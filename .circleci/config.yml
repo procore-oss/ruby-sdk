@@ -1,0 +1,44 @@
+version: 2
+jobs:
+  test:
+    docker:
+      - image: circleci/ruby:2.4.1
+      - image: redis:2.8.19
+
+    working_directory: ~/sdk
+
+    environment:
+      - REDIS_URL=redis://localhost:6379/
+
+    steps:
+      - checkout
+      - run: bundle install --path=vendor/bundle --jobs=4 --retry=3
+      - run: bundle exec rake
+
+  deploy:
+    docker:
+      - image: circleci/ruby:2.4.1
+
+    working_directory: ~/sdk
+
+    steps:
+      - checkout
+      - run: gem build procore.gemspec
+      - run: curl -F package=@procore-$CIRCLE_TAG.gem https://$GEMFURY_TOKEN@push.fury.io/procore/
+
+workflows:
+  version: 2
+  test-and-deploy:
+    jobs:
+      - test:
+          filters:
+            tags:
+              only: /.*/
+      - deploy:
+          requires:
+            - test
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
