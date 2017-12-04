@@ -19,7 +19,7 @@ Procore's [Developer Program](https://developers.procore.com/).
 A client requires a store. A store manages a particular user's access token.
 Stores automatically manage tokens for you - refreshing, revoking and storage
 are abstracted away to make your code as simple as possible. There are several
-different [types of stores](#Stores) available to you.
+different [types of stores](#stores) available to you.
 
 The client class exposes `#get`, `#post`, `#patch` and `#delete` methods to you.
 
@@ -79,8 +79,8 @@ def handle_callback
 end
 ```
 
-Now that the user's token is stored, requests can be made from anywhere in the
-application that access to the Rails session.
+With the user's token stored, requests can be made from anywhere in the
+application that has access to the Rails session.
 
 ```ruby
 client = Procore::Client.new(
@@ -94,7 +94,7 @@ client.get("me")
 
 ## Error Handling
 
-The Procore Gem raises errors whenever a request returns a non 2xx response.
+The Procore Gem raises errors whenever a request returns a non `2xx` response.
 Errors return both a message detailing the error and an instance of a
 `Response`.
 
@@ -164,8 +164,8 @@ end
 
 ## Pagination
 Endpoints which return multiple objects (a collection) will include pagination
-information. The `Response` object has a `#pagination` method which will return
-a hash which potentially contains the following keys and values:
+information. The `Response` object has a `#pagination` method that will return
+a hash which may conditionally contain the following keys:
 
 ```
 :next  URL for the immediate next page of results.
@@ -227,8 +227,8 @@ puts first_page.pagination
 }
 ```
 
-Notice now that `per_page` has been set to 250, there are only two pages of
-results.
+Notice that because `per_page` has been set to 250, there are only two pages of
+results (500 resources / 250 page size = 2 pages).
 
 ## Configuration
 
@@ -279,27 +279,11 @@ refresh tokens.
 
 Available stores:
 
-### ActiveRecord Store
-
-Options: `object`: Instance of an ActiveRecord model.
-
-For applications that store access token information on some user object. This
-store assumes that the ActiveRecord object has three columns - `access_token`,
-`refresh_token` and `expires_at`.
-
-The following columns **must** exist on the model you pass in:
-`access_token`, `refresh_token` and `expires_at`.
-
-```ruby
-store = Procore::Auth::Stores::ActiveRecord.new(object: current_user)
-```
-
 ### Session Store
 
 Options: `session`: Instance of a Rails session
 
-For applications that do not have a user model and want to keep access tokens in
-the user's session.
+For applications that want to keep access tokens in the user's session.
 
 ```ruby
 store = Procore::Auth::Stores::Session.new(session: session)
@@ -317,6 +301,19 @@ They key will usually be the id of the current user.
 
 ```ruby
 store = Procore::Auth::Stores::Redis.new(redis: Redis.new, key: current_user.id)
+```
+
+### ActiveRecord Store
+
+Options: `object`: Instance of an ActiveRecord model.
+
+For applications that store access token information on some user object.
+
+The following columns **must** exist on the model you pass in:
+`access_token`, `refresh_token` and `expires_at`.
+
+```ruby
+store = Procore::Auth::Stores::ActiveRecord.new(object: current_user)
 ```
 
 ### File Store
