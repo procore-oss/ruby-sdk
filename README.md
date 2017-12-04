@@ -376,7 +376,7 @@ class ProjectsController
   def client
     @client ||= Procore::Client.new(
       client_id: Rails.application.secrets.procore_client_id,
-      secret_id: Rails.application.secrets.procore_secret_id,
+      client_secret: Rails.application.secrets.procore_client_secret,
       store: Procore::Auth::Stores::Session.new(session: session)
     )
   end
