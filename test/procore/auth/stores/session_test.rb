@@ -3,7 +3,6 @@ require "action_dispatch"
 
 class Procore::Auth::Stores::SessionTest < Minitest::Test
   def setup
-    @session = ActionDispatch::Session::CookieStore.new({})
     @store = Procore::Auth::Stores::Session.new(session: {})
     @store.save(
       Procore::Auth::Token.new(

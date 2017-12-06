@@ -1,4 +1,7 @@
 ## Unreleased
+*  Fix session store not saving off the optional key attribute
+
+   *Patrick Koperwas*
 
 ## 0.6.1 (December 6, 2017)
 

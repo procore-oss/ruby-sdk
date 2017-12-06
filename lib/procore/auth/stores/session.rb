@@ -7,6 +7,7 @@ module Procore
         attr_reader :session, :key
         def initialize(session:, key: SESSION_KEY)
           @session = session
+          @key = key
         end
 
         def save(token)
