@@ -26,6 +26,9 @@ module Procore
   # required parameters or sending a request to access a non-existent resource.
   InvalidRequestError = Class.new(Error)
 
+  # Raised when the request 404's
+  NotFoundError = Class.new(Error)
+
   # Raised whenever there is a problem with OAuth. Possible causes: required
   # credentials are missing or an access token failed to refresh.
   OAuthError = Class.new(Error)

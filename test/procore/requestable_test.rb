@@ -94,7 +94,7 @@ class Procore::RequestableTest < Minitest::Test
     stub_request(:get, "http://test.com")
       .to_return(status: 404, body: "", headers: {})
 
-    assert_raises Procore::InvalidRequestError do
+    assert_raises Procore::NotFoundError do
       Request.new(token: "token").get("")
     end
   end
