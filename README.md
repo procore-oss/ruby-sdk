@@ -108,6 +108,9 @@ rescue Procore::RateLimitError => e
   # If you are receiving this error then you are making too many requests
   # against the Procore API.
 
+rescue Procore::NotFoundError => e
+  # Raised when the request 404's
+
 rescue Procore::InvalidRequestError => e
   # Raised when the request is incorrectly formated. Possible causes: missing
   # required parameters or sending a request to access a non-existent resource.

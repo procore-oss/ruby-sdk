@@ -175,7 +175,7 @@ module Procore
           response: response,
         )
       when 404
-        raise Procore::InvalidRequestError.new(
+        raise Procore::NotFoundError.new(
           "The URI requested is invalid or the resource requested does not "   \
           "exist.",
           response: response,
