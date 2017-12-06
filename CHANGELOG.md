@@ -3,6 +3,8 @@
 ## 0.6.2 (December 6, 2017)
 *  Fix session store not saving off the optional key attribute
 
+   PR #2 - https://github.com/procore/ruby-sdk/pull/2
+
    *Patrick Koperwas*
 
 ## 0.6.1 (December 6, 2017)
