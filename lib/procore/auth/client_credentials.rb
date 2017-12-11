@@ -15,7 +15,9 @@ module Procore
       end
 
       def refresh(token: nil, refresh: nil)
-        new_token = client.client_credentials.get_token
+        new_token = client
+          .client_credentials
+          .get_token({}, { auth_scheme: :request_body })
 
         Procore::Auth::Token.new(
           access_token: new_token.token,
