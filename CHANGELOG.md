@@ -1,11 +1,14 @@
 ## Unreleased
 
+## 0.6.3 (December 11, 2017)
+
 *  Fix issue with client credentials by forcing the usage of request body
    for sending `client_id` and `client_secret`
 
    *Michael Stock*
 
 ## 0.6.2 (December 6, 2017)
+
 *  Fix session store not saving off the optional key attribute
 
    PR #2 - https://github.com/procore/ruby-sdk/pull/2
