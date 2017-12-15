@@ -1,5 +1,9 @@
 ## Unreleased
 
+* Fix issue with passing request into `Procore::Response`.
+
+  *Michael Stock*
+
 ## 0.6.3 (December 11, 2017)
 
 *  Fix issue with client credentials by forcing the usage of request body

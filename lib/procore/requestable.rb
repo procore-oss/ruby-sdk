@@ -142,7 +142,7 @@ module Procore
         body: result.body,
         headers: result.headers,
         code: result.code,
-        request: result,
+        request: result.request,
       )
 
       case result.code
