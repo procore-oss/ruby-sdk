@@ -1,5 +1,7 @@
 ## Unreleased
 
+## 0.6.4 (December 15, 2017)
+
 * Fix issue with passing request into `Procore::Response`.
 
   *Michael Stock*
