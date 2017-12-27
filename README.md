@@ -329,7 +329,7 @@ information to disk. This way a user can run a CLI without needing to
 authenticate every single command.
 
 ```ruby
-store = Procore::Auth::Stores::Path.new(path: "./tokens.yml", key: current_user.id)
+store = Procore::Auth::Stores::File.new(path: "./tokens.yml", key: current_user.id)
 ```
 
 ### Memory Store
