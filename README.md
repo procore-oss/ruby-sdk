@@ -36,7 +36,7 @@ All paths are relative - the gem will handle expanding `client.get("me")` to
 Example Usage:
 
 ```ruby
-store = Procore::Auth::Stores::SessionStore.new(session: session)
+store = Procore::Auth::Stores::Session.new(session: session)
 client = Procore::Client.new(
   client_id: "client id",
   client_secret: "client secret",
