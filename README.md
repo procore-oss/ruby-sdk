@@ -36,7 +36,7 @@ All paths are relative - the gem will handle expanding `client.get("me")` to
 Example Usage:
 
 ```ruby
-store = Procore::Auth::Stores::SessionStore.new(session: session)
+store = Procore::Auth::Stores::Session.new(session: session)
 client = Procore::Client.new(
   client_id: "client id",
   client_secret: "client secret",
@@ -66,9 +66,9 @@ def handle_callback
 
     # Create a new token to save into a store
     token = Procore::Auth::Token.new(
-      access_token: auth_hash["token"]
-      refresh_token: auth_hash["refresh_token"],
-      expires_at: auth_hash["expires_at"]
+      access_token: auth_hash["credentials"]["token"]
+      refresh_token: auth_hash["credentials"]["refresh_token"],
+      expires_at: auth_hash["credentials"]["expires_at"]
     )
 
     store = Procore::Auth::Stores::Session.new(session: session)
@@ -329,7 +329,7 @@ information to disk. This way a user can run a CLI without needing to
 authenticate every single command.
 
 ```ruby
-store = Procore::Auth::Stores::Path.new(path: "./tokens.yml", key: current_user.id)
+store = Procore::Auth::Stores::File.new(path: "./tokens.yml", key: current_user.id)
 ```
 
 ### Memory Store
