@@ -11,6 +11,8 @@ module Procore
     def initialize(message, response: nil)
       @message = message
       @response = response
+
+      super(message)
     end
   end
 
@@ -31,7 +33,25 @@ module Procore
 
   # Raised whenever there is a problem with OAuth. Possible causes: required
   # credentials are missing or an access token failed to refresh.
-  OAuthError = Class.new(Error)
+  class OAuthError < Error
+    def initialize(message, response: nil)
+      @message = message
+
+      duck_response = if response
+                        OpenStruct.new(
+                          code: response.status,
+                          body: response.parsed.presence || response.body,
+                          headers: response.headers,
+                          request: OpenStruct.new(
+                            options: {},
+                            path: nil
+                          ),
+                        )
+                      end
+
+      super(message, response: duck_response)
+    end
+  end
 
   # Raised when a token reaches it's request limit for the current time period.
   # If you are receiving this error then you are making too many requests

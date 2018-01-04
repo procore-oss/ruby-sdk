@@ -26,7 +26,7 @@ module Procore
         )
 
       rescue OAuth2::Error => e
-        raise OAuthError.new(e.description)
+        raise OAuthError.new(e.description, response: e.response)
 
       rescue Faraday::ConnectionFailed => e
         raise APIConnectionError.new("Connection Error: #{e.message}")
