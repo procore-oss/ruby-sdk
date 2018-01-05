@@ -1,12 +1,18 @@
 language: ruby
 rvm:
-  - 2.2
   - 2.3
   - 2.4
   - 2.5
 
 services:
   - redis-server
+
+before_install:
+  - gem update --system
+
+cache: bundler
+
+script: bundle exec rake
 
 deploy:
   provider: rubygems
