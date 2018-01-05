@@ -4,7 +4,8 @@ require "fakefs/safe"
 # FakeFS Stub for YAML Store. Since FakeFS doesn't implement File#flock.
 module FakeFS
   class File
-    def flock(*); end
+    def flock(*)
+    end
   end
 end
 
@@ -17,7 +18,7 @@ class Procore::Auth::Stores::FileTest < Minitest::Test
         access_token: "token",
         refresh_token: "refresh",
         expires_at: 55,
-      )
+      ),
     )
   end
 
@@ -35,7 +36,7 @@ class Procore::Auth::Stores::FileTest < Minitest::Test
         access_token: "new token",
         refresh_token: "new refresh",
         expires_at: 55,
-      )
+      ),
     )
 
     assert_equal "new token", @store.fetch.access_token

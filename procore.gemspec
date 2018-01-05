@@ -1,4 +1,5 @@
 # coding: utf-8
+
 lib = File.expand_path("../lib", __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "procore/version"
@@ -9,8 +10,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Procore Engineering"]
   spec.email         = ["opensource@procore.comm"]
 
-  spec.summary       = %q{Procore Ruby Gem}
-  spec.description   = %q{Procore Ruby Gem}
+  spec.summary       = "Procore Ruby Gem"
+  spec.description   = "Procore Ruby Gem"
   spec.homepage      = "https://github.com/procore/ruby-sdk"
   spec.license       = "MIT"
 
@@ -29,6 +30,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "pry"
   spec.add_development_dependency "rake"
   spec.add_development_dependency "redis"
+  spec.add_development_dependency "rubocop"
   spec.add_development_dependency "sqlite3"
   spec.add_development_dependency "webmock"
 

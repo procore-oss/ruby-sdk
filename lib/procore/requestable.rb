@@ -22,7 +22,7 @@ module Procore
         "API Request Initiated",
         path: "#{base_api_path}/#{path}",
         method: "GET",
-        query: "#{query}",
+        query: query.to_s,
       )
 
       with_response_handling do
@@ -50,7 +50,7 @@ module Procore
         "API Request Initiated",
         path: "#{base_api_path}/#{path}",
         method: "POST",
-        body: "#{body}",
+        body: body.to_s,
       )
 
       with_response_handling do
@@ -77,7 +77,7 @@ module Procore
         "API Request Initiated",
         path: "#{base_api_path}/#{path}",
         method: "PATCH",
-        body: "#{body}",
+        body: body.to_s,
       )
 
       with_response_handling do
@@ -97,12 +97,12 @@ module Procore
     #   client.delete("users/1")
     #
     # @return [Response]
-    def delete(path, query = {}, options = {})
+    def delete(path, query = {}, _options = {})
       Util.log_info(
         "API Request Initiated",
         path: "#{base_api_path}/#{path}",
         method: "DELETE",
-        query: "#{query}",
+        query: query.to_s,
       )
 
       with_response_handling do
@@ -126,14 +126,14 @@ module Procore
       rescue Timeout::Error, Errno::ECONNREFUSED => e
         if retries <= Procore.configuration.max_retries
           retries += 1
-          sleep 1.5 ** retries
+          sleep 1.5**retries
           retry
         else
           raise APIConnectionError.new(
             "Cannot connect to the Procore API. Double check your timeout "    \
             "settings to ensure requests are not being cancelled before they " \
             "can complete. Try setting the timeout and max_retries to larger " \
-            "values."
+            "values.",
           ), e
         end
       end
@@ -150,7 +150,7 @@ module Procore
         Util.log_info(
           "API Request Finished ",
           path: result.request.path,
-          status: "#{result.code}",
+          status: result.code.to_s,
           duration: "#{((Time.now - request_start_time) * 1000).round(0)}ms",
           request_id: result.headers["x-request-id"],
         )
@@ -158,10 +158,10 @@ module Procore
         Util.log_error(
           "API Request Failed",
           path: result.request.path,
-          status: "#{result.code}",
+          status: result.code.to_s,
           duration: "#{((Time.now - request_start_time) * 1000).round(0)}ms",
           request_id: result.headers["x-request-id"],
-          retries: retries
+          retries: retries,
         )
       end
 
@@ -206,7 +206,7 @@ module Procore
         "Accepts" => "application/json",
         "Authorization" => "Bearer #{access_token}",
         "Content-Type" => "application/json",
-        "User-Agent" => Procore.configuration.user_agent
+        "User-Agent" => Procore.configuration.user_agent,
       }.tap do |headers|
         if options[:idempotency_token]
           headers["Idempotency-Token"] = options[:idempotency_token]

@@ -14,28 +14,25 @@ module Procore
         @host = host
       end
 
-      def refresh(token: nil, refresh: nil)
+      def refresh(*)
         begin
           new_token = client
             .client_credentials
-            .get_token({}, { auth_scheme: :request_body })
+            .get_token({}, auth_scheme: :request_body)
 
           Procore::Auth::Token.new(
             access_token: new_token.token,
             refresh_token: new_token.refresh_token,
             expires_at: new_token.expires_at,
           )
-
         rescue OAuth2::Error => e
           raise OAuthError.new(e.description, response: e.response)
-
         rescue Faraday::ConnectionFailed => e
           raise APIConnectionError.new("Connection Error: #{e.message}")
-
         rescue URI::BadURIError
           raise OAuthError.new(
             "Host is not a valid URI. Check your host option to make sure it "   \
-            "is a properly formed url"
+            "is a properly formed url",
           )
         end
       end

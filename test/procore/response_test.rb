@@ -45,7 +45,7 @@ class Procore::Response::BodyTest < Minitest::Test
         next: "projects?page=6",
         prev: "projects?page=4",
       },
-      response.pagination
+      response.pagination,
     )
   end
 
@@ -65,7 +65,7 @@ class Procore::Response::BodyTest < Minitest::Test
         last: "projects?page=173",
         next: "projects?page=6",
       },
-      response.pagination
+      response.pagination,
     )
   end
 

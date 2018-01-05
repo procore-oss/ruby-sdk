@@ -21,7 +21,7 @@ class Procore::Auth::Stores::ActiveRecordTest < Minitest::Test
         access_token: "new token",
         refresh_token: "new refresh",
         expires_at: 55,
-      )
+      ),
     )
 
     assert_equal "new token", @user.access_token

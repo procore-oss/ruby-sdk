@@ -17,10 +17,10 @@ class Procore::RequestableTest < Minitest::Test
   def test_get
     stub_request(:get, "http://test.com/home?per_page=5")
       .with(headers: {
-        "Accepts" => "application/json",
-        "Authorization" => "Bearer token",
-        "Content-Type" => "application/json",
-      })
+              "Accepts" => "application/json",
+              "Authorization" => "Bearer token",
+              "Content-Type" => "application/json",
+            })
       .to_return(status: 200, body: "", headers: {})
 
     Request.new(token: "token").get("home", per_page: 5)
@@ -49,7 +49,7 @@ class Procore::RequestableTest < Minitest::Test
           "Accepts" => "application/json",
           "Authorization" => "Bearer token",
           "Content-Type" => "application/json",
-        }
+        },
       )
       .to_return(status: 200, body: "", headers: {})
 
@@ -59,10 +59,10 @@ class Procore::RequestableTest < Minitest::Test
   def test_delete
     stub_request(:delete, "http://test.com/home")
       .with(headers: {
-        "Accepts" => "application/json",
-        "Authorization" => "Bearer token",
-        "Content-Type" => "application/json",
-      })
+              "Accepts" => "application/json",
+              "Authorization" => "Bearer token",
+              "Content-Type" => "application/json",
+            })
       .to_return(status: 200, body: "", headers: {})
 
     Request.new(token: "token").delete("home")
@@ -71,14 +71,14 @@ class Procore::RequestableTest < Minitest::Test
   def test_post_with_idempotency_token
     stub_request(:post, "http://test.com/home")
       .with(headers: {
-        "Accepts" => "application/json",
-        "Authorization" => "Bearer token",
-        "Content-Type" => "application/json",
-        "Idempotency-Token" => "token"
-      })
+              "Accepts" => "application/json",
+              "Authorization" => "Bearer token",
+              "Content-Type" => "application/json",
+              "Idempotency-Token" => "token",
+            })
       .to_return(status: 200, body: "", headers: {})
 
-    Request.new(token: "token").post("home", {}, { idempotency_token: "token" })
+    Request.new(token: "token").post("home", {}, idempotency_token: "token")
   end
 
   def test_unauthorized_error

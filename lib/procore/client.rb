@@ -55,7 +55,7 @@ module Procore
         raise Procore::OAuthError.new(
           "Unable to retreive an access token from the store. Double check "   \
           "your store configuration and make sure to correctly store a token " \
-          "before attempting to make API requests"
+          "before attempting to make API requests",
         )
       end
 
@@ -75,7 +75,7 @@ module Procore
             "Unable to refresh the access token. Perhaps the Procore API is "  \
             "down or the your access token store is misconfigured. Either "    \
             "way, you should clear the store and prompt the user to sign in "  \
-            "again."
+            "again.",
           )
         end
       end

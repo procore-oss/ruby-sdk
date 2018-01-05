@@ -9,7 +9,7 @@ class Procore::Auth::Stores::RedisTest < Minitest::Test
         access_token: "token",
         refresh_token: "refresh",
         expires_at: 55,
-      )
+      ),
     )
   end
 
@@ -23,7 +23,7 @@ class Procore::Auth::Stores::RedisTest < Minitest::Test
         access_token: "new token",
         refresh_token: "new refresh",
         expires_at: 55,
-      )
+      ),
     )
 
     assert_equal "new token", @store.fetch.access_token
