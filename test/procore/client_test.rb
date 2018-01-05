@@ -29,7 +29,7 @@ class Procore::ClientTest < Minitest::Test
       options: {
         host: "https://example.com",
         user_agent: "Procore Test Suite",
-      }
+      },
     )
 
     assert_equal "https://example.com", client.options[:host]

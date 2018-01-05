@@ -44,7 +44,7 @@ module Procore
                           headers: response.headers,
                           request: OpenStruct.new(
                             options: {},
-                            path: nil
+                            path: nil,
                           ),
                         )
                       end

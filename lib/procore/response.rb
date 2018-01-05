@@ -37,7 +37,6 @@ module Procore
   #   last_page.pagination[:last]
   #     #=> nil
   class Response
-
     # @!attribute [r] headers
     #   @return [Hash<String, String>] Raw headers returned from Procore API.
     # @!attribute [r] code
@@ -69,7 +68,7 @@ module Procore
     end
 
     def parse_pagination
-      headers["link"].to_s.split(", ").map(&:strip).inject({}) do |links, link|
+      headers["link"].to_s.split(", ").map(&:strip).reduce({}) do |links, link|
         url, name = link.match(/vapid\/(.*?)>; rel="(\w+)"/).captures
         links.merge!(name.to_sym => url)
       end
