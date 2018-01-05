@@ -1,5 +1,7 @@
 ## Unreleased
 
+* Wrap `AccessTokenCredentials` external errors with our own errors
+
 ## 0.6.7 (January 04, 2018)
 
 * Allow gem to be pushed to RubyGems

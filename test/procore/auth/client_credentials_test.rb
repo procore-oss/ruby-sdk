@@ -42,15 +42,15 @@ class Procore::Auth::ClientCredentialsTest < Minitest::Test
       host: "https://procore.example.com"
     )
 
-    begin
+    error = assert_raises Procore::OAuthError do
       token.refresh
-    rescue Procore::OAuthError => error
-      assert_equal error.response.code, 500
-      assert_equal error.response.body, "<html><body><h1>This is very bad</h1></body></html>"
-      assert_equal error.response.headers, { "content-type" => "text/html" }
-      assert_nil error.response.request.path
-      assert_equal error.response.request.options, {}
     end
+
+    assert_equal error.response.code, 500
+    assert_equal error.response.body, "<html><body><h1>This is very bad</h1></body></html>"
+    assert_equal error.response.headers, { "content-type" => "text/html" }
+    assert_nil error.response.request.path
+    assert_equal error.response.request.options, {}
   end
 
   def test_oauth_client_error_with_json
@@ -72,14 +72,58 @@ class Procore::Auth::ClientCredentialsTest < Minitest::Test
       host: "https://procore.example.com"
     )
 
-    begin
+    error = assert_raises Procore::OAuthError do
       token.refresh
-    rescue Procore::OAuthError => error
-      assert_equal error.response.code, 500
-      assert_equal error.response.body, { "error" => "Some bad error" }
-      assert_equal error.response.headers, { "content-type" => "application/json" }
-      assert_nil error.response.request.path
-      assert_equal error.response.request.options, {}
     end
+
+    assert_equal error.response.code, 500
+    assert_equal error.response.body, { "error" => "Some bad error" }
+    assert_equal error.response.headers, { "content-type" => "application/json" }
+    assert_nil error.response.request.path
+    assert_equal error.response.request.options, {}
+  end
+
+  def test_connection_failed_error
+    stub_request(:post, "https://procore.example.com/oauth/token")
+      .with(
+        body: {
+          "client_id" => "id",
+          "client_secret" => "secret",
+          "grant_type" => "client_credentials",
+        },
+      ).to_timeout
+
+    token = Procore::Auth::ClientCredentials.new(
+      client_id: "id",
+      client_secret: "secret",
+      host: "https://procore.example.com"
+    )
+
+    assert_raises Procore::APIConnectionError do
+      token.refresh
+    end
+  end
+
+  def test_bad_uri_error
+    stub_request(:post, "https://procore.example.com/oauth/token")
+      .with(
+        body: {
+          "client_id" => "id",
+          "client_secret" => "secret",
+          "grant_type" => "client_credentials",
+        },
+      )
+
+    token = Procore::Auth::ClientCredentials.new(
+      client_id: "id",
+      client_secret: "secret",
+      host: "invalid-uri",
+    )
+
+    error = assert_raises Procore::OAuthError do
+      token.refresh
+    end
+
+    assert_equal error.message, "Host is not a valid URI. Check your host option to make sure it is a properly formed url"
   end
 end
