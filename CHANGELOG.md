@@ -1,5 +1,9 @@
 ## Unreleased
 
+## 0.6.7 (January 04, 2018)
+
+* Allow gem to be pushed to RubyGems
+
 ## 0.6.6 (January 04, 2018)
 
 * Move to using TravisCI
