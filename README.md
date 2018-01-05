@@ -1,6 +1,6 @@
 # Procore Gem
 
-[![CircleCI](https://circleci.com/gh/procore/ruby-sdk.svg?style=svg&circle-token=a46865279f779d2020ba379666eeb91a3b39b780)](https://circleci.com/gh/procore/ruby-sdk)
+[![Build Status](https://travis-ci.org/procore/ruby-sdk.svg?branch=move-to-travis)](https://travis-ci.org/procore/ruby-sdk)
 
 ## Installation & Usage
 
