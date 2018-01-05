@@ -1,5 +1,7 @@
 ## Unreleased
 
+## 0.6.8 (January 04, 2018)
+
 * Wrap `AccessTokenCredentials` external errors with our own errors
 
 ## 0.6.7 (January 04, 2018)
