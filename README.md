@@ -21,7 +21,7 @@ Stores automatically manage tokens for you - refreshing, revoking and storage
 are abstracted away to make your code as simple as possible. There are several
 different [types of stores](#stores) available to you.
 
-The client class exposes `#get`, `#post`, `#patch` and `#delete` methods to you.
+The Client class exposes `#get`, `#post`, `#patch` and `#delete` methods to you.
 
 ```ruby
 get(path, query = {})
@@ -104,7 +104,7 @@ begin
   client.get("projects")
 
 rescue Procore::RateLimitError => e
-  # Raised when a token reaches it's request limit for the current time period.
+  # Raised when a token reaches its request limit for the current time period.
   # If you are receiving this error then you are making too many requests
   # against the Procore API.
 
@@ -112,7 +112,7 @@ rescue Procore::NotFoundError => e
   # Raised when the request 404's
 
 rescue Procore::InvalidRequestError => e
-  # Raised when the request is incorrectly formated. Possible causes: missing
+  # Raised when the request is incorrectly formatted. Possible causes: missing
   # required parameters or sending a request to access a non-existent resource.
 
 rescue Procore::OAuthError => e
@@ -128,7 +128,7 @@ rescue Procore::APIConnectionError => e
   # Procore is down or the network is doing something funny.
 
 rescue Procore::ServerError => e
-  # Raised when a Procore endpoint returns a 500x resonse code.
+  # Raised when a Procore endpoint returns a 5xx response code.
 
 rescue Procore::Error => e
   # Generic catch all error.
@@ -300,7 +300,7 @@ Options: `key`: Unique identifier to an access token
 For applications which want to store access tokens in Redis. There's two
 required options, `redis` which is an instance of a Redis connection, and `key`
 which is a unique key which will be used to save / retrieve an access token.
-They key will usually be the id of the current user.
+The key will usually be the id of the current user.
 
 ```ruby
 store = Procore::Auth::Stores::Redis.new(redis: Redis.new, key: current_user.id)
