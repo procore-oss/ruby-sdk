@@ -21,11 +21,13 @@ Stores automatically manage tokens for you - refreshing, revoking and storage
 are abstracted away to make your code as simple as possible. There are several
 different [types of stores](#stores) available to you.
 
-The Client class exposes `#get`, `#post`, `#patch` and `#delete` methods to you.
+The Client class exposes `#get`, `#post`, `#put`, `#patch` and `#delete` methods
+to you.
 
 ```ruby
 get(path, query = {})
 post(path, body = {}, options = {})
+put(path, body = {}, options = {})
 patch(path, body = {}, options = {})
 delete(path, query = {})
 ```

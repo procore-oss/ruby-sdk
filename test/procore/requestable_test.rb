@@ -41,6 +41,21 @@ class Procore::RequestableTest < Minitest::Test
     Request.new(token: "token").post("home", name: "Name")
   end
 
+  def test_put
+    stub_request(:put, "http://test.com/home")
+      .with(
+        body: { name: "Replaced Name" },
+        headers: {
+          "Accepts" => "application/json",
+          "Authorization" => "Bearer token",
+          "Content-Type" => "application/json",
+        },
+      )
+      .to_return(status: 200, body: "", headers: {})
+
+    Request.new(token: "token").put("home", name: "Replaced Name")
+  end
+
   def test_patch
     stub_request(:patch, "http://test.com/home")
       .with(

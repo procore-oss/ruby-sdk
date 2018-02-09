@@ -3,7 +3,7 @@ require "procore/requestable"
 module Procore
   # Main class end users interact with. An instance of a client can call out
   # the Procore API using methods matching standard HTTP verbs #get, #post,
-  # #patch, #delete.
+  # #put, #patch, #delete.
   #
   # @example Creating a new client:
   #   store = Procore::Auth::Stores::Session.new(session: session)
