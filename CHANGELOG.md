@@ -1,5 +1,7 @@
 ## Unreleased
 
+## 0.6.9 (February 09, 2018)
+
 *  Add HTTP PUT support
 
    *Matt Brinza*
