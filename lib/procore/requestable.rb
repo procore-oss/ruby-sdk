@@ -1,8 +1,8 @@
 require "httparty"
 
 module Procore
-  # Module which defines HTTP verbs GET, POST, PATCH and DELETE. Is included in
-  # Client. Has support for Idempotency Tokens on POST and PATCH.
+  # Module which defines HTTP verbs GET, POST, PUT, PATCH and DELETE. Is
+  # included in Client. Has support for Idempotency Tokens on POST and PATCH.
   #
   # @example Using #get:
   #   client.get("my_open_items", per_page: 5)
@@ -66,9 +66,37 @@ module Procore
     # @param path [String] URL path
     # @param body [Hash] Body parameters to send with the request
     # @param options [Hash} Extra request options
+    # TODO Add description for idempotency key
+    #
+    # @example Usage
+    #   client.put("dashboards/1/users", [1,2,3])
+    #
+    # @return [Response]
+    def put(path, body = {}, options = {})
+      Util.log_info(
+        "API Request Initiated",
+        path: "#{base_api_path}/#{path}",
+        method: "PUT",
+        body: body.to_s,
+      )
+
+      with_response_handling do
+        HTTParty.put(
+          "#{base_api_path}/#{path}",
+          body: body.to_json,
+          headers: headers(options),
+          timeout: Procore.configuration.timeout,
+        )
+      end
+    end
+
+    # @param path [String] URL path
+    # @param body [Hash] Body parameters to send with the request
+    # @param options [Hash} Extra request options
     # TODO Add description for idempotency token
     # @option options [String] :idempotency_token
     #
+    # @example Usage
     #   client.patch("users/1", { name: "Updated" }, { idempotency_token: "key" })
     #
     # @return [Response]
