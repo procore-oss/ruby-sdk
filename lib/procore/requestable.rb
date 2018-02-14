@@ -213,7 +213,7 @@ module Procore
           "exist.",
           response: response,
         )
-      when 422
+      when 400, 422
         raise Procore::InvalidRequestError.new(
           "Bad Request.",
           response: response,
