@@ -1,4 +1,4 @@
-require "httparty"
+require "rest-client"
 
 module Procore
   # Module which defines HTTP verbs GET, POST, PUT, PATCH and DELETE. Is
@@ -26,10 +26,10 @@ module Procore
       )
 
       with_response_handling do
-        HTTParty.get(
-          "#{base_api_path}/#{path}",
-          query: query,
-          headers: headers,
+        RestClient::Request.execute(
+          method: :get,
+          url: "#{base_api_path}/#{path}",
+          headers: headers.merge(params: query),
           timeout: Procore.configuration.timeout,
         )
       end
@@ -54,9 +54,10 @@ module Procore
       )
 
       with_response_handling do
-        HTTParty.post(
-          "#{base_api_path}/#{path}",
-          body: body.to_json,
+        RestClient::Request.execute(
+          method: :post,
+          url: "#{base_api_path}/#{path}",
+          payload: payload(body),
           headers: headers(options),
           timeout: Procore.configuration.timeout,
         )
@@ -81,9 +82,10 @@ module Procore
       )
 
       with_response_handling do
-        HTTParty.put(
-          "#{base_api_path}/#{path}",
-          body: body.to_json,
+        RestClient::Request.execute(
+          method: :put,
+          url: "#{base_api_path}/#{path}",
+          payload: payload(body),
           headers: headers(options),
           timeout: Procore.configuration.timeout,
         )
@@ -109,9 +111,10 @@ module Procore
       )
 
       with_response_handling do
-        HTTParty.patch(
-          "#{base_api_path}/#{path}",
-          body: body.to_json,
+        RestClient::Request.execute(
+          method: :patch,
+          url: "#{base_api_path}/#{path}",
+          payload: payload(body),
           headers: headers(options),
           timeout: Procore.configuration.timeout,
         )
@@ -134,10 +137,10 @@ module Procore
       )
 
       with_response_handling do
-        HTTParty.delete(
-          "#{base_api_path}/#{path}",
-          query: query,
-          headers: headers,
+        RestClient::Request.execute(
+          method: :delete,
+          url: "#{base_api_path}/#{path}",
+          headers: headers.merge(params: query),
           timeout: Procore.configuration.timeout,
         )
       end
@@ -151,7 +154,7 @@ module Procore
 
       begin
         result = yield
-      rescue Timeout::Error, Errno::ECONNREFUSED => e
+      rescue RestClient::Exceptions::Timeout, Errno::ECONNREFUSED => e
         if retries <= Procore.configuration.max_retries
           retries += 1
           sleep 1.5**retries
@@ -164,6 +167,8 @@ module Procore
             "values.",
           ), e
         end
+      rescue RestClient::ExceptionWithResponse => e
+        result = e.response
       end
 
       response = Procore::Response.new(
@@ -177,7 +182,7 @@ module Procore
       when 200..299
         Util.log_info(
           "API Request Finished ",
-          path: result.request.path,
+          path: result.request.url,
           status: result.code.to_s,
           duration: "#{((Time.now - request_start_time) * 1000).round(0)}ms",
           request_id: result.headers["x-request-id"],
@@ -185,7 +190,7 @@ module Procore
       else
         Util.log_error(
           "API Request Failed",
-          path: result.request.path,
+          path: result.request.url,
           status: result.code.to_s,
           duration: "#{((Time.now - request_start_time) * 1000).round(0)}ms",
           request_id: result.headers["x-request-id"],
@@ -240,6 +245,14 @@ module Procore
           headers["Idempotency-Token"] = options[:idempotency_token]
         end
       end
+    end
+
+    def payload(body)
+      multipart?(body) ? body : body.to_json
+    end
+
+    def multipart?(body)
+      RestClient::Payload::has_file?(body)
     end
   end
 end

@@ -34,6 +34,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "sqlite3"
   spec.add_development_dependency "webmock"
 
-  spec.add_dependency "httparty", "~> 0.16"
+  spec.add_dependency "rest-client", "~> 2.0.0"
   spec.add_dependency "oauth2", "~> 1.4"
 end
