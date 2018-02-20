@@ -101,10 +101,10 @@ class Procore::RequestableTest < Minitest::Test
       .with(headers: {
               "Accepts" => "application/json",
               "Authorization" => "Bearer token",
-              "Content-Type" => %r[multipart/form-data]
+              "Content-Type" => %r[multipart/form-data],
             })
       .to_return(status: 200, body: "", headers: {})
-    pixel = File.new('test/support/pixel.png', 'r')
+    pixel = File.new("test/support/pixel.png", "r")
 
     Request.new(token: "token").post("home", file: pixel)
   end
