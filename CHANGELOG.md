@@ -1,5 +1,7 @@
 ## Unreleased
 
+## 0.7.0 (February 21, 2018)
+
 * Add multipart request support
 * Move to `RestClient` from `HTTParty`
 
