@@ -96,6 +96,19 @@ class Procore::RequestableTest < Minitest::Test
     Request.new(token: "token").post("home", {}, idempotency_token: "token")
   end
 
+  def test_post_with_multipart_body
+    stub_request(:post, "http://test.com/home")
+      .with(headers: {
+              "Accepts" => "application/json",
+              "Authorization" => "Bearer token",
+              "Content-Type" => %r[multipart/form-data],
+            })
+      .to_return(status: 200, body: "", headers: {})
+    pixel = File.new("test/support/pixel.png", "r")
+
+    Request.new(token: "token").post("home", file: pixel)
+  end
+
   def test_unauthorized_error
     stub_request(:get, "http://test.com")
       .to_return(status: 401, body: "", headers: {})

@@ -1,5 +1,10 @@
 ## Unreleased
 
+* Add multipart request support
+* Move to `RestClient` from `HTTParty`
+
+  *Matt Brinza*
+
 ## 0.6.9 (February 09, 2018)
 
 *  Add HTTP PUT support
