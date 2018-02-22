@@ -1,5 +1,9 @@
 ## Unreleased
 
+*  Fix redis store guard clause
+
+   *Patrick Koperwas*
+
 ## 0.7.0 (February 21, 2018)
 
 * Add multipart request support

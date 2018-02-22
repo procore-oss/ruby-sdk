@@ -13,7 +13,7 @@ module Procore
         end
 
         def fetch
-          return if redis.get(redis_key).empty?
+          return unless redis.exists(redis_key)
 
           token = JSON.parse(redis.get(redis_key))
           Procore::Auth::Token.new(
@@ -24,7 +24,7 @@ module Procore
         end
 
         def delete
-          redis.set(redis_key, nil)
+          redis.del(redis_key)
         end
 
         def to_s
