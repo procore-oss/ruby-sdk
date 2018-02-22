@@ -1,5 +1,7 @@
 ## Unreleased
 
+## 0.7.1 (February 22, 2018)
+
 *  Fix redis store guard clause
 
    *Patrick Koperwas*
