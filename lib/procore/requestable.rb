@@ -53,7 +53,7 @@ module Procore
         body: body.to_s,
       )
 
-      with_response_handling do
+      with_response_handling(request_body: body) do
         RestClient::Request.execute(
           method: :post,
           url: "#{base_api_path}/#{path}",
@@ -81,7 +81,7 @@ module Procore
         body: body.to_s,
       )
 
-      with_response_handling do
+      with_response_handling(request_body: body) do
         RestClient::Request.execute(
           method: :put,
           url: "#{base_api_path}/#{path}",
@@ -110,7 +110,7 @@ module Procore
         body: body.to_s,
       )
 
-      with_response_handling do
+      with_response_handling(request_body: body) do
         RestClient::Request.execute(
           method: :patch,
           url: "#{base_api_path}/#{path}",
@@ -148,7 +148,7 @@ module Procore
 
     private
 
-    def with_response_handling
+    def with_response_handling(request_body: nil)
       request_start_time = Time.now
       retries = 0
 
@@ -176,6 +176,7 @@ module Procore
         headers: result.headers,
         code: result.code,
         request: result.request,
+        request_body: request_body,
       )
 
       case result.code
@@ -248,7 +249,11 @@ module Procore
     end
 
     def payload(body)
-      multipart?(body) ? body : body.to_json
+      if multipart?(body)
+        body
+      else
+        body.to_json
+      end
     end
 
     def multipart?(body)
