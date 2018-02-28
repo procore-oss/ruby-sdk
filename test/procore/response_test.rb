@@ -7,6 +7,7 @@ class Procore::Response::BodyTest < Minitest::Test
       code: 200,
       headers: {},
       request: nil,
+      request_body: nil,
     )
 
     assert_equal({ "key" => "value" }, response.body)
@@ -20,6 +21,7 @@ class Procore::Response::BodyTest < Minitest::Test
       code: 200,
       headers: {},
       request: nil,
+      request_body: nil,
     )
 
     assert_equal(response_body, response.body)
@@ -36,6 +38,7 @@ class Procore::Response::BodyTest < Minitest::Test
       code: 200,
       headers: { "link" => links },
       request: nil,
+      request_body: nil,
     )
 
     assert_equal(
@@ -58,6 +61,7 @@ class Procore::Response::BodyTest < Minitest::Test
       code: 200,
       headers: { "link" => links },
       request: nil,
+      request_body: nil,
     )
 
     assert_equal(
@@ -77,8 +81,23 @@ class Procore::Response::BodyTest < Minitest::Test
         "link" => "",
       },
       request: nil,
+      request_body: nil,
     )
 
     assert_equal({}, response.pagination)
+  end
+
+  def test_request_body
+    request_body = { key: "value" }
+
+    response = Procore::Response.new(
+      body: nil,
+      code: 200,
+      headers: {},
+      request: nil,
+      request_body: request_body,
+    )
+
+    assert_equal(request_body, response.request_body)
   end
 end

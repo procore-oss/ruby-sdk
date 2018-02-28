@@ -43,13 +43,14 @@ module Procore
     #   @return [Integer] Status Code returned from Procore API.
     # @!attribute [r] pagination
     #   @return [Hash<Symbol, String>] Pagination URLs
-    attr_reader :headers, :code, :pagination, :request
+    attr_reader :headers, :code, :pagination, :request, :request_body
 
-    def initialize(body:, headers:, code:, request:)
+    def initialize(body:, headers:, code:, request:, request_body:)
       @code = code
       @headers = headers
       @pagination = parse_pagination
       @request = request
+      @request_body = request_body
       @raw_body = !body.to_s.empty? ? body : "{}".to_json
     end
 
