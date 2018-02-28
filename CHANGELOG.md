@@ -1,7 +1,14 @@
 ## Unreleased
 
+## 0.7.2 (February 28, 2018)
+
 *  Add 400 responses as Procore::InvalidRequestError
+
+   *Michael Stock*
+
 *  Add request_body to Procore::Response for debugging
+
+   *Michael Stock*
 
 ## 0.7.1 (February 22, 2018)
 
