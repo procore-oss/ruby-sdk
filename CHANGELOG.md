@@ -1,5 +1,7 @@
 ## Unreleased
 
+## 0.7.3 (March 1, 2018)
+
 * Add 403 responses as Procore::ForbiddenError
 
     *Michael Stock*
