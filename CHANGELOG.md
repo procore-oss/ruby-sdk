@@ -1,5 +1,9 @@
 ## Unreleased
 
+* Add 403 responses as Procore::ForbiddenError
+
+    *Michael Stock*
+
 ## 0.7.2 (February 28, 2018)
 
 *  Add 400 responses as Procore::InvalidRequestError

@@ -208,6 +208,11 @@ module Procore
           "access the target resource",
           response: response,
         )
+      when 403
+        raise Procore::ForbiddenError.new(
+          "The request failed because you lack the required permissions",
+          response: response,
+        )
       when 404
         raise Procore::NotFoundError.new(
           "The URI requested is invalid or the resource requested does not "   \
