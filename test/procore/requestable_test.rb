@@ -118,6 +118,15 @@ class Procore::RequestableTest < Minitest::Test
     end
   end
 
+  def test_forbidden_error
+    stub_request(:get, "http://test.com")
+      .to_return(status: 403, body: "", headers: {})
+
+    assert_raises Procore::ForbiddenError do
+      Request.new(token: "token").get("")
+    end
+  end
+
   def test_not_found_error
     stub_request(:get, "http://test.com")
       .to_return(status: 404, body: "", headers: {})

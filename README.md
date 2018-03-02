@@ -125,6 +125,9 @@ rescue Procore::AuthorizationError => e
   # Raised when the request is attempting to access a resource the token's
   # owner does not have access to.
 
+rescue Procore::ForbiddenError => e
+  # Raised when the request failed because you lack the required permissions.
+
 rescue Procore::APIConnectionError => e
   # Raised when the gem cannot connect to the Procore API. Possible causes:
   # Procore is down or the network is doing something funny.
