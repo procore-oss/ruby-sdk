@@ -1,3 +1,5 @@
+require "active_support/hash_with_indifferent_access"
+
 module Procore
   # Wrapper class for a response received from the Procore API. Stores the
   # body, code, headers, and pagination information.
