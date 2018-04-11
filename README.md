@@ -2,7 +2,24 @@
 
 [![Build Status](https://travis-ci.org/procore/ruby-sdk.svg?branch=move-to-travis)](https://travis-ci.org/procore/ruby-sdk)
 
-## Installation & Usage
+#### Table of Contents
+- [Installation](#installation)
+- [Making Requests](#making-requests)
+- [Usage](#usage)
+- [Error Handling](#error-handling)
+- [Pagination](#pagination)
+  - [Navigating Through Paginated Results](#navigating-through-paginated-results)
+  - [Change Number of Results](#change-number-of-results)
+- [Configuration](#configuration)
+- [Stores](#stores)
+  - [Session Store](#session-store)
+  - [Redis Store](#redis-store)
+  - [ActiveRecord Store](#activerecord-store)
+  - [File Store](#file-store)
+  - [Memory Store](#memory-store)
+- [Full Example](#full-example)
+
+## Installation
 
 Add this line to your application's Gemfile:
 
