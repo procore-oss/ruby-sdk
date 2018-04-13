@@ -1,5 +1,9 @@
 ## Unreleased
 
+* Move all request methods to use keyword arguments
+
+    *Michael Stock/Jason Gittler*
+
 ## 0.7.3 (March 1, 2018)
 
 * Add 403 responses as Procore::ForbiddenError

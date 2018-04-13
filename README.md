@@ -25,11 +25,11 @@ The Client class exposes `#get`, `#post`, `#put`, `#patch` and `#delete` methods
 to you.
 
 ```ruby
-get(path, query = {})
-post(path, body = {}, options = {})
-put(path, body = {}, options = {})
-patch(path, body = {}, options = {})
-delete(path, query = {})
+get(path, query: {})
+post(path, body: {}, options: {})
+put(path, body: {}, options: {})
+patch(path, body: {}, options: {})
+delete(path, query: {})
 ```
 
 All paths are relative - the gem will handle expanding `client.get("me")` to
@@ -226,7 +226,7 @@ You can pass a `per_page` query parameter in your request to change the page
 size. The pagination links will update to reflect that change.
 
 ```
-first_page = client.get("projects", per_page: 250)
+first_page = client.get("projects", query: { per_page: 250 })
 
 puts first_page.pagination
 {
@@ -376,7 +376,7 @@ end
 # Somewhere else in the application
 class ProjectsController
   def index
-    @projects = client.get("projects", company_id: params[:company_id])
+    @projects = client.get("projects", query: { company_id: params[:company_id] })
   end
 
   private
