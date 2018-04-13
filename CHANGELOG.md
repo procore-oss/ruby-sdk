@@ -1,5 +1,7 @@
 ## Unreleased
 
+## 0.8.1 (April 13, 2018)
+
 * Fix rubocop
 
     *Michael Stock/Jason Gittler*
