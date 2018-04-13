@@ -30,7 +30,7 @@ module Procore
         RestClient::Request.execute(
           method: :get,
           url: "#{base_api_path}/#{path}",
-          headers: headers.merge(params: query),
+          headers: headers(options).merge(params: query),
           timeout: Procore.configuration.timeout,
         )
       end

@@ -1,5 +1,9 @@
 ## Unreleased
 
+* Fix rubocop
+
+    *Michael Stock/Jason Gittler*
+
 ## 0.8.0 (April 13, 2018)
 
 * Move all request methods to use keyword arguments

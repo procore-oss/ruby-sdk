@@ -117,6 +117,26 @@ class Procore::RequestableTest < Minitest::Test
     assert_requested request
   end
 
+  def test_get_with_company_id
+    request = stub_request(:get, "http://test.com/home")
+      .with(
+        headers: {
+          "Accepts" => "application/json",
+          "Authorization" => "Bearer token",
+          "Content-Type" => "application/json",
+          "procore-company-id" => "1",
+        },
+      )
+      .to_return(status: 200, body: "", headers: {})
+
+    Request.new(token: "token").get(
+      "home",
+      options: { company_id: 1 },
+    )
+
+    assert_requested request
+  end
+
   def test_post_with_company_id
     request = stub_request(:post, "http://test.com/home")
       .with(
