@@ -36,7 +36,7 @@ class Procore::Response::BodyTest < Minitest::Test
     response = Procore::Response.new(
       body: [{ key: "value" }].to_json,
       code: 200,
-      headers: { "link" => links },
+      headers: { link: links },
       request: nil,
       request_body: nil,
     )
@@ -59,7 +59,7 @@ class Procore::Response::BodyTest < Minitest::Test
     response = Procore::Response.new(
       body: [{ key: "value" }].to_json,
       code: 200,
-      headers: { "link" => links },
+      headers: { link: links },
       request: nil,
       request_body: nil,
     )
@@ -78,7 +78,7 @@ class Procore::Response::BodyTest < Minitest::Test
       body: [{ key: "value" }].to_json,
       code: 200,
       headers: {
-        "link" => "",
+        link: "",
       },
       request: nil,
       request_body: nil,
