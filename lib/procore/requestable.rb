@@ -1,5 +1,6 @@
 require "rest-client"
 require "procore/errors"
+require "active_support/notifications"
 
 module Procore
   # Module which defines HTTP verbs GET, POST, PUT, PATCH and DELETE. Is
@@ -206,6 +207,14 @@ module Procore
         request_body: request_body,
       )
 
+      instrument(
+        status: response.code.to_s,
+        path: response.request.uri.path,
+        retries: retries,
+        request_id: response.headers["x-request-id"],
+        duration: (Time.now - request_start_time),
+      )
+
       case result.code
       when 200..299
         Util.log_info(
@@ -298,6 +307,16 @@ module Procore
 
     def full_path(path)
       File.join(base_api_path, path).to_s
+    end
+
+    def instrument(status:, path:, retries:, request_id:, duration:)
+      ActiveSupport::Notifications.instrument("procore.api.request",
+        status: status,
+        path: path,
+        retries: retries,
+        request_id: request_id,
+        duration: duration,
+      )
     end
   end
 end
