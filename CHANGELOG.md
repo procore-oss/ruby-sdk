@@ -1,5 +1,17 @@
 ## Unreleased
 
+## 0.8.1 (April 13, 2018)
+
+* Fix rubocop
+
+    *Michael Stock/Jason Gittler*
+
+## 0.8.0 (April 13, 2018)
+
+* Move all request methods to use keyword arguments
+
+    *Michael Stock/Jason Gittler*
+
 ## 0.7.3 (March 1, 2018)
 
 * Add 403 responses as Procore::ForbiddenError

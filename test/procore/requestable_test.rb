@@ -15,19 +15,24 @@ class Procore::RequestableTest < Minitest::Test
   end
 
   def test_get
-    stub_request(:get, "http://test.com/home?per_page=5")
-      .with(headers: {
-              "Accepts" => "application/json",
-              "Authorization" => "Bearer token",
-              "Content-Type" => "application/json",
-            })
+    request = stub_request(:get, "http://test.com/home")
+      .with(
+        query: { per_page: 5 },
+        headers: {
+          "Accepts" => "application/json",
+          "Authorization" => "Bearer token",
+          "Content-Type" => "application/json",
+        },
+      )
       .to_return(status: 200, body: "", headers: {})
 
-    Request.new(token: "token").get("home", per_page: 5)
+    Request.new(token: "token").get("home", query: { per_page: 5 })
+
+    assert_requested request
   end
 
   def test_post
-    stub_request(:post, "http://test.com/home")
+    request = stub_request(:post, "http://test.com/home")
       .with(
         body: { name: "Name" },
         headers: {
@@ -38,11 +43,13 @@ class Procore::RequestableTest < Minitest::Test
       )
       .to_return(status: 200, body: "", headers: {})
 
-    Request.new(token: "token").post("home", name: "Name")
+    Request.new(token: "token").post("home", body: { name: "Name" })
+
+    assert_requested request
   end
 
   def test_put
-    stub_request(:put, "http://test.com/home")
+    request = stub_request(:put, "http://test.com/home")
       .with(
         body: { name: "Replaced Name" },
         headers: {
@@ -53,11 +60,13 @@ class Procore::RequestableTest < Minitest::Test
       )
       .to_return(status: 200, body: "", headers: {})
 
-    Request.new(token: "token").put("home", name: "Replaced Name")
+    Request.new(token: "token").put("home", body: { name: "Replaced Name" })
+
+    assert_requested request
   end
 
   def test_patch
-    stub_request(:patch, "http://test.com/home")
+    request = stub_request(:patch, "http://test.com/home")
       .with(
         body: { name: "New Name" },
         headers: {
@@ -68,11 +77,13 @@ class Procore::RequestableTest < Minitest::Test
       )
       .to_return(status: 200, body: "", headers: {})
 
-    Request.new(token: "token").patch("home", name: "New Name")
+    Request.new(token: "token").patch("home", body: { name: "New Name" })
+
+    assert_requested request
   end
 
   def test_delete
-    stub_request(:delete, "http://test.com/home")
+    request = stub_request(:delete, "http://test.com/home")
       .with(headers: {
               "Accepts" => "application/json",
               "Authorization" => "Bearer token",
@@ -81,32 +92,89 @@ class Procore::RequestableTest < Minitest::Test
       .to_return(status: 200, body: "", headers: {})
 
     Request.new(token: "token").delete("home")
+
+    assert_requested request
   end
 
   def test_post_with_idempotency_token
-    stub_request(:post, "http://test.com/home")
-      .with(headers: {
-              "Accepts" => "application/json",
-              "Authorization" => "Bearer token",
-              "Content-Type" => "application/json",
-              "Idempotency-Token" => "token",
-            })
+    request = stub_request(:post, "http://test.com/home")
+      .with(
+        headers: {
+          "Accepts" => "application/json",
+          "Authorization" => "Bearer token",
+          "Content-Type" => "application/json",
+          "Idempotency-Token" => "token",
+        },
+      )
       .to_return(status: 200, body: "", headers: {})
 
-    Request.new(token: "token").post("home", {}, idempotency_token: "token")
+    Request.new(token: "token").post(
+      "home",
+      body: {},
+      options: { idempotency_token: "token" },
+    )
+
+    assert_requested request
+  end
+
+  def test_get_with_company_id
+    request = stub_request(:get, "http://test.com/home")
+      .with(
+        headers: {
+          "Accepts" => "application/json",
+          "Authorization" => "Bearer token",
+          "Content-Type" => "application/json",
+          "procore-company-id" => "1",
+        },
+      )
+      .to_return(status: 200, body: "", headers: {})
+
+    Request.new(token: "token").get(
+      "home",
+      options: { company_id: 1 },
+    )
+
+    assert_requested request
+  end
+
+  def test_post_with_company_id
+    request = stub_request(:post, "http://test.com/home")
+      .with(
+        body: { name: "Name" },
+        headers: {
+          "Accepts" => "application/json",
+          "Authorization" => "Bearer token",
+          "Content-Type" => "application/json",
+          "procore-company-id" => "1",
+        },
+      )
+      .to_return(status: 200, body: "", headers: {})
+
+    Request.new(token: "token").post(
+      "home",
+      body: { name: "Name" },
+      options: { company_id: 1 },
+    )
+
+    assert_requested request
   end
 
   def test_post_with_multipart_body
-    stub_request(:post, "http://test.com/home")
-      .with(headers: {
-              "Accepts" => "application/json",
-              "Authorization" => "Bearer token",
-              "Content-Type" => %r[multipart/form-data],
-            })
+    request = stub_request(:post, "http://test.com/home")
+      .with(
+        headers: {
+          "Accepts" => "application/json",
+          "Authorization" => "Bearer token",
+          "Content-Type" => %r[multipart/form-data],
+        },
+      )
       .to_return(status: 200, body: "", headers: {})
+
     pixel = File.new("test/support/pixel.png", "r")
 
-    Request.new(token: "token").post("home", file: pixel)
+    Request.new(token: "token").post("home", body: { file: pixel })
+
+    assert_requested request
   end
 
   def test_unauthorized_error

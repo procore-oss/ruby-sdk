@@ -12,12 +12,13 @@ module Procore
   module Requestable
     # @param path [String] URL path
     # @param query [Hash] Query options to pass along with the request
+    # @option options [Hash] :company_id
     #
     # @example Usage
-    #   client.get("my_open_items", per_page: 5, filter: {})
+    #   client.get("my_open_items", query: { per_page: 5, filter: {} })
     #
     # @return [Response]
-    def get(path, query = {})
+    def get(path, query: {}, options: {})
       Util.log_info(
         "API Request Initiated",
         path: "#{base_api_path}/#{path}",
@@ -29,7 +30,7 @@ module Procore
         RestClient::Request.execute(
           method: :get,
           url: "#{base_api_path}/#{path}",
-          headers: headers.merge(params: query),
+          headers: headers(options).merge(params: query),
           timeout: Procore.configuration.timeout,
         )
       end
@@ -38,14 +39,17 @@ module Procore
     # @param path [String] URL path
     # @param body [Hash] Body parameters to send with the request
     # @param options [Hash} Extra request options
-    # TODO Add description for idempotency key
-    # @option options [String] :idempotency_token
+    # @option options [String] :idempotency_token | :company_id
     #
     # @example Usage
-    #   client.post("users", { name: "New User" }, { idempotency_token: "key" })
+    #   client.post(
+    #     "users",
+    #     body: { name: "New User" },
+    #     options: { idempotency_token: "key", company_id: 1 },
+    #   )
     #
     # @return [Response]
-    def post(path, body = {}, options = {})
+    def post(path, body: {}, options: {})
       Util.log_info(
         "API Request Initiated",
         path: "#{base_api_path}/#{path}",
@@ -67,13 +71,13 @@ module Procore
     # @param path [String] URL path
     # @param body [Hash] Body parameters to send with the request
     # @param options [Hash} Extra request options
-    # TODO Add description for idempotency key
+    # @option options [String] :idempotency_token | :company_id
     #
     # @example Usage
-    #   client.put("dashboards/1/users", [1,2,3])
+    #   client.put("dashboards/1/users", body: [1,2,3], options: { company_id: 1 })
     #
     # @return [Response]
-    def put(path, body = {}, options = {})
+    def put(path, body: {}, options: {})
       Util.log_info(
         "API Request Initiated",
         path: "#{base_api_path}/#{path}",
@@ -95,14 +99,17 @@ module Procore
     # @param path [String] URL path
     # @param body [Hash] Body parameters to send with the request
     # @param options [Hash} Extra request options
-    # TODO Add description for idempotency token
-    # @option options [String] :idempotency_token
+    # @option options [String] :idempotency_token | :company_id
     #
     # @example Usage
-    #   client.patch("users/1", { name: "Updated" }, { idempotency_token: "key" })
+    #   client.patch(
+    #     "users/1",
+    #     body: { name: "Updated" },
+    #     options: { idempotency_token: "key", company_id: 1 },
+    #   )
     #
     # @return [Response]
-    def patch(path, body = {}, options = {})
+    def patch(path, body: {}, options: {})
       Util.log_info(
         "API Request Initiated",
         path: "#{base_api_path}/#{path}",
@@ -123,16 +130,18 @@ module Procore
 
     # @param path [String] URL path
     # @param query [Hash] Query options to pass along with the request
+    # @option options [String] :company_id
     #
     # @example Usage
-    #   client.delete("users/1")
+    #   client.delete("users/1", query: {}, options: {})
     #
     # @return [Response]
-    def delete(path, query = {}, _options = {})
+    def delete(path, query: {}, options: {})
       Util.log_info(
         "API Request Initiated",
         path: "#{base_api_path}/#{path}",
         method: "DELETE",
+        headers: headers(options),
         query: query.to_s,
       )
 
@@ -249,6 +258,10 @@ module Procore
       }.tap do |headers|
         if options[:idempotency_token]
           headers["Idempotency-Token"] = options[:idempotency_token]
+        end
+
+        if options[:company_id]
+          headers["procore-company-id"] = options[:company_id]
         end
       end
     end
