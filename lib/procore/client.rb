@@ -52,7 +52,7 @@ module Procore
       token = store.fetch
 
       if token.nil? || token.invalid?
-        raise Procore::OAuthError.new(
+        raise Procore::MissingTokenError.new(
           "Unable to retreive an access token from the store. Double check "   \
           "your store configuration and make sure to correctly store a token " \
           "before attempting to make API requests",

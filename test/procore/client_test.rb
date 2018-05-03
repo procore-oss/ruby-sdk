@@ -71,7 +71,7 @@ class Procore::ClientTest < Minitest::Test
       store: store,
     )
 
-    assert_raises(Procore::APIConnectionError) do
+    assert_raises(Procore::MissingTokenError) do
       client.get("me")
     end
   end

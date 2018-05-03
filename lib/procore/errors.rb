@@ -63,4 +63,7 @@ module Procore
 
   # Raised when a Procore endpoint returns a 500x resonse code.
   ServerError = Class.new(Error)
+
+  # Raised when a token is missing with refresh failure.
+  MissingTokenError = Class.new(Error)
 end
