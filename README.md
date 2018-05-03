@@ -138,6 +138,9 @@ rescue Procore::OAuthError => e
   # Raised whenever there is a problem with OAuth. Possible causes: required
   # credentials are missing or an access token failed to refresh.
 
+rescue Procore::MissingTokenError => e
+  # Raised whenever an access token is nil or invalid.
+
 rescue Procore::AuthorizationError => e
   # Raised when the request is attempting to access a resource the token's
   # owner does not have access to.
