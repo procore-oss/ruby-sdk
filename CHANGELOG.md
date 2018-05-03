@@ -1,5 +1,11 @@
 ## Unreleased
 
+## 0.8.2 (May 3, 2018)
+
+* Rescue Procore::OAuthError
+
+    *Casey Ochs*
+
 ## 0.8.1 (April 13, 2018)
 
 * Fix rubocop
