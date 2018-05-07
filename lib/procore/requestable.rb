@@ -19,9 +19,11 @@ module Procore
     #
     # @return [Response]
     def get(path, query: {}, options: {})
+      full_path = File.join(base_api_path, path).to_s
+
       Util.log_info(
         "API Request Initiated",
-        path: "#{base_api_path}/#{path}",
+        path: full_path,
         method: "GET",
         query: query.to_s,
       )
@@ -29,7 +31,7 @@ module Procore
       with_response_handling do
         RestClient::Request.execute(
           method: :get,
-          url: "#{base_api_path}/#{path}",
+          url: full_path,
           headers: headers(options).merge(params: query),
           timeout: Procore.configuration.timeout,
         )
@@ -50,9 +52,11 @@ module Procore
     #
     # @return [Response]
     def post(path, body: {}, options: {})
+      full_path = File.join(base_api_path, path).to_s
+
       Util.log_info(
         "API Request Initiated",
-        path: "#{base_api_path}/#{path}",
+        path: full_path,
         method: "POST",
         body: body.to_s,
       )
@@ -60,7 +64,7 @@ module Procore
       with_response_handling(request_body: body) do
         RestClient::Request.execute(
           method: :post,
-          url: "#{base_api_path}/#{path}",
+          url: full_path,
           payload: payload(body),
           headers: headers(options),
           timeout: Procore.configuration.timeout,
@@ -78,9 +82,11 @@ module Procore
     #
     # @return [Response]
     def put(path, body: {}, options: {})
+      full_path = File.join(base_api_path, path).to_s
+
       Util.log_info(
         "API Request Initiated",
-        path: "#{base_api_path}/#{path}",
+        path: full_path,
         method: "PUT",
         body: body.to_s,
       )
@@ -88,7 +94,7 @@ module Procore
       with_response_handling(request_body: body) do
         RestClient::Request.execute(
           method: :put,
-          url: "#{base_api_path}/#{path}",
+          url: full_path,
           payload: payload(body),
           headers: headers(options),
           timeout: Procore.configuration.timeout,
@@ -110,9 +116,11 @@ module Procore
     #
     # @return [Response]
     def patch(path, body: {}, options: {})
+      full_path = File.join(base_api_path, path).to_s
+
       Util.log_info(
         "API Request Initiated",
-        path: "#{base_api_path}/#{path}",
+        path: full_path,
         method: "PATCH",
         body: body.to_s,
       )
@@ -120,7 +128,7 @@ module Procore
       with_response_handling(request_body: body) do
         RestClient::Request.execute(
           method: :patch,
-          url: "#{base_api_path}/#{path}",
+          url: full_path,
           payload: payload(body),
           headers: headers(options),
           timeout: Procore.configuration.timeout,
@@ -137,9 +145,11 @@ module Procore
     #
     # @return [Response]
     def delete(path, query: {}, options: {})
+      full_path = File.join(base_api_path, path).to_s
+
       Util.log_info(
         "API Request Initiated",
-        path: "#{base_api_path}/#{path}",
+        path: full_path,
         method: "DELETE",
         headers: headers(options),
         query: query.to_s,
@@ -148,7 +158,7 @@ module Procore
       with_response_handling do
         RestClient::Request.execute(
           method: :delete,
-          url: "#{base_api_path}/#{path}",
+          url: full_path,
           headers: headers.merge(params: query),
           timeout: Procore.configuration.timeout,
         )
