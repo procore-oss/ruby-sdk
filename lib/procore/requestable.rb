@@ -10,6 +10,7 @@ module Procore
   # @example Using #post:
   #   client.post("projects", name: "New Project")
   module Requestable
+    HTTP_EXCEPTIONS = [RestClient::Exceptions::Timeout, Errno::ECONNREFUSED, Errno::ECONNRESET, Procore::OAuthError].freeze
     # @param path [String] URL path
     # @param query [Hash] Query options to pass along with the request
     # @option options [Hash] :company_id
@@ -18,8 +19,6 @@ module Procore
     #   client.get("my_open_items", query: { per_page: 5, filter: {} })
     #
     # @return [Response]
-    HTTP_EXCEPTIONS = [RestClient::Exceptions::Timeout, Errno::ECONNREFUSED, Errno::ECONNRESET, Procore::OAuthError].freeze
-
     def get(path, query: {}, options: {})
       Util.log_info(
         "API Request Initiated",
