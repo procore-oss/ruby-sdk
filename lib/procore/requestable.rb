@@ -1,4 +1,5 @@
 require "rest-client"
+require "procore/errors"
 
 module Procore
   # Module which defines HTTP verbs GET, POST, PUT, PATCH and DELETE. Is
@@ -10,6 +11,13 @@ module Procore
   # @example Using #post:
   #   client.post("projects", name: "New Project")
   module Requestable
+    HTTP_EXCEPTIONS = [
+      Errno::ECONNREFUSED,
+      Errno::ECONNRESET,
+      Procore::OAuthError,
+      RestClient::Exceptions::Timeout,
+      RestClient::ServerBrokeConnection,
+    ].freeze
     # @param path [String] URL path
     # @param query [Hash] Query options to pass along with the request
     # @option options [Hash] :company_id
@@ -163,7 +171,7 @@ module Procore
 
       begin
         result = yield
-      rescue RestClient::Exceptions::Timeout, Errno::ECONNREFUSED, Procore::OAuthError => e
+      rescue *HTTP_EXCEPTIONS => e
         if retries <= Procore.configuration.max_retries
           retries += 1
           sleep 1.5**retries
