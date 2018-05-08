@@ -18,7 +18,7 @@ module Procore
     #   client.get("my_open_items", query: { per_page: 5, filter: {} })
     #
     # @return [Response]
-    HTTP_EXCEPTIONS = [RestClient::Exceptions::Timeout, Errno::ECONNREFUSED, Errno::ECONNRESET, Procore::OAuthError]
+    HTTP_EXCEPTIONS = [RestClient::Exceptions::Timeout, Errno::ECONNREFUSED, Errno::ECONNRESET, Procore::OAuthError].freeze
 
     def get(path, query: {}, options: {})
       Util.log_info(
