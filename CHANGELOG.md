@@ -1,5 +1,9 @@
 ## Unreleased
 
+* Rescue Errno::ECONNREFUSED errors
+
+    *Casey Ochs*
+
 ## 0.8.4 (May 8, 2018)
 
 * Use symbol key access for headers object
