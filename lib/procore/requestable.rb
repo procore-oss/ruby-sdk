@@ -173,7 +173,7 @@ module Procore
 
       begin
         result = yield
-      rescue RestClient::Exceptions::Timeout, Errno::ECONNREFUSED => e
+      rescue RestClient::Exceptions::Timeout, Errno::ECONNREFUSED, Procore::OAuthError => e
         if retries <= Procore.configuration.max_retries
           retries += 1
           sleep 1.5**retries

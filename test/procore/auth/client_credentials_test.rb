@@ -126,4 +126,25 @@ class Procore::Auth::ClientCredentialsTest < Minitest::Test
 
     assert_equal error.message, "Host is not a valid URI. Check your host option to make sure it is a properly formed url"
   end
+
+  def test_procore_oauth_error
+    stub_request(:post, "https://procore.example.com/oauth/token")
+      .with(
+        body: {
+          "client_id" => "id",
+          "client_secret" => "secret",
+          "grant_type" => "client_credentials",
+        },
+      )
+
+    token = Procore::Auth::ClientCredentials.new(
+      client_id: "id",
+      client_secret: "secret",
+      host: "https://procore.example.com",
+    )
+
+    assert_raises Procore::OAuthError do
+      token.refresh
+    end
+  end
 end
