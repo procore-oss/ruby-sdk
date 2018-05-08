@@ -18,6 +18,8 @@ module Procore
     #   client.get("my_open_items", query: { per_page: 5, filter: {} })
     #
     # @return [Response]
+    HTTP_EXCEPTIONS = [RestClient::Exceptions::Timeout, Errno::ECONNREFUSED, Errno::ECONNRESET, Procore::OAuthError]
+
     def get(path, query: {}, options: {})
       Util.log_info(
         "API Request Initiated",
@@ -158,7 +160,6 @@ module Procore
     private
 
     def with_response_handling(request_body: nil)
-      HTTP_EXCEPTIONS = [RestClient::Exceptions::Timeout, Errno::ECONNREFUSED, Errno::ECONNRESET, Procore::OAuthError]
       request_start_time = Time.now
       retries = 0
 
