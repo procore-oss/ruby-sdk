@@ -16,7 +16,7 @@ module Procore
       Errno::ECONNRESET,
       Procore::OAuthError,
       RestClient::Exceptions::Timeout,
-      RestClient::ServerBrokeConnection
+      RestClient::ServerBrokeConnection,
     ].freeze
     # @param path [String] URL path
     # @param query [Hash] Query options to pass along with the request
