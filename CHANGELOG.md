@@ -1,5 +1,13 @@
 ## Unreleased
 
+## 0.8.4 (May 8, 2018)
+
+* Use symbol key access for headers object
+
+  PR #23 - https://github.com/procore/ruby-sdk/pull/23
+
+    *Michael Stock*
+
 ## 0.8.3 (May 7, 2018)
 
 ## 0.8.2 (May 7, 2018)
