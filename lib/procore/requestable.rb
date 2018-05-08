@@ -19,7 +19,7 @@ module Procore
     #
     # @return [Response]
     def get(path, query: {}, options: {})
-      full_path = File.join(base_api_path, path).to_s
+      full_path = full_path(path)
 
       Util.log_info(
         "API Request Initiated",
@@ -52,7 +52,7 @@ module Procore
     #
     # @return [Response]
     def post(path, body: {}, options: {})
-      full_path = File.join(base_api_path, path).to_s
+      full_path = full_path(path)
 
       Util.log_info(
         "API Request Initiated",
@@ -82,7 +82,7 @@ module Procore
     #
     # @return [Response]
     def put(path, body: {}, options: {})
-      full_path = File.join(base_api_path, path).to_s
+      full_path = full_path(path)
 
       Util.log_info(
         "API Request Initiated",
@@ -116,7 +116,7 @@ module Procore
     #
     # @return [Response]
     def patch(path, body: {}, options: {})
-      full_path = File.join(base_api_path, path).to_s
+      full_path = full_path(path)
 
       Util.log_info(
         "API Request Initiated",
@@ -145,7 +145,7 @@ module Procore
     #
     # @return [Response]
     def delete(path, query: {}, options: {})
-      full_path = File.join(base_api_path, path).to_s
+      full_path = full_path(path)
 
       Util.log_info(
         "API Request Initiated",
@@ -286,6 +286,10 @@ module Procore
 
     def multipart?(body)
       RestClient::Payload::has_file?(body)
+    end
+
+    def full_path(path)
+      File.join(base_api_path, path).to_s
     end
   end
 end
