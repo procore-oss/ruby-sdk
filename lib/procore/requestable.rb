@@ -158,12 +158,13 @@ module Procore
     private
 
     def with_response_handling(request_body: nil)
+      HTTP_EXCEPTIONS = [RestClient::Exceptions::Timeout, Errno::ECONNREFUSED, Errno::ECONNRESET, Procore::OAuthError]
       request_start_time = Time.now
       retries = 0
 
       begin
         result = yield
-      rescue RestClient::Exceptions::Timeout, Errno::ECONNREFUSED, Errno::ECONNRESET, Procore::OAuthError => e
+      rescue *HTTP_EXCEPTIONS => e
         if retries <= Procore.configuration.max_retries
           retries += 1
           sleep 1.5**retries
