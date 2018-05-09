@@ -1,6 +1,7 @@
 ## Unreleased
 
-* Rescue Errno::ECONNREFUSED errors
+## 0.8.5 (May 9, 2018)
+* Rescue Errno::ECONNREFUSED errors and RestClient::ServerBrokeConnection
 
     *Casey Ochs*
 
