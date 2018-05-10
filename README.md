@@ -14,6 +14,7 @@
 - [Stores](#stores)
   - [Session Store](#session-store)
   - [Redis Store](#redis-store)
+  - [Dalli Store](#dalli-store)
   - [ActiveRecord Store](#activerecord-store)
   - [File Store](#file-store)
   - [Memory Store](#memory-store)
@@ -329,6 +330,20 @@ The key will usually be the id of the current user.
 
 ```ruby
 store = Procore::Auth::Stores::Redis.new(redis: Redis.new, key: current_user.id)
+```
+
+### Dalli Store
+
+Options: `dalli`: Instance of Dalli
+Options: `key`: Unique identifier to an access token
+
+For applications which want to store access tokens in memcached using Dalli.
+There's two required options, `dalli` which is an instance of a Dalli client,
+and `key` which is a unique key which will be used to save / retrieve an access
+token.  The key will usually be the id of the current user.
+
+```ruby
+store = Procore::Auth::Stores::Dalli.new(redis: Dalli.new, key: current_user.id)
 ```
 
 ### ActiveRecord Store

@@ -1,5 +1,9 @@
 ## Unreleased
 
+* Dalli Store
+
+  *Patrick Koperwas*
+
 * Fix Requestable paths to prevent double slash in URI
   
     *Megan O'Neill*
