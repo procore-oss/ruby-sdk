@@ -343,7 +343,7 @@ and `key` which is a unique key which will be used to save / retrieve an access
 token.  The key will usually be the id of the current user.
 
 ```ruby
-store = Procore::Auth::Stores::Dalli.new(redis: Dalli.new, key: current_user.id)
+store = Procore::Auth::Stores::Dalli.new(dalli: Dalli.new, key: current_user.id)
 ```
 
 ### ActiveRecord Store
