@@ -1,5 +1,7 @@
 ## Unreleased
 
+## 0.8.6 (May 10, 2018)
+
 * Dalli Store
 
   *Patrick Koperwas*
