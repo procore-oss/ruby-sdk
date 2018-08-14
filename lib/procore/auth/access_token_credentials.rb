@@ -3,11 +3,12 @@ require "oauth2"
 module Procore
   module Auth
     class AccessTokenCredentials
-      attr_reader :client_id, :client_secret, :host
-      def initialize(client_id:, client_secret:, host:)
+      attr_reader :client_id, :client_secret
+      AUTH_HOST = "https://auth.procore.com"
+
+      def initialize(client_id:, client_secret:)
         @client_id = client_id
         @client_secret = client_secret
-        @host = host
       end
 
       def refresh(token:, refresh:)
@@ -38,7 +39,7 @@ module Procore
         OAuth2::Client.new(
           client_id,
           client_secret,
-          site: "#{host}/oauth/token",
+          site: "#{AUTH_HOST}/oauth/token",
         )
       end
     end
