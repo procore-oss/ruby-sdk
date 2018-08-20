@@ -39,8 +39,12 @@ module Procore
         OAuth2::Client.new(
           client_id,
           client_secret,
-          site: "#{AUTH_HOST}/oauth/token",
+          site: "#{auth_host}/oauth/token",
         )
+      end
+
+      def auth_host
+        ::ENV.fetch("AUTH_HOST", nil) || AUTH_HOST
       end
     end
   end

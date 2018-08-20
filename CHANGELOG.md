@@ -1,5 +1,9 @@
 ## Unreleased
 
+* Use auth.procore.com for client credentials and access tokens
+
+  *Megan O'Neill*
+
 ## 0.8.6 (May 10, 2018)
 
 * Dalli Store
