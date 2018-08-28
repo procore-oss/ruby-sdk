@@ -24,7 +24,7 @@ module Procore
     # @param store [Auth::Store] A store to use for saving, updating and
     #   refreshing tokens
     # @param options [Hash] options to configure the client with
-    # @option options [String] :host Endpoint to use for the API. Defaults to 
+    # @option options [String] :host Endpoint to use for the API. Defaults to
     #   Configuration.host
     # @option options [String] :user_agent User Agent string to send along with
     #   the request. Defaults to Configuration.user_agent

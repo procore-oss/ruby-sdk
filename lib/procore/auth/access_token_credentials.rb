@@ -44,7 +44,7 @@ module Procore
       end
 
       def auth_host
-        ::ENV.fetch("AUTH_HOST", nil) || AUTH_HOST
+        ::ENV.fetch("PROCORE_AUTH_HOST", nil) || AUTH_HOST
       end
     end
   end
