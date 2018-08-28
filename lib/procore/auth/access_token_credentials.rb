@@ -4,7 +4,6 @@ module Procore
   module Auth
     class AccessTokenCredentials
       attr_reader :client_id, :client_secret
-      AUTH_HOST = "https://auth.procore.com"
 
       def initialize(client_id:, client_secret:)
         @client_id = client_id
@@ -39,12 +38,8 @@ module Procore
         OAuth2::Client.new(
           client_id,
           client_secret,
-          site: "#{auth_host}/oauth/token",
+          site: "#{Procore.configuration.auth_host}/oauth/token",
         )
-      end
-
-      def auth_host
-        ::ENV.fetch("PROCORE_AUTH_HOST", nil) || AUTH_HOST
       end
     end
   end

@@ -32,6 +32,16 @@ module Procore
     # @return [String]
     attr_accessor :host
 
+    # @!attribute [rw] auth_host
+    # @note defaults to Defaults::AUTH_HOST
+    #
+    # Base authentication host name. Alter this depending on your environment - in a
+    # staging or test environment you may want to point this at a sandbox
+    # instead of production.
+    #
+    # @return [String]
+    attr_accessor :auth_host
+
     # @!attribute [rw] logger
     # @note defaults to nil
     #
@@ -79,6 +89,7 @@ module Procore
 
     def initialize
       @host = Procore::Defaults::API_ENDPOINT
+      @auth_host = Procore::Defaults::AUTH_HOST
       @logger = nil
       @max_retries = 1
       @timeout = 1.0
