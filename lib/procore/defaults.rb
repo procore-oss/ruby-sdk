@@ -7,7 +7,7 @@ module Procore
     API_ENDPOINT = "https://app.procore.com".freeze
 
     # Default authentication endpoint
-    AUTH_HOST = "https://auth.procore.com".freeze
+    AUTH_HOST = "https://login.procore.com".freeze
 
     # Default User Agent header string
     USER_AGENT = "Procore Ruby Gem #{Procore::VERSION}".freeze

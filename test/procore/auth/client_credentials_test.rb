@@ -2,7 +2,7 @@ require "test_helper"
 
 class Procore::Auth::ClientCredentialsTest < Minitest::Test
   def test_get_token
-    stub_request(:post, "https://auth.procore.com/oauth/token")
+    stub_request(:post, "https://login.procore.com/oauth/token")
       .with(body: {
               "client_id" => "id",
               "client_secret" => "secret",
@@ -23,7 +23,7 @@ class Procore::Auth::ClientCredentialsTest < Minitest::Test
   end
 
   def test_oauth_client_error_with_html
-    stub_request(:post, "https://auth.procore.com/oauth/token")
+    stub_request(:post, "https://login.procore.com/oauth/token")
       .with(body: {
               "client_id" => "id",
               "client_secret" => "secret",
@@ -52,7 +52,7 @@ class Procore::Auth::ClientCredentialsTest < Minitest::Test
   end
 
   def test_oauth_client_error_with_json
-    stub_request(:post, "https://auth.procore.com/oauth/token")
+    stub_request(:post, "https://login.procore.com/oauth/token")
       .with(body: {
               "client_id" => "id",
               "client_secret" => "secret",
@@ -81,7 +81,7 @@ class Procore::Auth::ClientCredentialsTest < Minitest::Test
   end
 
   def test_connection_failed_error
-    stub_request(:post, "https://auth.procore.com/oauth/token")
+    stub_request(:post, "https://login.procore.com/oauth/token")
       .with(
         body: {
           "client_id" => "id",
@@ -101,7 +101,7 @@ class Procore::Auth::ClientCredentialsTest < Minitest::Test
   end
 
   def test_procore_oauth_error
-    stub_request(:post, "https://auth.procore.com/oauth/token")
+    stub_request(:post, "https://login.procore.com/oauth/token")
       .with(
         body: {
           "client_id" => "id",
