@@ -1,6 +1,6 @@
 ## Unreleased
 
-* Use auth.procore.com for client credentials and access tokens
+* Use login.procore.com for client credentials and access tokens
 
   *Megan O'Neill*
 
