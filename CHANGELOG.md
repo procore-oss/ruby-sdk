@@ -1,5 +1,9 @@
 ## Unreleased
 
+* Addition of contribution guidelines to README
+
+  *Megan O'Neill*
+
 * Fix TravisCI failures
 
   *Patrick Koperwas*
