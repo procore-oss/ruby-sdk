@@ -314,12 +314,13 @@ Options: `session`: Instance of a Rails session
 
 For applications that want to keep access tokens in the user's session.
 
-<aside class="warning">
-  We strongly discourage using the session as a token store. Even if the session
-  is using an encrypted cookie or memcached, since an unencrypted version of the
-  rails session is often logged by default to external apps like bugsnag. Be sure
-  you are not logging tokens!
-</aside>
+:warning:
+We strongly discourage using the session as a token store. Even if the session
+is using an encrypted cookie or memcached, since an unencrypted version of the
+rails session is often logged by default to external apps like bugsnag. Be sure
+you are not logging tokens!
+:warning:
+
 
 ```ruby
 store = Procore::Auth::Stores::Session.new(session: session)
