@@ -315,9 +315,11 @@ Options: `session`: Instance of a Rails session
 For applications that want to keep access tokens in the user's session.
 
 :warning:
-We strongly discourage using the session as a token store since an unencrypted
-version of the rails session is often logged by default to external apps such as
-bugsnag etc. Be sure you are not logging tokens.
+We strongly discourage using the session as a token store since the rails
+session is often logged by default to external apps such as bugsnag etc. Be sure
+you are not logging tokens. There is also the possibility that the rails session
+is using a cookie store which, depending on application settings, could be
+unencrypted. Tokens should not be stored client-side if it can be avoided.
 :warning:
 
 ```ruby
