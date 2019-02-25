@@ -32,7 +32,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake"
   spec.add_development_dependency "redis"
   spec.add_development_dependency "rubocop"
-  spec.add_development_dependency "sqlite3"
+  spec.add_development_dependency "sqlite3", "~> 1.4"
   spec.add_development_dependency "webmock"
 
   spec.add_dependency "activesupport", "> 2.4"
