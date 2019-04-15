@@ -297,7 +297,11 @@ module Procore
     end
 
     def full_path(path)
-      File.join(base_api_path, path).to_s
+      File.join(rest_compatible_base_api_path(path), path).to_s
+    end
+
+    def rest_compatible_base_api_path(path)
+      path.starts_with?('rest/') || path.starts_with?('/rest/') ? base_api_path.remove('/vapid') : base_api_path
     end
   end
 end
