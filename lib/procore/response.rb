@@ -50,11 +50,11 @@ module Procore
     def initialize(body:, headers:, code:, request:, request_body:, api_version: 'vapid')
       @code = code
       @headers = headers
+      @api_version = api_version
       @pagination = parse_pagination
       @request = request
       @request_body = request_body
       @raw_body = !body.to_s.empty? ? body : "{}".to_json
-      @api_version = api_version
     end
 
     # @return [Array<Hash>, Hash] Ruby representation of JSON response. Hashes are
