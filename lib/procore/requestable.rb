@@ -204,6 +204,7 @@ module Procore
         code: result.code,
         request: result.request,
         request_body: request_body,
+        api_version: api_version
       )
 
       case result.code
@@ -297,11 +298,7 @@ module Procore
     end
 
     def full_path(path)
-      File.join(rest_compatible_base_api_path(path), path).to_s
-    end
-
-    def rest_compatible_base_api_path(path)
-      path.starts_with?('rest/') || path.starts_with?('/rest/') ? base_api_path.remove('/vapid') : base_api_path
+      File.join(base_api_path, path).to_s
     end
   end
 end
