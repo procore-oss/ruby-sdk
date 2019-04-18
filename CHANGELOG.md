@@ -1,5 +1,7 @@
 ## Unreleased
 
+## 0.8.7 (April 18, 2019)
+
 * Add api_version to allow calls to procore rest endpoints
 
   *Shane Means*
