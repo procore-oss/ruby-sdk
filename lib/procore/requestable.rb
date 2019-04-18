@@ -204,6 +204,7 @@ module Procore
         code: result.code,
         request: result.request,
         request_body: request_body,
+        api_version: api_version
       )
 
       case result.code

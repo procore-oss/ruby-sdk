@@ -1,5 +1,9 @@
 ## Unreleased
 
+* Add api_version to allow calls to procore rest endpoints
+
+  *Shane Means*
+
 ## 0.8.6 (May 10, 2018)
 
 * Dalli Store
@@ -7,7 +11,7 @@
   *Patrick Koperwas*
 
 * Fix Requestable paths to prevent double slash in URI
-  
+
     *Megan O'Neill*
 
 ## 0.8.5 (May 9, 2018)
