@@ -7,14 +7,13 @@ module Procore
     class BatchSync
       BATCH_SIZE = 500.freeze
 
-      def initialize(url:, arguments: {}, updates:, connection:)
+      def initialize(url:, arguments: {}, updates:, connection:, batch_size: BATCH_SIZE)
         @url = url
         @arguments = arguments
         @updates = updates
         @connection = connection
+        @batch_size = batch_size
       end
-
-      attr_accessor :url, :arguments, :updates, :connection
 
       def execute
         entities = []
@@ -31,8 +30,10 @@ module Procore
 
       private
 
+      attr_reader :url, :arguments, :updates, :connection, :batch_size
+
       def batches
-        updates.in_groups_of(BATCH_SIZE)
+        updates.in_groups_of(batch_size)
       end
     end
   end
