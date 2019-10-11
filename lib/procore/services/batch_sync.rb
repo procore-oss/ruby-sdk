@@ -33,7 +33,7 @@ module Procore
       attr_reader :url, :arguments, :updates, :connection, :batch_size
 
       def batches
-        updates.in_groups_of(batch_size)
+        updates.in_groups_of(batch_size, false)
       end
     end
   end

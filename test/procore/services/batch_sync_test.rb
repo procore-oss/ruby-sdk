@@ -7,7 +7,7 @@ class Procore::Services::BatchSyncTest < Minitest::Test
     updates = (0..1000).to_a.map { |count| { id: count, origin_id: "origin_id_#{count}" } }
     oauth_connection = Minitest::Mock.new
 
-    url = '/erp_projects/sync'
+    url = '/projects/sync'
 
     batch1 = updates[0..499]
     batch1_sync_result = Minitest::Mock.new
@@ -43,7 +43,7 @@ class Procore::Services::BatchSyncTest < Minitest::Test
     updates = (0..5).to_a.map { |count| { id: count, origin_id: "origin_id_#{count}" } }
     oauth_connection = Minitest::Mock.new
 
-    url = '/erp_projects/sync'
+    url = '/projects/sync'
 
     batch1 = updates[0..4]
     batch1_sync_result = Minitest::Mock.new
