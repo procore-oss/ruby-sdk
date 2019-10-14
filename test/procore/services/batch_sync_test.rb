@@ -24,7 +24,7 @@ class Procore::Services::BatchSyncTest < Minitest::Test
     batch3_sync_result.expect :body, { 'errors' => [{ 'id' => 3, 'origin_id' => 'batch3' }] }
     oauth_connection.expect :patch, batch3_sync_result, [url, { view: :compact, updates: batch3 }]
 
-    batch_sync_service = Procore::Services::BatchSync.new(url: url, arguments: { view: :compact }, updates: updates, connection: oauth_connection)
+    batch_sync_service = Procore::Services::BatchSync.new(url: url, options: { view: :compact }, updates: updates, connection: oauth_connection)
     sync_result = batch_sync_service.execute
 
     expected_sync_result = {

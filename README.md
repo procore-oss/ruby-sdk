@@ -259,6 +259,27 @@ puts first_page.pagination
 Notice that because `per_page` has been set to 250, there are only two pages of
 results (500 resources / 250 page size = 2 pages).
 
+### Services
+
+For large sets of data, the `Procore::Services::BatchSync` class can be used to specify batch size when syncing with Procore.
+Note that this class should only be used for the `sync` endpoints which has response in the format of:
+```
+{ 
+  "entities": [],
+  "errors": []
+}
+```
+#### Example:
+```
+Procore::Services::BatchSync.new(
+  url: '/projects/sync', 
+  options: { company_id: 10 }, 
+  updates: [ ], 
+  connection: oauth_connection, 
+  batch_size: 500
+)
+```
+
 ## Configuration
 
 The Procore Gem exposes a configuration with several options.

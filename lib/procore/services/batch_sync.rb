@@ -7,30 +7,26 @@ module Procore
     class BatchSync
       BATCH_SIZE = 500.freeze
 
-      def initialize(url:, arguments: {}, updates:, connection:, batch_size: BATCH_SIZE)
+      def initialize(url:, options: {}, updates:, connection:, batch_size: BATCH_SIZE)
         @url = url
-        @arguments = arguments
+        @options = options
         @updates = updates
         @connection = connection
         @batch_size = batch_size
       end
 
       def execute
-        entities = []
-        errors = []
-        batches.each do |batch|
-          sync_arguments = arguments.merge(updates: batch.compact)
+        batches.each_with_object( { entities: [], errors: [] } ) do |batch, results|
+          sync_arguments = options.merge(updates: batch)
           response = connection.patch(url, sync_arguments).body
-          entities += response['entities'] if response['entities']&.is_a?(Array)
-          errors += response['errors'] if response['errors']&.is_a?(Array)
+          results[:entities] += response['entities'] if response['entities']&.is_a?(Array)
+          results[:errors] += response['errors'] if response['errors']&.is_a?(Array)
         end
-
-        { entities: entities, errors: errors }
       end
 
       private
 
-      attr_reader :url, :arguments, :updates, :connection, :batch_size
+      attr_reader :url, :options, :updates, :connection, :batch_size
 
       def batches
         updates.in_groups_of(batch_size, false)
