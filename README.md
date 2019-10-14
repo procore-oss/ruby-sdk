@@ -19,6 +19,7 @@
   - [File Store](#file-store)
   - [Memory Store](#memory-store)
 - [Full Example](#full-example)
+- [Contributing](#contributing)
 
 ## Installation
 
@@ -454,6 +455,27 @@ class ProjectsController
   end
 end
 ```
+## Contributing
+
+To contribute to the gem, please clone the repo and cut a new branch. In the PR update the changelog with a short explanation of what you've changed, and your name under the "Unreleased" section. Example changelog update:
+
+```markdown
+## Unreleased
+
+* Short sentence of what has changed
+
+    *Your Name*
+```
+
+Please **do not** bump the gem version in your PR. This will be done in a follow up PR by the gem maintainers.
+
+### Tests
+
+To run the specs run the following command:
+```bash
+$ bundle exec rake test
+```
+
 
 ## License
 

@@ -1,11 +1,17 @@
-## Unreleased
-
-## 0.8.8 (October 11, 2019)
+## 0.8.8 (October 14, 2019)
 
 * Add `BatchSync` service class to handle syncing large volumes of data
 
   *Phu Phan*
   
+* Addition of contribution guidelines to README
+
+  *Megan O'Neill*
+
+* Fix TravisCI failures
+
+  *Patrick Koperwas*
+
 ## 0.8.7 (April 18, 2019)
 
 * Add api_version to allow calls to procore rest endpoints
