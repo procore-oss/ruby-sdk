@@ -48,7 +48,7 @@ module Procore
 
     # @param path [String] URL path
     # @param body [Hash] Body parameters to send with the request
-    # @param options [Hash} Extra request options
+    # @param options [Hash] Extra request options
     # @option options [String] :idempotency_token | :company_id
     #
     # @example Usage
@@ -82,7 +82,7 @@ module Procore
 
     # @param path [String] URL path
     # @param body [Hash] Body parameters to send with the request
-    # @param options [Hash} Extra request options
+    # @param options [Hash] Extra request options
     # @option options [String] :idempotency_token | :company_id
     #
     # @example Usage
@@ -112,7 +112,7 @@ module Procore
 
     # @param path [String] URL path
     # @param body [Hash] Body parameters to send with the request
-    # @param options [Hash} Extra request options
+    # @param options [Hash] Extra request options
     # @option options [String] :idempotency_token | :company_id
     #
     # @example Usage
@@ -146,7 +146,7 @@ module Procore
 
     # @param path [String] URL path
     # @param body [Hash] Body parameters to send with the request
-    # @param options [Hash} Extra request options
+    # @param options [Hash] Extra request options
     # @option options [String | Integer] :company_id | :batch_size
     #
     # @example Usage
