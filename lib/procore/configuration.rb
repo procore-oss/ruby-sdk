@@ -77,7 +77,20 @@ module Procore
     # @return [String]
     attr_accessor :user_agent
 
+    # @!attribute [rw] default_batch_size
+    # @note defaults to Defaults::BATCH_SIZE
+    #
+    # When using #sync action, sets the default batch size to use for chunking
+    # up a request body. Example, if the size is set to 500 and 2,000 updates
+    # are desired, 4 requests will be made.
+    #
+    # Note: The maximum size is 1,000
+    #
+    # @return [Integer]
+    attr_accessor :default_batch_size
+
     def initialize
+      @default_batch_size = Procore::Defaults::BATCH_SIZE
       @host = Procore::Defaults::API_ENDPOINT
       @logger = nil
       @max_retries = 1

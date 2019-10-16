@@ -145,6 +145,72 @@ module Procore
     end
 
     # @param path [String] URL path
+    # @param body [Hash] Body parameters to send with the request
+    # @param options [Hash} Extra request options
+    # @option options [String | Integer] :company_id | :batch_size
+    #
+    # @example Usage
+    #   client.sync(
+    #     "projects/sync",
+    #     body: {
+    #       updates: [
+    #        { id: 1, name: "Update 1" },
+    #        { id: 2, name: "Update 2" },
+    #        { id: 3, name: "Update 3" },
+    #        ...
+    #        ...
+    #        { id: 5055, name: "Update 5055" },
+    #       ]
+    #     },
+    #     options: { batch_size: 500, company_id: 1 },
+    #   )
+    #
+    # @return [Response]
+    def sync(path, body: {}, options: {})
+      full_path = full_path(path)
+
+      batch_size = options[:batch_size] ||
+        Procore.configuration.default_batch_size
+
+      if batch_size > 1000
+        batch_size = 1000
+      end
+
+      Util.log_info(
+        "API Request Initiated",
+        path: full_path,
+        method: "SYNC",
+        batch_size: batch_size,
+      )
+
+      groups = body[:updates].in_groups_of(batch_size, false)
+
+      responses = groups.map do |group|
+        batched_body = body.merge(updates: group)
+        with_response_handling(request_body: batched_body) do
+          RestClient::Request.execute(
+            method: :patch,
+            url: full_path,
+            payload: payload(batched_body),
+            headers: headers(options),
+            timeout: Procore.configuration.timeout,
+          )
+        end
+      end
+
+      Procore::Response.new(
+        body: responses.reduce({}) do |combined, response|
+          combined.deep_merge(response.body) { |_, v1, v2| v1 + v2 }
+        end.to_json,
+        headers: responses.map(&:headers).inject({}, &:deep_merge),
+        code: 200,
+        request: responses.last&.request,
+        request_body: body,
+        api_version: api_version,
+      )
+    end
+
+    # @param path [String] URL path
     # @param query [Hash] Query options to pass along with the request
     # @option options [String] :company_id
     #

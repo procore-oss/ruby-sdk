@@ -10,6 +10,7 @@
 - [Pagination](#pagination)
   - [Navigating Through Paginated Results](#navigating-through-paginated-results)
   - [Change Number of Results](#change-number-of-results)
+- [Sync Actions](#sync-actions)
 - [Configuration](#configuration)
 - [Stores](#stores)
   - [Session Store](#session-store)
@@ -40,8 +41,8 @@ Stores automatically manage tokens for you - refreshing, revoking and storage
 are abstracted away to make your code as simple as possible. There are several
 different [types of stores](#stores) available to you.
 
-The Client class exposes `#get`, `#post`, `#put`, `#patch` and `#delete` methods
-to you.
+The Client class exposes `#get`, `#post`, `#put`, `#patch`, '#sync' and
+`#delete` methods to you.
 
 ```ruby
 get(path, query: {})
@@ -49,6 +50,7 @@ post(path, body: {}, options: {})
 put(path, body: {}, options: {})
 patch(path, body: {}, options: {})
 delete(path, query: {})
+sync(path, body: {}, options: {})
 ```
 
 All paths are relative - the gem will handle expanding `client.get("me")` to
@@ -260,6 +262,49 @@ puts first_page.pagination
 Notice that because `per_page` has been set to 250, there are only two pages of
 results (500 resources / 250 page size = 2 pages).
 
+## Sync Actions
+The Sync action enables batch creation or updates to resources using a single
+call. When using a Sync action, the resources to be created or updated can be
+specified by supplying either an `id` or an `origin_id` in the request body.
+Utilizing the `origin_id` attribute for batch operations is often preferable as
+it allows you to easily link to external systems by maintaining your own list of
+unique resource identifiers outside of Procore.
+
+The caller provides an array of hashes, each hash containing the attributes for
+a single resource. The attribute names in each hash match those used by the
+Create and Update actions for the resource. Attributes for a maximum of 1000
+resources within a collection may be passed with each call. The API will always
+return an HTTP status of 200.
+
+The response body contains two attributes - `entities` and `errors`. The
+attributes for each successfully created or updated resource will appear in the
+entities list. The attributes for each resource will match those returned by the
+Show action. For each resource which could not be created or updated, the
+attributes supplied by the caller are present in the errors list, along with an
+additional errors attribute which provides reasons for the failure.
+
+[Continue reading
+here.](https://developers.procore.com/documentation/using-sync-actions)
+
+Example Usage:
+
+```ruby
+client.sync(
+ "projects/sync",
+ body: {
+   updates: [
+    { id: 1, name: "Update 1" },
+    { id: 2, name: "Update 2" },
+    { id: 3, name: "Update 3" },
+    ...
+    ...
+    { id: 5055, name: "Update 5055" },
+   ]
+ },
+ options: { batch_size: 500, company_id: 1 },
+)
+```
+
 ## Configuration
 
 The Procore Gem exposes a configuration with several options.
@@ -273,6 +318,11 @@ Procore.configure do |config|
   # staging or test environment you may want to point this at a sandbox
   # instead of production.
   config.host = ENV.fetch("PROCORE_BASE_API_PATH", "https://app.procore.com")
+
+  # When using #sync action, sets the default batch size to use for chunking
+  # up a request body. Example: if the size is set to 500, and 2,000 updates
+  # are desired, 4 requests will be made. Note, the maximum size is 1000.
+  config.default_batch_size = 500
 
   # Integer: Number of times to retry a failed API call. Reasons an API call
   # could potentially fail:

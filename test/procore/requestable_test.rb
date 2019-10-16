@@ -148,6 +148,54 @@ class Procore::RequestableTest < Minitest::Test
     assert_requested request
   end
 
+  def test_sync
+    update1 = [{ id: 4, name: "Updated Project 4" }]
+    request1 = stub_request(:patch, "http://test.com/vapid/projects/sync")
+      .with(body: { company_id: 13, updates: update1 })
+      .to_return(
+        status: 200,
+        body: {
+          entities: [{ id: 4, name: "Updated Project 4" }],
+          errors: [],
+        }.to_json,
+        headers: {},
+      )
+
+    update2 = [{ id: 0, name: "Updated Project 0" }]
+    request2 = stub_request(:patch, "http://test.com/vapid/projects/sync")
+      .with(body: { company_id: 13, updates: update2 }).to_return(
+        status: 200,
+        body: {
+          entities: [],
+          errors: [{
+            id: 0,
+            name: "No project has this id value",
+            errors: { id: ["Entity with this ID not found"] },
+          }],
+        }.to_json,
+        headers: {},
+      )
+
+    response = Request.new(token: "token").sync(
+      "projects/sync",
+      body: { company_id: 13, updates: update1 + update2 },
+      options: { batch_size: 1 },
+    )
+
+    assert_requested request1
+    assert_requested request2
+
+    expected_body = {
+      entities: [{ id: 4, name: "Updated Project 4" }],
+      errors: [{
+        id: 0,
+        name: "No project has this id value",
+        errors: { id: ["Entity with this ID not found"] },
+      }],
+    }
+    assert response.body, expected_body
+  end
+
   def test_post_with_idempotency_token
     request = stub_request(:post, "http://test.com/vapid/home")
       .with(

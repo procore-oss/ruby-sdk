@@ -1,5 +1,9 @@
 ## Unreleased
 
+* Expose #sync, a method that enables calling sync-actions
+
+  *Patrick Koperwas*
+
 * Addition of contribution guidelines to README
 
   *Megan O'Neill*
