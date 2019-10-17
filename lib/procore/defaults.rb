@@ -9,6 +9,9 @@ module Procore
     # Default User Agent header string
     USER_AGENT = "Procore Ruby Gem #{Procore::VERSION}".freeze
 
+    # Default size to use for batch requests
+    BATCH_SIZE = 500
+
     def self.client_options
       {
         host: Procore.configuration.host,
