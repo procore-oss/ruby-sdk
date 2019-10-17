@@ -1,5 +1,7 @@
 ## Unreleased
 
+## 0.8.8 (October 17, 2019)
+
 * Expose #sync, a method that enables calling sync-actions
 
   *Patrick Koperwas*
