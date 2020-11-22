@@ -53,8 +53,13 @@ delete(path, query: {})
 sync(path, body: {}, options: {})
 ```
 
-All paths are relative - the gem will handle expanding `client.get("me")` to
-`https://app.procore.com/vapid/me`.
+All paths are relative, the gem will handle expanding them. An API version may be specified in the path, or the latest major version of Rest is used by default (currently v1.0).
+
+| Example | Requested URL |
+| --- | --- |
+| `client.get("me")` | `https://app.procore.com/rest/v1.0/me` |
+| `client.get("rest/v1.1/me")` | `https://app.procore.com/rest/v1.1/me` |
+| `client.get("vapid/me")` | `https://app.procore.com/vapid/me` |
 
 Example Usage:
 
