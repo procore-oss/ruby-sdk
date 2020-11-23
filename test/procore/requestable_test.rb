@@ -39,6 +39,19 @@ class Procore::RequestableTest < Minitest::Test
     assert_requested request
   end
 
+  def test_rest_get
+    request = stub_request(:get, "http://test.com/rest/v1.1/home")
+      .with(
+        query: { per_page: 5 },
+        headers: headers
+      )
+      .to_return(status: 200, body: "", headers: {})
+
+    Request.new(token: "token").get("rest/v1.1/home", query: { per_page: 5 })
+
+    assert_requested request
+  end
+
   def test_vapid_get
     request = stub_request(:get, "http://test.com/vapid/home")
       .with(
@@ -56,15 +69,24 @@ class Procore::RequestableTest < Minitest::Test
     request = stub_request(:post, "http://test.com/rest/v1.0/home")
       .with(
         body: { name: "Name" },
-        headers: {
-          "Accepts" => "application/json",
-          "Authorization" => "Bearer token",
-          "Content-Type" => "application/json",
-        },
+        headers: headers
       )
       .to_return(status: 200, body: "", headers: {})
 
     Request.new(token: "token").post("home", body: { name: "Name" })
+
+    assert_requested request
+  end
+
+  def test_rest_post
+    request = stub_request(:post, "http://test.com/rest/v1.1/home")
+      .with(
+        body: { name: "Name" },
+        headers: headers
+      )
+      .to_return(status: 200, body: "", headers: {})
+
+    Request.new(token: "token").post("rest/v1.1/home", body: { name: "Name" })
 
     assert_requested request
   end
@@ -94,6 +116,20 @@ class Procore::RequestableTest < Minitest::Test
 
     assert_requested request
   end
+
+  def test_rest_put
+    request = stub_request(:put, "http://test.com/rest/v1.1/home")
+      .with(
+        body: { name: "Replaced Name" },
+        headers: headers
+      )
+      .to_return(status: 200, body: "", headers: {})
+
+    Request.new(token: "token").put("rest/v1.1/home", body: { name: "Replaced Name" })
+
+    assert_requested request
+  end
+
 
   def test_vapid_put
     request = stub_request(:put, "http://test.com/vapid/home")
