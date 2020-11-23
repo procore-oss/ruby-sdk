@@ -362,7 +362,6 @@ module Procore
     end
 
     def full_path(path)
-      # require 'pry'; binding.pry
       if path.match?(/(vapid|rest)/)
         File.join(base_api_path, path)
       else
