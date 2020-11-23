@@ -4,14 +4,17 @@ class Procore::RequestableTest < Minitest::Test
   class Request
     include Procore::Requestable
 
-    attr_reader :access_token, :api_version
-    def initialize(token:, api_version: 'vapid')
+    attr_reader :access_token
+    def initialize(token:)
       @access_token = token
-      @api_version = api_version
+    end
+
+    def base_api_path
+      "http://test.com"
     end
 
     def base_api_default_path
-      "http://test.com/#{@api_version}"
+      "#{base_api_path}/vapid"
     end
   end
 
@@ -44,7 +47,7 @@ class Procore::RequestableTest < Minitest::Test
       )
       .to_return(status: 200, body: "", headers: {})
 
-    Request.new(token: "token", api_version: 'rest').get("home", query: { per_page: 5 })
+    Request.new(token: "token").get("rest/home", query: { per_page: 5 })
 
     assert_requested request
   end
@@ -78,7 +81,7 @@ class Procore::RequestableTest < Minitest::Test
       )
       .to_return(status: 200, body: "", headers: {})
 
-    Request.new(token: "token", api_version: 'rest').post("home", body: { name: "Name" })
+    Request.new(token: "token").post("rest/home", body: { name: "Name" })
 
     assert_requested request
   end
@@ -112,7 +115,7 @@ class Procore::RequestableTest < Minitest::Test
       )
       .to_return(status: 200, body: "", headers: {})
 
-    Request.new(token: "token", api_version: 'rest').put("home", body: { name: "Replaced Name" })
+    Request.new(token: "token").put("rest/home", body: { name: "Replaced Name" })
 
     assert_requested request
   end
