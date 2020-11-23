@@ -206,7 +206,6 @@ module Procore
         code: 200,
         request: responses.last&.request,
         request_body: body,
-        api_version: api_version,
       )
     end
 
@@ -270,7 +269,6 @@ module Procore
         code: result.code,
         request: result.request,
         request_body: request_body,
-        api_version: api_version
       )
 
       case result.code
@@ -364,7 +362,12 @@ module Procore
     end
 
     def full_path(path)
-      File.join(base_api_path, path).to_s
+      # require 'pry'; binding.pry
+      if path.match?(/(vapid|rest)/)
+        File.join(base_api_path, path)
+      else
+        File.join(base_api_default_path, path)
+      end.to_s
     end
   end
 end

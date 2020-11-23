@@ -10,7 +10,7 @@ class Procore::RequestableTest < Minitest::Test
       @api_version = api_version
     end
 
-    def base_api_path
+    def base_api_default_path
       "http://test.com/#{@api_version}"
     end
   end
