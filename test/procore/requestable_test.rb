@@ -18,15 +18,19 @@ class Procore::RequestableTest < Minitest::Test
     end
   end
 
+  def headers
+    {
+      "Accepts" => "application/json",
+      "Authorization" => "Bearer token",
+      "Content-Type" => "application/json",
+    }
+  end
+
   def test_get
     request = stub_request(:get, "http://test.com/rest/v1.0/home")
       .with(
         query: { per_page: 5 },
-        headers: {
-          "Accepts" => "application/json",
-          "Authorization" => "Bearer token",
-          "Content-Type" => "application/json",
-        },
+        headers: headers
       )
       .to_return(status: 200, body: "", headers: {})
 
@@ -39,11 +43,7 @@ class Procore::RequestableTest < Minitest::Test
     request = stub_request(:get, "http://test.com/vapid/home")
       .with(
         query: { per_page: 5 },
-        headers: {
-          "Accepts" => "application/json",
-          "Authorization" => "Bearer token",
-          "Content-Type" => "application/json",
-        },
+        headers: headers
       )
       .to_return(status: 200, body: "", headers: {})
 
@@ -73,11 +73,7 @@ class Procore::RequestableTest < Minitest::Test
     request = stub_request(:post, "http://test.com/vapid/home")
       .with(
         body: { name: "Name" },
-        headers: {
-          "Accepts" => "application/json",
-          "Authorization" => "Bearer token",
-          "Content-Type" => "application/json",
-        },
+        headers: headers
       )
       .to_return(status: 200, body: "", headers: {})
 
@@ -90,11 +86,7 @@ class Procore::RequestableTest < Minitest::Test
     request = stub_request(:put, "http://test.com/rest/v1.0/home")
       .with(
         body: { name: "Replaced Name" },
-        headers: {
-          "Accepts" => "application/json",
-          "Authorization" => "Bearer token",
-          "Content-Type" => "application/json",
-        },
+        headers: headers
       )
       .to_return(status: 200, body: "", headers: {})
 
@@ -107,11 +99,7 @@ class Procore::RequestableTest < Minitest::Test
     request = stub_request(:put, "http://test.com/vapid/home")
       .with(
         body: { name: "Replaced Name" },
-        headers: {
-          "Accepts" => "application/json",
-          "Authorization" => "Bearer token",
-          "Content-Type" => "application/json",
-        },
+        headers: headers
       )
       .to_return(status: 200, body: "", headers: {})
 
@@ -124,11 +112,7 @@ class Procore::RequestableTest < Minitest::Test
     request = stub_request(:patch, "http://test.com/rest/v1.0/home")
       .with(
         body: { name: "New Name" },
-        headers: {
-          "Accepts" => "application/json",
-          "Authorization" => "Bearer token",
-          "Content-Type" => "application/json",
-        },
+        headers: headers
       )
       .to_return(status: 200, body: "", headers: {})
 
@@ -139,11 +123,7 @@ class Procore::RequestableTest < Minitest::Test
 
   def test_delete
     request = stub_request(:delete, "http://test.com/rest/v1.0/home")
-      .with(headers: {
-              "Accepts" => "application/json",
-              "Authorization" => "Bearer token",
-              "Content-Type" => "application/json",
-            })
+      .with(headers: headers)
       .to_return(status: 200, body: "", headers: {})
 
     Request.new(token: "token").delete("home")
@@ -202,12 +182,7 @@ class Procore::RequestableTest < Minitest::Test
   def test_post_with_idempotency_token
     request = stub_request(:post, "http://test.com/rest/v1.0/home")
       .with(
-        headers: {
-          "Accepts" => "application/json",
-          "Authorization" => "Bearer token",
-          "Content-Type" => "application/json",
-          "Idempotency-Token" => "token",
-        },
+        headers: headers.merge("Idempotency-Token" => "token"),
       )
       .to_return(status: 200, body: "", headers: {})
 
@@ -223,12 +198,7 @@ class Procore::RequestableTest < Minitest::Test
   def test_get_with_company_id
     request = stub_request(:get, "http://test.com/rest/v1.0/home")
       .with(
-        headers: {
-          "Accepts" => "application/json",
-          "Authorization" => "Bearer token",
-          "Content-Type" => "application/json",
-          "procore-company-id" => "1",
-        },
+        headers: headers.merge("procore-company-id" => "1")
       )
       .to_return(status: 200, body: "", headers: {})
 
@@ -244,12 +214,7 @@ class Procore::RequestableTest < Minitest::Test
     request = stub_request(:post, "http://test.com/rest/v1.0/home")
       .with(
         body: { name: "Name" },
-        headers: {
-          "Accepts" => "application/json",
-          "Authorization" => "Bearer token",
-          "Content-Type" => "application/json",
-          "procore-company-id" => "1",
-        },
+        headers: headers.merge("procore-company-id" => "1"),
       )
       .to_return(status: 200, body: "", headers: {})
 
@@ -265,11 +230,7 @@ class Procore::RequestableTest < Minitest::Test
   def test_post_with_multipart_body
     request = stub_request(:post, "http://test.com/rest/v1.0/home")
       .with(
-        headers: {
-          "Accepts" => "application/json",
-          "Authorization" => "Bearer token",
-          "Content-Type" => %r[multipart/form-data],
-        },
+        headers: headers.merge("Content-Type" => %r[multipart/form-data]),
       )
       .to_return(status: 200, body: "", headers: {})
 
