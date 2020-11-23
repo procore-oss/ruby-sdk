@@ -14,12 +14,12 @@ class Procore::RequestableTest < Minitest::Test
     end
 
     def base_api_default_path
-      "#{base_api_path}/vapid"
+      "#{base_api_path}/rest/v1.0"
     end
   end
 
   def test_get
-    request = stub_request(:get, "http://test.com/vapid/home")
+    request = stub_request(:get, "http://test.com/rest/v1.0/home")
       .with(
         query: { per_page: 5 },
         headers: {
@@ -35,8 +35,8 @@ class Procore::RequestableTest < Minitest::Test
     assert_requested request
   end
 
-  def test_rest_get
-    request = stub_request(:get, "http://test.com/rest/home")
+  def test_vapid_get
+    request = stub_request(:get, "http://test.com/vapid/home")
       .with(
         query: { per_page: 5 },
         headers: {
@@ -47,13 +47,13 @@ class Procore::RequestableTest < Minitest::Test
       )
       .to_return(status: 200, body: "", headers: {})
 
-    Request.new(token: "token").get("rest/home", query: { per_page: 5 })
+    Request.new(token: "token").get("vapid/home", query: { per_page: 5 })
 
     assert_requested request
   end
 
   def test_post
-    request = stub_request(:post, "http://test.com/vapid/home")
+    request = stub_request(:post, "http://test.com/rest/v1.0/home")
       .with(
         body: { name: "Name" },
         headers: {
@@ -69,8 +69,8 @@ class Procore::RequestableTest < Minitest::Test
     assert_requested request
   end
 
-  def test_rest_post
-    request = stub_request(:post, "http://test.com/rest/home")
+  def test_vapid_post
+    request = stub_request(:post, "http://test.com/vapid/home")
       .with(
         body: { name: "Name" },
         headers: {
@@ -81,13 +81,13 @@ class Procore::RequestableTest < Minitest::Test
       )
       .to_return(status: 200, body: "", headers: {})
 
-    Request.new(token: "token").post("rest/home", body: { name: "Name" })
+    Request.new(token: "token").post("vapid/home", body: { name: "Name" })
 
     assert_requested request
   end
 
   def test_put
-    request = stub_request(:put, "http://test.com/vapid/home")
+    request = stub_request(:put, "http://test.com/rest/v1.0/home")
       .with(
         body: { name: "Replaced Name" },
         headers: {
@@ -103,8 +103,8 @@ class Procore::RequestableTest < Minitest::Test
     assert_requested request
   end
 
-  def test_rest_put
-    request = stub_request(:put, "http://test.com/rest/home")
+  def test_vapid_put
+    request = stub_request(:put, "http://test.com/vapid/home")
       .with(
         body: { name: "Replaced Name" },
         headers: {
@@ -115,13 +115,13 @@ class Procore::RequestableTest < Minitest::Test
       )
       .to_return(status: 200, body: "", headers: {})
 
-    Request.new(token: "token").put("rest/home", body: { name: "Replaced Name" })
+    Request.new(token: "token").put("vapid/home", body: { name: "Replaced Name" })
 
     assert_requested request
   end
 
   def test_patch
-    request = stub_request(:patch, "http://test.com/vapid/home")
+    request = stub_request(:patch, "http://test.com/rest/v1.0/home")
       .with(
         body: { name: "New Name" },
         headers: {
@@ -138,7 +138,7 @@ class Procore::RequestableTest < Minitest::Test
   end
 
   def test_delete
-    request = stub_request(:delete, "http://test.com/vapid/home")
+    request = stub_request(:delete, "http://test.com/rest/v1.0/home")
       .with(headers: {
               "Accepts" => "application/json",
               "Authorization" => "Bearer token",
@@ -153,7 +153,7 @@ class Procore::RequestableTest < Minitest::Test
 
   def test_sync
     update1 = [{ id: 4, name: "Updated Project 4" }]
-    request1 = stub_request(:patch, "http://test.com/vapid/projects/sync")
+    request1 = stub_request(:patch, "http://test.com/rest/v1.0/projects/sync")
       .with(body: { company_id: 13, updates: update1 })
       .to_return(
         status: 200,
@@ -165,7 +165,7 @@ class Procore::RequestableTest < Minitest::Test
       )
 
     update2 = [{ id: 0, name: "Updated Project 0" }]
-    request2 = stub_request(:patch, "http://test.com/vapid/projects/sync")
+    request2 = stub_request(:patch, "http://test.com/rest/v1.0/projects/sync")
       .with(body: { company_id: 13, updates: update2 }).to_return(
         status: 200,
         body: {
@@ -200,7 +200,7 @@ class Procore::RequestableTest < Minitest::Test
   end
 
   def test_post_with_idempotency_token
-    request = stub_request(:post, "http://test.com/vapid/home")
+    request = stub_request(:post, "http://test.com/rest/v1.0/home")
       .with(
         headers: {
           "Accepts" => "application/json",
@@ -221,7 +221,7 @@ class Procore::RequestableTest < Minitest::Test
   end
 
   def test_get_with_company_id
-    request = stub_request(:get, "http://test.com/vapid/home")
+    request = stub_request(:get, "http://test.com/rest/v1.0/home")
       .with(
         headers: {
           "Accepts" => "application/json",
@@ -241,7 +241,7 @@ class Procore::RequestableTest < Minitest::Test
   end
 
   def test_post_with_company_id
-    request = stub_request(:post, "http://test.com/vapid/home")
+    request = stub_request(:post, "http://test.com/rest/v1.0/home")
       .with(
         body: { name: "Name" },
         headers: {
@@ -263,7 +263,7 @@ class Procore::RequestableTest < Minitest::Test
   end
 
   def test_post_with_multipart_body
-    request = stub_request(:post, "http://test.com/vapid/home")
+    request = stub_request(:post, "http://test.com/rest/v1.0/home")
       .with(
         headers: {
           "Accepts" => "application/json",
@@ -281,7 +281,7 @@ class Procore::RequestableTest < Minitest::Test
   end
 
   def test_unauthorized_error
-    stub_request(:get, "http://test.com/vapid/")
+    stub_request(:get, "http://test.com/rest/v1.0/")
       .to_return(status: 401, body: "", headers: {})
 
     assert_raises Procore::AuthorizationError do
@@ -290,7 +290,7 @@ class Procore::RequestableTest < Minitest::Test
   end
 
   def test_forbidden_error
-    stub_request(:get, "http://test.com/vapid/")
+    stub_request(:get, "http://test.com/rest/v1.0/")
       .to_return(status: 403, body: "", headers: {})
 
     assert_raises Procore::ForbiddenError do
@@ -299,7 +299,7 @@ class Procore::RequestableTest < Minitest::Test
   end
 
   def test_not_found_error
-    stub_request(:get, "http://test.com/vapid/")
+    stub_request(:get, "http://test.com/rest/v1.0/")
       .to_return(status: 404, body: "", headers: {})
 
     assert_raises Procore::NotFoundError do
@@ -308,7 +308,7 @@ class Procore::RequestableTest < Minitest::Test
   end
 
   def test_server_error
-    stub_request(:get, "http://test.com/vapid/")
+    stub_request(:get, "http://test.com/rest/v1.0/")
       .to_return(status: 500, body: "", headers: {})
 
     assert_raises Procore::ServerError do
@@ -317,7 +317,7 @@ class Procore::RequestableTest < Minitest::Test
   end
 
   def test_error_body
-    stub_request(:get, "http://test.com/vapid/")
+    stub_request(:get, "http://test.com/rest/v1.0/")
       .to_return(
         status: 401,
         body: { errors: "Unauthorized" }.to_json,
