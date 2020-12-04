@@ -1,5 +1,9 @@
 ## Unreleased
 
+* Changes how API versions are handled. Switches default version from Vapid to Rest v1.0.
+
+  *Nate Baer*
+
 ## 0.8.8 (October 17, 2019)
 
 * Expose #sync, a method that enables calling sync-actions

@@ -329,6 +329,10 @@ Procore.configure do |config|
   # are desired, 4 requests will be made. Note, the maximum size is 1000.
   config.default_batch_size = 500
 
+  # The default API version to use if none is specified in the request.
+  # Should be either "v1.0" (recommended) or "vapid" (legacy).
+  config.default_version = "v1.0"
+
   # Integer: Number of times to retry a failed API call. Reasons an API call
   # could potentially fail:
   # 1. Service is briefly down or unreachable
