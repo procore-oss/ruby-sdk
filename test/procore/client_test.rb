@@ -28,6 +28,7 @@ class Procore::ClientTest < Minitest::Test
       store: store,
       options: {
         host: "https://example.com",
+        default_version: "v1.0",
         user_agent: "Procore Test Suite",
       },
     )
@@ -51,6 +52,9 @@ class Procore::ClientTest < Minitest::Test
       client_id: "client_id",
       client_secret: "client secret",
       store: store,
+      options: {
+        default_version: "v1.0",
+      },
     )
 
     client.get("me")
@@ -69,6 +73,9 @@ class Procore::ClientTest < Minitest::Test
       client_id: "client_id",
       client_secret: "client secret",
       store: store,
+      options: {
+        default_version: "v1.0",
+      },
     )
 
     assert_raises(Procore::MissingTokenError) do

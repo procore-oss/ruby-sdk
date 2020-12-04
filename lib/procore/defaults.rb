@@ -16,6 +16,7 @@ module Procore
       {
         host: Procore.configuration.host,
         user_agent: Procore.configuration.user_agent,
+        default_version: Procore.configuration.default_version,
       }
     end
   end

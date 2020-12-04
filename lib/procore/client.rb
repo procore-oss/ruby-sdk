@@ -44,10 +44,6 @@ module Procore
       "#{options[:host]}"
     end
 
-    def base_api_default_path
-      "#{options[:host]}/rest/v1.0"
-    end
-
     # @raise [OAuthError] if the store does not have a token stored in it prior
     #   to making a request.
     # @raise [OAuthError] if a token cannot be refreshed.

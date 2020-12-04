@@ -1,6 +1,6 @@
 ## Unreleased
 
-* Changes how API versions are handled. Switches default version from Vapid to Rest v1.0.
+* Changes how API versioning is handled, and requires configuring a default version.
 
   *Nate Baer*
 

@@ -5,6 +5,7 @@ class Procore::RequestableTest < Minitest::Test
     include Procore::Requestable
 
     attr_reader :access_token
+
     def initialize(token:)
       @access_token = token
     end
@@ -13,8 +14,10 @@ class Procore::RequestableTest < Minitest::Test
       "http://test.com"
     end
 
-    def base_api_default_path
-      "#{base_api_path}/rest/v1.0"
+    def options
+      {
+        default_version: "v1.0",
+      }
     end
   end
 
@@ -47,7 +50,7 @@ class Procore::RequestableTest < Minitest::Test
       )
       .to_return(status: 200, body: "", headers: {})
 
-    Request.new(token: "token").get("rest/v1.1/home", query: { per_page: 5 })
+    Request.new(token: "token").get("home", version: "v1.1", query: { per_page: 5 })
 
     assert_requested request
   end
@@ -60,7 +63,7 @@ class Procore::RequestableTest < Minitest::Test
       )
       .to_return(status: 200, body: "", headers: {})
 
-    Request.new(token: "token").get("vapid/home", query: { per_page: 5 })
+    Request.new(token: "token").get("home", version: "vapid", query: { per_page: 5 })
 
     assert_requested request
   end
@@ -86,7 +89,7 @@ class Procore::RequestableTest < Minitest::Test
       )
       .to_return(status: 200, body: "", headers: {})
 
-    Request.new(token: "token").post("rest/v1.1/home", body: { name: "Name" })
+    Request.new(token: "token").post("home", version: "v1.1", body: { name: "Name" })
 
     assert_requested request
   end
@@ -99,7 +102,7 @@ class Procore::RequestableTest < Minitest::Test
       )
       .to_return(status: 200, body: "", headers: {})
 
-    Request.new(token: "token").post("vapid/home", body: { name: "Name" })
+    Request.new(token: "token").post("home", version: "vapid", body: { name: "Name" })
 
     assert_requested request
   end
@@ -125,7 +128,7 @@ class Procore::RequestableTest < Minitest::Test
       )
       .to_return(status: 200, body: "", headers: {})
 
-    Request.new(token: "token").put("rest/v1.1/home", body: { name: "Replaced Name" })
+    Request.new(token: "token").put("home", version: "v1.1", body: { name: "Replaced Name" })
 
     assert_requested request
   end
@@ -139,7 +142,7 @@ class Procore::RequestableTest < Minitest::Test
       )
       .to_return(status: 200, body: "", headers: {})
 
-    Request.new(token: "token").put("vapid/home", body: { name: "Replaced Name" })
+    Request.new(token: "token").put("home", version: "vapid", body: { name: "Replaced Name" })
 
     assert_requested request
   end
