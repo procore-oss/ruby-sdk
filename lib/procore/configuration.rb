@@ -11,6 +11,10 @@ module Procore
   #   end
   def self.configure
     yield(configuration)
+    
+    if configuration.default_version.nil?
+      raise ArgumentError.new "default_version must be configured for the Procore API"
+    end
   end
 
   # The current configuration for the gem.
