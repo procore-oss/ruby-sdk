@@ -365,7 +365,7 @@ module Procore
       version ||= options[:default_version]
       if version == "vapid"
         File.join(base_api_path, "/vapid", path)
-      elsif /^v\d+\.\d+$/.match?(version)
+      elsif /\Av\d+\.\d+\z/.match?(version)
         File.join(base_api_path, "/rest/#{version}", path)
       else
         raise ArgumentError.new "'#{version}' is an invalid Procore API version"
