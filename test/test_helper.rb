@@ -8,4 +8,5 @@ require "procore"
 
 Procore.configure do |config|
   config.host = "https://procore.example.com"
+  config.default_version = "v1.0"
 end
