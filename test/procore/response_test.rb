@@ -27,11 +27,13 @@ class Procore::Response::BodyTest < Minitest::Test
     assert_equal(response_body, response.body)
   end
 
-  def test_response_pagination_parsing
-    links = '<http://localhost:3000/vapid/projects?page=1>; rel="first", '\
-      '<http://localhost:3000/vapid/projects?page=173>; rel="last", '\
-      '<http://localhost:3000/vapid/projects?page=6>; rel="next", '\
-      '<http://localhost:3000/vapid/projects?page=4>; rel="prev"'
+  def shared_response_pagination_parsing_test(base_path)
+    links = %W(
+      <#{base_path}/projects?page=1>; rel="first",
+      <#{base_path}/projects?page=173>; rel="last",
+      <#{base_path}/projects?page=6>; rel="next",
+      '#{base_path}/projects?page=4>; rel="prev"
+    ).join(" ")
 
     response = Procore::Response.new(
       body: [{ key: "value" }].to_json,
@@ -52,9 +54,19 @@ class Procore::Response::BodyTest < Minitest::Test
     )
   end
 
-  def test_response_pagination_parsing_on_first_page
-    links = '<http://localhost:3000/vapid/projects?page=173>; rel="last", '\
-      '<http://localhost:3000/vapid/projects?page=6>; rel="next"'
+  def test_rest_response_pagination_parsing
+    shared_response_pagination_parsing_test("http://localhost:3000/rest/v1.0")
+  end
+
+  def test_vapid_response_pagination_parsing
+      shared_response_pagination_parsing_test("http://localhost:3000/vapid")
+  end
+
+  def shared_response_pagination_parsing_on_first_page(base_path)
+    links = %W(
+      <#{base_path}/projects?page=173>; rel="last",
+      <#{base_path}/projects?page=6>; rel="next"
+    ).join(" ")
 
     response = Procore::Response.new(
       body: [{ key: "value" }].to_json,
@@ -71,6 +83,14 @@ class Procore::Response::BodyTest < Minitest::Test
       },
       response.pagination,
     )
+  end
+
+  def test_vapid_response_pagination_parsing_on_first_page
+    shared_response_pagination_parsing_on_first_page("http://localhost:3000/vapid")
+  end
+
+  def test_rest_response_pagination_parsing_on_first_page
+    shared_response_pagination_parsing_on_first_page("http://localhost:3000/rest/v1.0")
   end
 
   def test_response_pagination_no_links
