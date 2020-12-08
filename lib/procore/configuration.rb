@@ -37,7 +37,7 @@ module Procore
     attr_accessor :host
 
     # @!attribute [rw] default_version
-    # @note defaults to Defaults::API_ENDPOINT
+    # @note required attribute
     #
     # The default API version to use if none is specified in the request.
     # Should be either "v1.0" (recommended) or "vapid" (legacy).
