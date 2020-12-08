@@ -19,6 +19,7 @@ module Procore
       RestClient::ServerBrokeConnection,
     ].freeze
     # @param path [String] URL path
+    # @param version [String] API version
     # @param query [Hash] Query options to pass along with the request
     # @option options [Hash] :company_id
     #
@@ -47,6 +48,7 @@ module Procore
     end
 
     # @param path [String] URL path
+    # @param version [String] API version
     # @param body [Hash] Body parameters to send with the request
     # @param options [Hash] Extra request options
     # @option options [String] :idempotency_token | :company_id
@@ -81,6 +83,7 @@ module Procore
     end
 
     # @param path [String] URL path
+    # @param version [String] API version
     # @param body [Hash] Body parameters to send with the request
     # @param options [Hash] Extra request options
     # @option options [String] :idempotency_token | :company_id
@@ -111,6 +114,7 @@ module Procore
     end
 
     # @param path [String] URL path
+    # @param version [String] API version
     # @param body [Hash] Body parameters to send with the request
     # @param options [Hash] Extra request options
     # @option options [String] :idempotency_token | :company_id
@@ -145,6 +149,7 @@ module Procore
     end
 
     # @param path [String] URL path
+    # @param version [String] API version
     # @param body [Hash] Body parameters to send with the request
     # @param options [Hash] Extra request options
     # @option options [String | Integer] :company_id | :batch_size
@@ -210,6 +215,7 @@ module Procore
     end
 
     # @param path [String] URL path
+    # @param version [String] API version
     # @param query [Hash] Query options to pass along with the request
     # @option options [String] :company_id
     #
