@@ -41,16 +41,16 @@ Stores automatically manage tokens for you - refreshing, revoking and storage
 are abstracted away to make your code as simple as possible. There are several
 different [types of stores](#stores) available to you.
 
-The Client class exposes `#get`, `#post`, `#put`, `#patch`, '#sync' and
+The Client class exposes `#get`, `#post`, `#put`, `#patch`, `#sync` and
 `#delete` methods to you.
 
 ```ruby
-get(path, query: {})
-post(path, body: {}, options: {})
-put(path, body: {}, options: {})
-patch(path, body: {}, options: {})
-delete(path, query: {})
-sync(path, body: {}, options: {})
+   get(path, version: "", query: {})
+  post(path, version: "", body: {}, options: {})
+   put(path, version: "", body: {}, options: {})
+ patch(path, version: "", body: {}, options: {})
+delete(path, version: "", query: {})
+  sync(path, version: "", body: {}, options: {})
 ```
 
 All paths are relative, the gem will handle expanding them. An API version may
@@ -70,7 +70,10 @@ store = Procore::Auth::Stores::Session.new(session: session)
 client = Procore::Client.new(
   client_id: "client id",
   client_secret: "client secret",
-  store: store
+  store: store,
+  options {
+    default_version: "v1.0",
+  }
 )
 
 # Get the current user's companies
