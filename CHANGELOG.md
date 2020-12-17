@@ -1,6 +1,6 @@
 ## Unreleased
 
-* Changes how API versioning is handled, and requires configuring a default version.
+* Adds support for API versioning
 
   *Nate Baer*
 
