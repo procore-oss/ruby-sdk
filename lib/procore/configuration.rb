@@ -11,10 +11,6 @@ module Procore
   #   end
   def self.configure
     yield(configuration)
-    
-    if configuration.default_version.nil?
-      raise ArgumentError.new "default_version must be configured for the Procore API"
-    end
   end
 
   # The current configuration for the gem.
@@ -37,7 +33,7 @@ module Procore
     attr_accessor :host
 
     # @!attribute [rw] default_version
-    # @note required attribute
+    # @note defaults to Defaults::DEFAULT_VERSION
     #
     # The default API version to use if none is specified in the request.
     # Should be either "v1.0" (recommended) or "vapid" (legacy).
@@ -109,6 +105,7 @@ module Procore
       @max_retries = 1
       @timeout = 1.0
       @user_agent = Procore::Defaults::USER_AGENT
+      @default_version = Procore::Defaults::DEFAULT_VERSION
     end
   end
 end

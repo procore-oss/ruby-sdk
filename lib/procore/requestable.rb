@@ -373,10 +373,8 @@ module Procore
         File.join(base_api_path, "vapid", path)
       elsif /\Av\d+\.\d+\z/.match?(version)
         File.join(base_api_path, "rest", version, path)
-      elsif version.present?
-        raise ArgumentError.new "'#{version}' is an invalid Procore API version"
       else
-        raise ArgumentError.new "A Procore API version was not specified"
+        raise ArgumentError.new "'#{version}' is an invalid Procore API version"
       end
     end
   end

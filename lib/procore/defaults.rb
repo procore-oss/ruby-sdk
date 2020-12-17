@@ -12,6 +12,9 @@ module Procore
     # Default size to use for batch requests
     BATCH_SIZE = 500
 
+    # Default API version to use
+    DEFAULT_VERSION = "v1.0"
+
     def self.client_options
       {
         host: Procore.configuration.host,

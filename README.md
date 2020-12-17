@@ -82,6 +82,7 @@ companies.first[:name] #=> "Procore Company 1"
 To use Procore's older API Vapid by default, the default version can be set in
 either the Gem's [configuration](https://github.com/procore/ruby-sdk#configuration)
 or the client's `options` hash:
+
 ```ruby
 client = Procore::Client.new(
   ...
@@ -90,7 +91,6 @@ client = Procore::Client.new(
   }
 )
 ```
-
 
 ## Usage
 
