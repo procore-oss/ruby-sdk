@@ -54,8 +54,8 @@ delete(path, version: "", query: {})
 ```
 
 All paths are relative, the gem will handle expanding them. An API version may
-be specified in the `version:` argument, or the default version from the
-configuration is used.
+be specified in the `version:` argument, or the default version is used. The
+default version is `v1.0` unless otherwise configured.
 
 | Example | Requested URL |
 | --- | --- |
@@ -71,9 +71,6 @@ client = Procore::Client.new(
   client_id: "client id",
   client_secret: "client secret",
   store: store,
-  options {
-    default_version: "v1.0",
-  }
 )
 
 # Get the current user's companies
@@ -81,6 +78,19 @@ companies = client.get("companies")
 
 companies.first[:name] #=> "Procore Company 1"
 ```
+
+To use Procore's older API Vapid by default, the default version can be set in
+either the Gem's [configuration](https://github.com/procore/ruby-sdk#configuration)
+or the client's `options` hash:
+```ruby
+client = Procore::Client.new(
+  ...
+  options {
+    default_version: "vapid",
+  }
+)
+```
+
 
 ## Usage
 
