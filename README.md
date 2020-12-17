@@ -70,7 +70,7 @@ store = Procore::Auth::Stores::Session.new(session: session)
 client = Procore::Client.new(
   client_id: "client id",
   client_secret: "client secret",
-  store: store,
+  store: store
 )
 
 # Get the current user's companies
@@ -87,7 +87,7 @@ or the client's `options` hash:
 client = Procore::Client.new(
   ...
   options {
-    default_version: "vapid",
+    default_version: "vapid"
   }
 )
 ```
