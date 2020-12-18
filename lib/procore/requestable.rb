@@ -188,7 +188,7 @@ module Procore
         batch_size: batch_size,
       )
 
-      groups = body[:updates].in_groups_of(batch_size, false)
+      groups = body[:updates].each_slice(batch_size).to_a
 
       responses = groups.map do |group|
         batched_body = body.merge(updates: group)
