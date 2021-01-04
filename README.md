@@ -41,20 +41,27 @@ Stores automatically manage tokens for you - refreshing, revoking and storage
 are abstracted away to make your code as simple as possible. There are several
 different [types of stores](#stores) available to you.
 
-The Client class exposes `#get`, `#post`, `#put`, `#patch`, '#sync' and
+The Client class exposes `#get`, `#post`, `#put`, `#patch`, `#sync` and
 `#delete` methods to you.
 
 ```ruby
-get(path, query: {})
-post(path, body: {}, options: {})
-put(path, body: {}, options: {})
-patch(path, body: {}, options: {})
-delete(path, query: {})
-sync(path, body: {}, options: {})
+   get(path, version: "", query: {})
+  post(path, version: "", body: {}, options: {})
+   put(path, version: "", body: {}, options: {})
+ patch(path, version: "", body: {}, options: {})
+delete(path, version: "", query: {})
+  sync(path, version: "", body: {}, options: {})
 ```
 
-All paths are relative - the gem will handle expanding `client.get("me")` to
-`https://app.procore.com/vapid/me`.
+All paths are relative, the gem will handle expanding them. An API version may
+be specified in the `version:` argument, or the default version is used. The
+default version is `v1.0` unless otherwise configured.
+
+| Example | Requested URL |
+| --- | --- |
+| `client.get("me")` | `https://app.procore.com/rest/v1.0/me` |
+| `client.get("me", version: "v1.1")` | `https://app.procore.com/rest/v1.1/me` |
+| `client.get("me", version: "vapid")` | `https://app.procore.com/vapid/me` |
 
 Example Usage:
 
@@ -70,6 +77,19 @@ client = Procore::Client.new(
 companies = client.get("companies")
 
 companies.first[:name] #=> "Procore Company 1"
+```
+
+To use Procore's older API Vapid by default, the default version can be set in
+either the Gem's [configuration](https://github.com/procore/ruby-sdk#configuration)
+or the client's `options` hash:
+
+```ruby
+client = Procore::Client.new(
+  ...
+  options {
+    default_version: "vapid"
+  }
+)
 ```
 
 ## Usage
@@ -323,6 +343,10 @@ Procore.configure do |config|
   # up a request body. Example: if the size is set to 500, and 2,000 updates
   # are desired, 4 requests will be made. Note, the maximum size is 1000.
   config.default_batch_size = 500
+
+  # The default API version to use if none is specified in the request.
+  # Should be either "v1.0" (recommended) or "vapid" (legacy).
+  config.default_version = "v1.0"
 
   # Integer: Number of times to retry a failed API call. Reasons an API call
   # could potentially fail:

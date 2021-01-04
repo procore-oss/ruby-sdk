@@ -41,11 +41,7 @@ module Procore
     private
 
     def base_api_path
-      "#{options[:host]}/#{api_version}"
-    end
-
-    def api_version
-      options[:api_version] || 'vapid'
+      "#{options[:host]}"
     end
 
     # @raise [OAuthError] if the store does not have a token stored in it prior

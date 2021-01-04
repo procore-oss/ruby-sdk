@@ -32,6 +32,15 @@ module Procore
     # @return [String]
     attr_accessor :host
 
+    # @!attribute [rw] default_version
+    # @note defaults to Defaults::DEFAULT_VERSION
+    #
+    # The default API version to use if none is specified in the request.
+    # Should be either "v1.0" (recommended) or "vapid" (legacy).
+    #
+    # @return [String]
+    attr_accessor :default_version
+
     # @!attribute [rw] logger
     # @note defaults to nil
     #
@@ -96,6 +105,7 @@ module Procore
       @max_retries = 1
       @timeout = 1.0
       @user_agent = Procore::Defaults::USER_AGENT
+      @default_version = Procore::Defaults::DEFAULT_VERSION
     end
   end
 end

@@ -19,6 +19,7 @@ module Procore
       RestClient::ServerBrokeConnection,
     ].freeze
     # @param path [String] URL path
+    # @param version [String] API version
     # @param query [Hash] Query options to pass along with the request
     # @option options [Hash] :company_id
     #
@@ -26,8 +27,8 @@ module Procore
     #   client.get("my_open_items", query: { per_page: 5, filter: {} })
     #
     # @return [Response]
-    def get(path, query: {}, options: {})
-      full_path = full_path(path)
+    def get(path, version: nil, query: {}, options: {})
+      full_path = full_path(path, version)
 
       Util.log_info(
         "API Request Initiated",
@@ -47,6 +48,7 @@ module Procore
     end
 
     # @param path [String] URL path
+    # @param version [String] API version
     # @param body [Hash] Body parameters to send with the request
     # @param options [Hash] Extra request options
     # @option options [String] :idempotency_token | :company_id
@@ -59,8 +61,8 @@ module Procore
     #   )
     #
     # @return [Response]
-    def post(path, body: {}, options: {})
-      full_path = full_path(path)
+    def post(path, version: nil, body: {}, options: {})
+      full_path = full_path(path, version)
 
       Util.log_info(
         "API Request Initiated",
@@ -81,6 +83,7 @@ module Procore
     end
 
     # @param path [String] URL path
+    # @param version [String] API version
     # @param body [Hash] Body parameters to send with the request
     # @param options [Hash] Extra request options
     # @option options [String] :idempotency_token | :company_id
@@ -89,8 +92,8 @@ module Procore
     #   client.put("dashboards/1/users", body: [1,2,3], options: { company_id: 1 })
     #
     # @return [Response]
-    def put(path, body: {}, options: {})
-      full_path = full_path(path)
+    def put(path, version: nil, body: {}, options: {})
+      full_path = full_path(path, version)
 
       Util.log_info(
         "API Request Initiated",
@@ -111,6 +114,7 @@ module Procore
     end
 
     # @param path [String] URL path
+    # @param version [String] API version
     # @param body [Hash] Body parameters to send with the request
     # @param options [Hash] Extra request options
     # @option options [String] :idempotency_token | :company_id
@@ -123,8 +127,8 @@ module Procore
     #   )
     #
     # @return [Response]
-    def patch(path, body: {}, options: {})
-      full_path = full_path(path)
+    def patch(path, version: nil, body: {}, options: {})
+      full_path = full_path(path, version)
 
       Util.log_info(
         "API Request Initiated",
@@ -145,6 +149,7 @@ module Procore
     end
 
     # @param path [String] URL path
+    # @param version [String] API version
     # @param body [Hash] Body parameters to send with the request
     # @param options [Hash] Extra request options
     # @option options [String | Integer] :company_id | :batch_size
@@ -166,8 +171,8 @@ module Procore
     #   )
     #
     # @return [Response]
-    def sync(path, body: {}, options: {})
-      full_path = full_path(path)
+    def sync(path, version: nil, body: {}, options: {})
+      full_path = full_path(path, version)
 
       batch_size = options[:batch_size] ||
         Procore.configuration.default_batch_size
@@ -183,7 +188,7 @@ module Procore
         batch_size: batch_size,
       )
 
-      groups = body[:updates].in_groups_of(batch_size, false)
+      groups = body[:updates].each_slice(batch_size).to_a
 
       responses = groups.map do |group|
         batched_body = body.merge(updates: group)
@@ -206,11 +211,11 @@ module Procore
         code: 200,
         request: responses.last&.request,
         request_body: body,
-        api_version: api_version,
       )
     end
 
     # @param path [String] URL path
+    # @param version [String] API version
     # @param query [Hash] Query options to pass along with the request
     # @option options [String] :company_id
     #
@@ -218,8 +223,8 @@ module Procore
     #   client.delete("users/1", query: {}, options: {})
     #
     # @return [Response]
-    def delete(path, query: {}, options: {})
-      full_path = full_path(path)
+    def delete(path, version: nil, query: {}, options: {})
+      full_path = full_path(path, version)
 
       Util.log_info(
         "API Request Initiated",
@@ -270,7 +275,6 @@ module Procore
         code: result.code,
         request: result.request,
         request_body: request_body,
-        api_version: api_version
       )
 
       case result.code
@@ -363,8 +367,15 @@ module Procore
       RestClient::Payload::has_file?(body)
     end
 
-    def full_path(path)
-      File.join(base_api_path, path).to_s
+    def full_path(path, version)
+      version ||= options[:default_version]
+      if version == "vapid"
+        File.join(base_api_path, "vapid", path)
+      elsif /\Av\d+\.\d+\z/.match?(version)
+        File.join(base_api_path, "rest", version, path)
+      else
+        raise ArgumentError.new "'#{version}' is an invalid Procore API version"
+      end
     end
   end
 end

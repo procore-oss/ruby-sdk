@@ -45,12 +45,11 @@ module Procore
     #   @return [Integer] Status Code returned from Procore API.
     # @!attribute [r] pagination
     #   @return [Hash<Symbol, String>] Pagination URLs
-    attr_reader :headers, :code, :pagination, :request, :request_body, :api_version
+    attr_reader :headers, :code, :pagination, :request, :request_body
 
-    def initialize(body:, headers:, code:, request:, request_body:, api_version: 'vapid')
+    def initialize(body:, headers:, code:, request:, request_body:)
       @code = code
       @headers = headers
-      @api_version = api_version
       @pagination = parse_pagination
       @request = request
       @request_body = request_body
@@ -73,7 +72,7 @@ module Procore
 
     def parse_pagination
       headers[:link].to_s.split(", ").map(&:strip).reduce({}) do |links, link|
-        url, name = link.match(/#{api_version}\/(.*?)>; rel="(\w+)"/).captures
+        url, name = link.match(/(?:vapid|rest\/.*?)\/(.*?)>; rel="(\w+)"/).captures
         links.merge!(name.to_sym => url)
       end
     end

@@ -1,5 +1,9 @@
 ## Unreleased
 
+* Adds support for API versioning
+
+  *Nate Baer*
+
 ## 0.8.8 (October 17, 2019)
 
 * Expose #sync, a method that enables calling sync-actions
