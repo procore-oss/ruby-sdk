@@ -4,7 +4,7 @@
 
 #### Table of Contents
 - [Installation](#installation)
-- [1.0.0 Release](#1.0.0-release)
+- [1.0.0 Release](#100-release)
 - [Making Requests](#making-requests)
 - [Usage](#usage)
 - [Error Handling](#error-handling)

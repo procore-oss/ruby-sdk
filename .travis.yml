@@ -1,30 +1,25 @@
 language: ruby
 rvm:
-  - 2.3
-  - 2.4
-  - 2.5
-  - 2.6
-
+- 2.3
+- 2.4
+- 2.5
+- 2.6
 services:
-  - redis-server
-  - memcached
-
+- redis-server
+- memcached
 before_install:
-  - gem update --system
-  - gem install bundler
-
+- gem update --system
+- gem install bundler
 cache: bundler
-
 script: bundle exec rake
-
 deploy:
   provider: rubygems
   api_key:
-    secure: GYH7nTi2D9ZwbCP+JYSgHceDUvZT9RQSP6yXFndwSyxdiSmB6wfq6EtoH4Wpznd6ALT6IxrtbR4aftTI9DO6HPq+PVO6NdxjkdlbdxxAqRQJBAwFwFATT8jCuuDjGPLf8PF0ouzcMvAIdIgHypwmLdevWdEMomWdRWlm1UFP/0C3RDjY1v04XDrRb+fEagPNnzMDCcO352nyFm06jnCq/ezjCRXBvNtHTZeqd7t9pbNw7gtYebZ3b9hfd4IIa68budeh+URygiPnNNWr6TCjO95IuHIeMDele3tir0KzqVBNsVAqEb7WpB26rf1JgneAoYZwVMFh+hk09cs68EbIELD4MX6/PzEUz2Ws20dIMjs1pcDtlw35ixoEpwC/vz2qVJyMRYXg8af5rpsZkKXRl7QP2LrX+xSEt4LiRnylj4PaRZWu1gvhC7fsCHXEM3mW3WlXFUmb9W4Jv8VooqOJtGhpD9Qs9pYtTOgJoEmYqttbuCaiYKaiPutBY4+t+t2ZmyCopv41nkjv/UCWXfo11ew1qK0rxDJVE2/JYTUDZ+zuHypTf2lHCWjyP65vGwBnmdixLnEMCUOkzKUmqFR4kAE6jRMEhtki4fTlFSIHJGM5oIXeRXDR43NIh7xWNvhl7lHkwWoRA0BfSITtvO8k0SefGnFwhNfOglQ/GKfyAaY=
-  gem: procore
+    secure: LC+5qDeaqBtA8IIDt0yHNYsTA/KEs7IK/hESF2V2f4bhmMapifEVSjikoZVE1lTe0R2+CyO+5mWHloFeTLayTchpZhW3yfduei3l2tktZOH9UCsXIQZKveSZlCMQ+XOn65Gstbd/5krh9+axKZswgM5YgBhjXNRgjL+yOGh2kXN0exk5nBvIBFxSCQdwqGiBDcrtgJ4eWrlPgofXszMFb3ogNQcIuUcKmAOC0j/fNag4qQV0jnp3zHDuOjrsARPJn4w6RMqSLpFVUYpJw3tE94GDW5kILHr7taTPj12PeYNbYjW7kRSgMYbQlIWUKLeyMp+vw3kNqd3Ysat+M+Mrf3z2KRKR5w62IJnCq758uerCdUo5v/vsWHYFcJvZWLrvsPSk+xQWysAqRdkun7ZBCK/FLR75S6Vkm0DBnbqd/yYp6MP9Vbi77gIZpWMXANfdk1aWGVlPNpskYeWyqPjwZX1nYybJQIIpZfX21F2WPrNA9r/cj1KYjb8vKopMEdn9GP9xMeUXXu85K+ZVPqSD/AblrLHyD2x7cES/i4+XcQSaKUOSLxTUqemAiDRBahDCehPOOeLHnu/rUzgQr1gzQL0YcLNgHovmIdstljBys62JC4gy376cNawiSW4ZPMHWg6PewqQ6Ozg4Lkytx06bBwOos55dFgI4k0T4H0/6QiE=
+  gem: ruby-sdk
   on:
     tags: true
     repo: procore/ruby-sdk
-
+  skip_cleanup: 'true'
 notifications:
   email: false
