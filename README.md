@@ -4,6 +4,7 @@
 
 #### Table of Contents
 - [Installation](#installation)
+- [1.0.0 Release](#1.0.0-release)
 - [Making Requests](#making-requests)
 - [Usage](#usage)
 - [Error Handling](#error-handling)
@@ -29,6 +30,11 @@ Add this line to your application's Gemfile:
 ```ruby
 gem "procore"
 ```
+
+## 1.0.0 Release
+
+v1.0.0 was released on January 5, 2021, and adds support the new Rest v1.0 API.
+See the CHANGELOG for upgrade instructions.
 
 ## Making Requests
 

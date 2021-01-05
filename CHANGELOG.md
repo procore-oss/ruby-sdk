@@ -1,8 +1,52 @@
-## Unreleased
+## 1.0.0 (January 5, 2021)
 
 * Adds support for API versioning
 
   *Nate Baer*
+
+### Upgrading
+
+As of v1.0.0, this gem now defaults to making requests against Procore's new
+Rest v1.0 resources, instead of the now deprecated `/vapid` namespace. Example:
+
+```ruby
+# Previously makes a request to
+client.get("me")
+=> app.procore.com/vapid/me
+
+# In 1.0.0
+client.get("me")
+=> app.procore.com/rest/v1.0/me
+```
+
+To keep the legacy behavior, set the new `default_version` configuration option.
+Note, that Rest v1.0 is a superset of the Vapid Api - there are no breaking
+changes. The Vapid API will be decommissioned in December 2021.
+
+[Read more here](https://developers.procore.com/documentation/vapid-deprecation)
+
+```ruby
+Procore.configure do |config|
+  ...
+  # Defaults to "v1.0"
+  config.default_version = "vapid"
+  ...
+end
+```
+
+All the request methods (`get`, `post`, `patch`, `put`, `delete`, `sync`) now
+accept an optional version parameter to specify the version at request time.
+
+```ruby
+client.get("me")
+=> https://app.procore.com/rest/v1.0/me
+
+client.get("me", version: "v1.1")
+=> https://app.procore.com/rest/v1.1/me
+
+client.get("me", version: "vapid")
+=> https://app.procore.com/vapid/me
+```
 
 ## 0.8.8 (October 17, 2019)
 
