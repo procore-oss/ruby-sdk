@@ -38,19 +38,39 @@ module Procore
       @store = store
     end
 
+    # @raise [OAuthError] if a token cannot be refreshed.
+    # @raise [OAuthError] if incorrect credentials have been supplied.
+    def refresh
+      token = fetch_token
+
+      begin
+        new_token = @credentials.refresh(
+          token: token.access_token,
+          refresh: token.refresh_token,
+        )
+
+        Util.log_info("Token Refresh Successful", store: store)
+        store.save(new_token)
+      rescue RuntimeError
+        Util.log_error("Token Refresh Failed", store: store)
+        raise Procore::OAuthError.new(
+          "Unable to refresh the access token. Perhaps the Procore API is "  \
+          "down or the your access token store is misconfigured. Either "    \
+          "way, you should clear the store and prompt the user to sign in "  \
+          "again.",
+        )
+      end
+    end
+
     private
 
     def base_api_path
       "#{options[:host]}"
     end
 
-    # @raise [OAuthError] if the store does not have a token stored in it prior
-    #   to making a request.
-    # @raise [OAuthError] if a token cannot be refreshed.
-    # @raise [OAuthError] if incorrect credentials have been supplied.
-    def access_token
+    # @raise [OAuthError] if the store does not have a token stored.
+    def fetch_token
       token = store.fetch
-
       if token.nil? || token.invalid?
         raise Procore::MissingTokenError.new(
           "Unable to retreive an access token from the store. Double check "   \
@@ -58,28 +78,15 @@ module Procore
           "before attempting to make API requests",
         )
       end
+      token
+    end
 
+    def access_token
+      token = fetch_token
       if token.expired?
         Util.log_info("Token Expired", store: store)
-        begin
-          token = @credentials.refresh(
-            token: token.access_token,
-            refresh: token.refresh_token,
-          )
-
-          Util.log_info("Token Refresh Successful", store: store)
-          store.save(token)
-        rescue RuntimeError
-          Util.log_error("Token Refresh Failed", store: store)
-          raise Procore::OAuthError.new(
-            "Unable to refresh the access token. Perhaps the Procore API is "  \
-            "down or the your access token store is misconfigured. Either "    \
-            "way, you should clear the store and prompt the user to sign in "  \
-            "again.",
-          )
-        end
+        refresh
       end
-
       token.access_token
     end
   end
