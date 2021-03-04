@@ -141,6 +141,12 @@ client = Procore::Client.new(
 client.get("me")
 ```
 
+Expired tokens will automatically be refreshed, but can also be refreshed manually:
+
+```ruby
+client.refresh
+```
+
 ## Error Handling
 
 The Procore Gem raises errors whenever a request returns a non `2xx` response.
