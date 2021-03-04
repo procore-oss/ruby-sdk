@@ -1,4 +1,4 @@
-## 1.1.0 (March 4, 2021)
+## Unreleased
 
 * Allow tokens to be revoked and manually refreshed.
 
