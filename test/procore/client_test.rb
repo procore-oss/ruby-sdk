@@ -82,4 +82,25 @@ class Procore::ClientTest < Minitest::Test
       client.get("me")
     end
   end
+
+  def test_client_token_refresh
+    stub_refresh_token
+
+    user = User.create(
+      access_token: "token",
+      refresh_token: "refresh",
+      expires_at: 2.hours.from_now,
+    )
+
+    store = Procore::Auth::Stores::ActiveRecord.new(object: user)
+    client = Procore::Client.new(
+      client_id: "client id",
+      client_secret: "client secret",
+      store: store,
+    )
+
+    client.refresh
+
+    assert_requested stub_refresh_token
+  end
 end
