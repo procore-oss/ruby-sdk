@@ -62,6 +62,23 @@ module Procore
       end
     end
 
+    def revoke
+      token = fetch_token
+
+      begin
+        @credentials.revoke(token: token)
+        Util.log_info("Token Revocation Successful", store: store)
+      rescue RuntimeError
+        Util.log_error("Token Revocation Failed", store: store)
+        raise Procore::OAuthError.new(
+          "Unable to revoke the access token. Perhaps the Procore API is "  \
+          "down or the your access token store is misconfigured. Either "    \
+          "way, you should clear the store and prompt the user to sign in "  \
+          "again.",
+        )
+      end
+    end
+
     private
 
     def base_api_path

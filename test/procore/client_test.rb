@@ -103,4 +103,25 @@ class Procore::ClientTest < Minitest::Test
 
     assert_requested stub_refresh_token
   end
+
+  def test_client_token_revoke
+    stub_revoke_token
+
+    user = User.create(
+      access_token: "token",
+      refresh_token: "refresh",
+      expires_at: 2.hours.from_now,
+    )
+
+    store = Procore::Auth::Stores::ActiveRecord.new(object: user)
+    client = Procore::Client.new(
+      client_id: "client id",
+      client_secret: "client secret",
+      store: store,
+    )
+
+    client.revoke
+
+    assert_requested stub_revoke_token
+  end
 end

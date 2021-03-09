@@ -22,4 +22,8 @@ module AuthStubs
         headers: { "Content-Type" => "application/json" },
       )
   end
+
+  def stub_revoke_token
+    stub_request(:post, "https://procore.example.com/oauth/revoke").to_return(status: 200)
+  end
 end
