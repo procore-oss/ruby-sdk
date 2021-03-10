@@ -55,7 +55,7 @@ module Procore
         Util.log_error("Token Refresh Failed", store: store)
         raise Procore::OAuthError.new(
           "Unable to refresh the access token. Perhaps the Procore API is "  \
-          "down or the your access token store is misconfigured. Either "    \
+          "down or your access token store is misconfigured. Either "    \
           "way, you should clear the store and prompt the user to sign in "  \
           "again.",
         )
@@ -72,7 +72,7 @@ module Procore
         Util.log_error("Token Revocation Failed", store: store)
         raise Procore::OAuthError.new(
           "Unable to revoke the access token. Perhaps the Procore API is "  \
-          "down or the your access token store is misconfigured. Either "    \
+          "down or your access token store is misconfigured. Either "    \
           "way, you should clear the store and prompt the user to sign in "  \
           "again.",
         )

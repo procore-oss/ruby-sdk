@@ -38,7 +38,7 @@ module Procore
           client_secret: @client_secret,
           token: token.access_token,
         }
-        RestClient.post("#{host}/oauth/revoke", request.to_json)
+        client.request(:post, "/oauth/revoke", body: request)
       rescue RestClient::ExceptionWithResponse
         raise OAuthError.new(e.description, response: e.response)
       end
