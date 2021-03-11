@@ -39,7 +39,6 @@ module Procore
     end
 
     # @raise [OAuthError] if a token cannot be refreshed.
-    # @raise [OAuthError] if incorrect credentials have been supplied.
     def refresh
       token = fetch_token
 
@@ -62,6 +61,7 @@ module Procore
       end
     end
 
+    # @raise [OAuthError] if a token cannot be revoked.
     def revoke
       token = fetch_token
 
