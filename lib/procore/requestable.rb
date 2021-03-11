@@ -374,7 +374,7 @@ module Procore
       elsif /\Av\d+\.\d+\z/.match?(version)
         File.join(base_api_path, "rest", version, path)
       else
-        raise ArgumentError.new "'#{version}' is an invalid Procore API version"
+        raise Procore::InvalidRequestError.new "#{version} is an invalid Procore API version"
       end
     end
   end

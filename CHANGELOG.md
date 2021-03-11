@@ -1,3 +1,11 @@
+## Unreleased
+
+* Allow tokens to be revoked and manually refreshed.
+
+  PR #39 - https://github.com/procore/ruby-sdk/pull/39
+
+  *Nate Baer*
+
 ## 1.0.0 (January 5, 2021)
 
 * Adds support for API versioning
