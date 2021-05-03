@@ -4,7 +4,7 @@ module Procore
   # Specifies some sensible defaults for certain configurations + clients
   class Defaults
     # Default API endpoint
-    API_ENDPOINT = "https://app.procore.com".freeze
+    API_ENDPOINT = "https://api.procore.com".freeze
 
     # Default User Agent header string
     USER_AGENT = "Procore Ruby Gem #{Procore::VERSION}".freeze
