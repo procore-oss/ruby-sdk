@@ -65,9 +65,9 @@ default version is `v1.0` unless otherwise configured.
 
 | Example | Requested URL |
 | --- | --- |
-| `client.get("me")` | `https://app.procore.com/rest/v1.0/me` |
-| `client.get("me", version: "v1.1")` | `https://app.procore.com/rest/v1.1/me` |
-| `client.get("me", version: "vapid")` | `https://app.procore.com/vapid/me` |
+| `client.get("me")` | `https://api.procore.com/rest/v1.0/me` |
+| `client.get("me", version: "v1.1")` | `https://api.procore.com/rest/v1.1/me` |
+| `client.get("me", version: "vapid")` | `https://api.procore.com/vapid/me` |
 
 Example Usage:
 
@@ -355,7 +355,7 @@ Procore.configure do |config|
   # Base API host name. Alter this depending on your environment - in a
   # staging or test environment you may want to point this at a sandbox
   # instead of production.
-  config.host = ENV.fetch("PROCORE_BASE_API_PATH", "https://app.procore.com")
+  config.host = ENV.fetch("PROCORE_BASE_API_PATH", "https://api.procore.com")
 
   # When using #sync action, sets the default batch size to use for chunking
   # up a request body. Example: if the size is set to 500, and 2,000 updates
