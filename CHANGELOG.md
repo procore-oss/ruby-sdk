@@ -1,6 +1,8 @@
-## Unreleased
+## 1.1.1 (May 5, 2021)
 
 * Change default host to 'api.procore.com'.
+
+  PR #42 - https://github.com/procore/ruby-sdk/pull/42
 
   *Nate Baer*
 
