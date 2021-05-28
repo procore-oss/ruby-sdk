@@ -88,7 +88,7 @@ companies = client.get("companies")
 companies.first[:name] #=> "Procore Company 1"
 
 # Get a company's projects (note the company_id value in options)
-projects = client.get("projects", query:{company_id:<company_id>}, options: {company_id: <company_id>})
+projects = client.get("projects", query: {company_id: <company_id>}, options: {company_id: <company_id>})
 
 projects.first[:name] #=> "Project 1"
 ```
