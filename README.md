@@ -69,6 +69,9 @@ default version is `v1.0` unless otherwise configured.
 | `client.get("me", version: "v1.1")` | `https://api.procore.com/rest/v1.1/me` |
 | `client.get("me", version: "vapid")` | `https://api.procore.com/vapid/me` |
 
+In addition to the settings above, you will need to set `company_id` in the request 
+options to work with [Multiple Procore Zones (MPZ)](https://developers.procore.com/documentation/tutorial-mpz).
+
 Example Usage:
 
 ```ruby
@@ -83,6 +86,11 @@ client = Procore::Client.new(
 companies = client.get("companies")
 
 companies.first[:name] #=> "Procore Company 1"
+
+# Get a company's projects (note the company_id value in options)
+projects = client.get("projects", query:{company_id:<company_id>}, options: {company_id: <company_id>})
+
+projects.first[:name] #=> "Project 1"
 ```
 
 To use Procore's older API Vapid by default, the default version can be set in
