@@ -26,6 +26,7 @@ class Procore::RequestableTest < Minitest::Test
       "Accepts" => "application/json",
       "Authorization" => "Bearer token",
       "Content-Type" => "application/json",
+      "Procore-Sdk-Version" => "ruby-#{Procore::VERSION}",
     }
   end
 
