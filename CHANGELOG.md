@@ -1,3 +1,10 @@
+## Unreleased
+* Add Procore-Sdk-Version header to all requests
+
+  PR #44 - https://github.com/procore/ruby-sdk/pull/44
+
+  *Benjamin Ross*
+
 ## 1.1.1 (May 5, 2021)
 
 * Change default host to 'api.procore.com'.
