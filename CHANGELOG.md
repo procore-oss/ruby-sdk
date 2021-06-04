@@ -1,4 +1,5 @@
-## Unreleased
+## 1.1.2 (Jun 4, 2021)
+
 * Add Procore-Sdk-Version header to all requests
 
   PR #44 - https://github.com/procore/ruby-sdk/pull/44
