@@ -1,3 +1,11 @@
+## Unreleased
+
+* Remove Redis.exists warning
+
+  PR #46 - https://github.com/procore/ruby-sdk/pull/46
+
+  *claudioprocore*
+
 ## 1.1.2 (Jun 4, 2021)
 
 * Add Procore-Sdk-Version header to all requests
