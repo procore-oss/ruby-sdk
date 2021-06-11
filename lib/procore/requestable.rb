@@ -343,7 +343,8 @@ module Procore
         "Accepts" => "application/json",
         "Authorization" => "Bearer #{access_token}",
         "Content-Type" => "application/json",
-        "Procore-Sdk-Version" => "ruby-#{Procore::VERSION}",
+        "Procore-Sdk-Version" => Procore::VERSION,
+        "Procore-Sdk-Language" => "ruby",
         "User-Agent" => Procore.configuration.user_agent,
       }.tap do |headers|
         if options[:idempotency_token]

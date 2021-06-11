@@ -1,5 +1,11 @@
 ## Unreleased
 
+* Add Procore-Sdk-Language header to all requests
+
+  PR #45 - https://github.com/procore/ruby-sdk/pull/45
+
+  *Benjamin Ross*
+
 * Remove Redis.exists warning
 
   PR #46 - https://github.com/procore/ruby-sdk/pull/46
