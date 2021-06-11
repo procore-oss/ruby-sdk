@@ -1,4 +1,4 @@
-## Unreleased
+## 1.1.3 (Jun 11, 2021)
 
 * Add Procore-Sdk-Language header to all requests
 
