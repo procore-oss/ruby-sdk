@@ -123,7 +123,7 @@ def handle_callback
 
     # Create a new token to save into a store
     token = Procore::Auth::Token.new(
-      access_token: auth_hash["credentials"]["token"]
+      access_token: auth_hash["credentials"]["token"],
       refresh_token: auth_hash["credentials"]["refresh_token"],
       expires_at: auth_hash["credentials"]["expires_at"]
     )
