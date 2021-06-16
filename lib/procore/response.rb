@@ -72,7 +72,7 @@ module Procore
 
     def parse_pagination
       headers[:link].to_s.split(", ").map(&:strip).reduce({}) do |links, link|
-        url, name = link.match(/(?:vapid|rest\/.*?)\/(.*?)>; rel="(\w+)"/).captures
+        url, name = link.match(/(?:vapid|api|rest)(?:\/?.*?)\/(.*?)>; rel="(\w+)"/).captures
         links.merge!(name.to_sym => url)
       end
     end

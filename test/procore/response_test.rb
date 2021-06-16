@@ -62,6 +62,10 @@ class Procore::Response::BodyTest < Minitest::Test
       shared_response_pagination_parsing_test("http://localhost:3000/vapid")
   end
 
+  def test_login_response_pagination_parsing
+      shared_response_pagination_parsing_test("http://localhost:3000/api/v1")
+  end
+
   def shared_response_pagination_parsing_on_first_page(base_path)
     links = %W(
       <#{base_path}/projects?page=173>; rel="last",
