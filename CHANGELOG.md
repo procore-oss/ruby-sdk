@@ -1,3 +1,9 @@
+## Unreleased
+
+* Fix a bug with automatic token refreshing where the expired token would still be used for the first request.
+
+  *Nate Baer*
+
 ## 1.1.3 (Jun 11, 2021)
 
 * Add Procore-Sdk-Language header to all requests
