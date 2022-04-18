@@ -1,8 +1,10 @@
-## Unreleased
+## 1.1.4 (Apr 18, 2022)
 
 * Fix a bug with automatic token refreshing where the expired token would still be used for the first request.
 
 * Fix requests made to incorrect URL when using newer versions of Oauth2
+
+  PR #52 - https://github.com/procore/ruby-sdk/pull/52
 
   *Nate Baer*
 
