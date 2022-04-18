@@ -43,7 +43,7 @@ module Procore
         OAuth2::Client.new(
           client_id,
           client_secret,
-          site: "#{host}/oauth/token",
+          site: host,
         )
       end
     end
