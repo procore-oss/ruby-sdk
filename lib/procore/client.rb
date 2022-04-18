@@ -103,6 +103,7 @@ module Procore
       if token.expired?
         Util.log_info("Token Expired", store: store)
         refresh
+        token = fetch_token
       end
       token.access_token
     end
