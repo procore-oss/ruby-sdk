@@ -50,6 +50,7 @@ module Procore
           client_id,
           client_secret,
           site: host,
+          auth_scheme: :request_body,
         )
       end
     end
