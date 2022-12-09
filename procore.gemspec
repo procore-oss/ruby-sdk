@@ -39,5 +39,5 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency "activesupport", "> 2.4"
   spec.add_dependency "oauth2", "~> 2.0"
-  spec.add_dependency "rest-client", "~> 2.0.0"
+  spec.add_dependency "rest-client", "~> 2.0"
 end
