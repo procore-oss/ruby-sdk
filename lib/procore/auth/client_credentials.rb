@@ -18,7 +18,7 @@ module Procore
         begin
           new_token = client
             .client_credentials
-            .get_token({}, auth_scheme: :request_body)
+            .get_token
 
           Procore::Auth::Token.new(
             access_token: new_token.token,
@@ -44,6 +44,7 @@ module Procore
           client_id,
           client_secret,
           site: host,
+          auth_scheme: :request_body,
         )
       end
     end

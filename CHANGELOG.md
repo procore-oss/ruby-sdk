@@ -1,3 +1,11 @@
+## 1.2 (Dec 8, 2022)
+
+* Update oauth2 gem version to any 2.x
+
+* Relax rest-client version to any 2.x
+
+  *Nate Baer*
+
 ## 1.1.4 (Apr 18, 2022)
 
 * Fix a bug with automatic token refreshing where the expired token would still be used for the first request.
