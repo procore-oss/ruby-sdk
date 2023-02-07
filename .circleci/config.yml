@@ -1,0 +1,23 @@
+version: 2.1
+jobs:
+  publish:
+    docker:
+      - image: cimg/ruby:3.2.0
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: bundle install --jobs=4 --retry=3
+      - run:
+          name: Publish to RubyGems
+          command: bundle exec rake release
+workflows:
+  version: 2
+  publish:
+    jobs:
+      - publish:
+          # filters:
+          #   tags:
+          #     only: /.*/
+          #   branches:
+          #     ignore: /.*/
