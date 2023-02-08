@@ -1,6 +1,9 @@
 version: 2.1
 jobs:
   test:
+    parameters:
+      ruby_version:
+        type: string
     docker:
       - image: "cimg/ruby:<< parameters.ruby_version >>"
       - image: cimg/redis:6.2.6
