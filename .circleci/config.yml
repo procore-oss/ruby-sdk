@@ -1,22 +1,37 @@
 version: 2.1
+orbs:
+  ruby: circleci/ruby@2.0.0
 jobs:
+  test:
+    docker:
+      - image: cimg/ruby:3.2.0
+    steps:
+      - checkout
+      - ruby/install-deps
+      - run:
+          name: Run tests
+          command: bundle exec rake
   publish:
     docker:
       - image: cimg/ruby:3.2.0
     steps:
       - checkout
+      - ruby/install-deps
       - run:
-          name: Install dependencies
-          command: bundle install --jobs=4 --retry=3
-      - run:
-          name: Publish to RubyGems
+          name: Publish to Rubygems
           command: bundle exec rake release
 workflows:
   version: 2
-  publish:
+  test-and-publish:
     jobs:
-      - publish
+      - test:
+          filters:
+            tags:
+              only: /.*/
+      - publish:
       # - publish:
+      #     requires:
+      #       - test
       #     filters:
       #       tags:
       #         only: /.*/
