@@ -1,6 +1,6 @@
 version: 2.1
 jobs:
-  test:
+  test-ruby:
     parameters:
       ruby_version:
         type: string
@@ -32,7 +32,7 @@ workflows:
   version: 2
   test-and-publish:
     jobs:
-      - test:
+      - test-ruby:
           matrix:
             parameters:
               ruby_version: ["3.2", "3.1", "3.0", "2.7", "2.6"]
@@ -42,8 +42,8 @@ workflows:
       - publish:
           requires:
             - test
-          # filters:
-          #   tags:
-          #     only: /.*/
-          #   branches:
-          #     ignore: /.*/
+          filters:
+            tags:
+              only: /.*/
+            branches:
+              ignore: /.*/
