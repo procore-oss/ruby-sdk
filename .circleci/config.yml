@@ -6,8 +6,8 @@ jobs:
         type: string
     docker:
       - image: "cimg/ruby:<< parameters.ruby_version >>"
-      - image: cimg/redis:latest
-      - image: memcached:latest
+      - image: cimg/redis:6.2.6
+      - image: memcached:1.6.18
     working_directory: ~/sdk
     steps:
       - checkout
