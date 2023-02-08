@@ -15,9 +15,10 @@ workflows:
   version: 2
   publish:
     jobs:
-      - publish:
-          # filters:
-          #   tags:
-          #     only: /.*/
-          #   branches:
-          #     ignore: /.*/
+      - publish
+      # - publish:
+      #     filters:
+      #       tags:
+      #         only: /.*/
+      #       branches:
+      #         ignore: /.*/
