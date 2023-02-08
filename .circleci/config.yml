@@ -41,7 +41,7 @@ workflows:
               only: /.*/
       - publish:
           requires:
-            - test
+            - test-ruby
           filters:
             tags:
               only: /.*/
