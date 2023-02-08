@@ -4,7 +4,7 @@ jobs:
     docker:
       - image: cimg/ruby:3.2.0
       - image: cimg/redis:6.2.6
-      - image: memcached
+      - image: memcached:1.6.18
     working_directory: ~/sdk
     steps:
       - checkout
