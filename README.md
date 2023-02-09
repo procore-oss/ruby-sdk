@@ -1,6 +1,6 @@
 # Procore Gem
 
-[![Build Status](https://travis-ci.org/procore/ruby-sdk.svg?branch=move-to-travis)](https://travis-ci.org/procore/ruby-sdk)
+[![CircleCI](https://circleci.com/gh/procore/ruby-sdk/tree/master.svg?style=svg)](https://app.circleci.com/pipelines/github/procore/ruby-sdk?branch=master)
 
 #### Table of Contents
 - [Installation](#installation)
@@ -534,9 +534,10 @@ class ProjectsController
   end
 end
 ```
+
 ## Contributing
 
-To contribute to the gem, please clone the repo and cut a new branch. In the PR update the changelog with a short explanation of what you've changed, and your name under the "Unreleased" section. Example changelog update:
+To contribute to the gem, please clone the repo and cut a new branch. In the PR, update the changelog with a short explanation of what you've changed, and your name under the "Unreleased" section. Example changelog update:
 
 ```markdown
 ## Unreleased
@@ -546,7 +547,17 @@ To contribute to the gem, please clone the repo and cut a new branch. In the PR 
     *Your Name*
 ```
 
-Please **do not** bump the gem version in your PR. This will be done in a follow up PR by the gem maintainers.
+Please **do not** bump the gem version in your PR. This will be done in a follow up by the gem maintainers.
+
+## Releasing
+
+Gem maintainer should follow these steps to release a new version:
+
+1. Merge all PRs into the `master` branch that you want included in the release.
+2. Update `version.rb` to a new semantic version, and move unreleased items in `CHANGELOG.md` into a section for that version.
+3. Stage and commit changes. `git commit -a`
+4. Create a tag for the new version. `git tag -a {version}`
+5. Push the tagged commit `git push --follow-tags` and a new version will be published to RubyGems.
 
 ### Tests
 
