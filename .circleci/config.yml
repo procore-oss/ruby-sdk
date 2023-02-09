@@ -29,7 +29,6 @@ jobs:
           name: Publish to Rubygems
           command: bundle exec rake release
 workflows:
-  version: 2
   test-and-publish:
     jobs:
       - test-ruby:
