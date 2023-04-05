@@ -3,6 +3,7 @@ kind: Component
 metadata:
   name: ruby-sdk
   description: Procore Ruby SDK
+  title: Procore Ruby SDK
   annotations:
     circleci.com/project-slug: github/procore/ruby-sdk
     circleci.com/test-workflow: test-and-publish
