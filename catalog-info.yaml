@@ -1,0 +1,29 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: ruby-sdk
+  description: Procore Ruby SDK
+  title: Procore Ruby SDK
+  annotations:
+    circleci.com/project-slug: github/procore/ruby-sdk
+    circleci.com/test-workflow: test-and-publish
+    github.com/project-slug: procore/ruby-sdk
+    github.com/team-slug: procore/team-api
+  tags:
+    - ruby
+    - shell
+  links:
+    - url: https://procoretech.slack.com/archives/C02FHVBQF6K
+      title: Support
+      icon: help
+    - url: https://procoretech.slack.com/archives/C02FHVBQF6K
+      title: Team Slack
+      icon: chat
+    - url: https://procoretech.atlassian.net/jira/software/c/projects/AGX/boards/1293
+      title: Jira
+      icon: developerBoard
+spec:
+  system: API
+  type: library
+  lifecycle: ga
+  owner: team-api
