@@ -17,6 +17,10 @@ jobs:
       - run:
           name: Run tests
           command: bundle exec rake
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
   publish:
     docker:
       - image: cimg/ruby:3.2.0
@@ -28,6 +32,15 @@ jobs:
       - run:
           name: Publish to Rubygems
           command: bundle exec rake release
+  sonarqube_analysis:
+    working_directory: ~/sdk
+    executor: sonar-scanner
+    steps:
+      - attach_workspace:
+          at: .
+      - run:
+          name: Execute sonar-scanner
+          command: sonar-scanner -Dsonar.host.url=$SONARQUBE_HOST -Dsonar.login=$SONARQUBE_OPS_CI_TOKEN -Dsonar.buildString=$CIRCLE_SHA1 -Dsonar.analysis.build.url=$CIRCLE_BUILD_URL
 workflows:
   test-and-publish:
     jobs:
@@ -46,3 +59,11 @@ workflows:
               only: /.*/
             branches:
               ignore: /.*/
+      - sonarqube_analysis:
+          context: procore-sonarqube-ci
+          requires:
+            - test-ruby
+          #filters:
+          #  branches:
+          #    only:
+          #      - master
