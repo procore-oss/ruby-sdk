@@ -5,7 +5,7 @@ if ENV["COVERAGE"]
   require "simplecov_json_formatter"
   SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([SimpleCov::Formatter::HTMLFormatter, SimpleCov::Formatter::JSONFormatter])
   SimpleCov.start do
-    add_filter "/test/"
+    track_files "test/**/*.{rb}"
   end
   SimpleCov.command_name "Unit Tests"
 end
