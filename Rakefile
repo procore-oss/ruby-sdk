@@ -7,7 +7,6 @@ if ENV["COVERAGE"]
   SimpleCov.start do
     track_files "test/**/*.{rb}"
   end
-  SimpleCov.command_name "Unit Tests"
 end
 
 require "bundler/gem_tasks"
