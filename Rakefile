@@ -4,6 +4,7 @@ if ENV["COVERAGE"]
   require "simplecov"
   require "simplecov_json_formatter"
   SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([SimpleCov::Formatter::HTMLFormatter, SimpleCov::Formatter::JSONFormatter])
+  SimpleCov.command_name "rspec-unit"
   SimpleCov.start do
     track_files "test/**/*.{rb}"
   end
