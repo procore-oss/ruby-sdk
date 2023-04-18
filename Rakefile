@@ -1,3 +1,14 @@
+# For code coverage measurements to work properly, `SimpleCov` should be loaded
+# and started before any application code is loaded.
+if ENV["COVERAGE"]
+  require "simplecov"
+  require "simplecov_json_formatter"
+  SimpleCov.formatters = SimpleCov::Formatter::MultiFormatter.new([SimpleCov::Formatter::HTMLFormatter, SimpleCov::Formatter::JSONFormatter])
+  SimpleCov.start do
+    add_filter "/test/"
+  end
+end
+
 require "bundler/gem_tasks"
 require "rake/testtask"
 require "rubocop/rake_task"
