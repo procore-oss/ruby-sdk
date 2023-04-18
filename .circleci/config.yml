@@ -20,7 +20,7 @@ jobs:
           command: bundle install
       - run:
           name: Run tests
-          command: bundle exec rake
+          command: COVERAGE=true bundle exec rake
       - persist_to_workspace:
           root: .
           paths:
