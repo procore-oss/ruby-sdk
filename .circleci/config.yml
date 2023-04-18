@@ -24,6 +24,9 @@ jobs:
       - run:
           name: Display content
           command: ls -al
+      - run:
+          name: Display coverage content
+          command: cd coverage && ls -al
       - persist_to_workspace:
           root: .
           paths:
