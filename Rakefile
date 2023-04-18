@@ -7,6 +7,7 @@ if ENV["COVERAGE"]
   SimpleCov.start do
     add_filter "/test/"
   end
+  SimpleCov.command_name "Unit Tests"
 end
 
 require "bundler/gem_tasks"
