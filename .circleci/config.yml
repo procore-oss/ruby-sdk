@@ -1,4 +1,8 @@
 version: 2.1
+executors:
+  sonar-scanner:
+    docker:
+      - image: sonarsource/sonar-scanner-cli:4.7.0
 jobs:
   test-ruby:
     parameters:
