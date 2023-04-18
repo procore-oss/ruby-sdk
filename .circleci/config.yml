@@ -21,6 +21,9 @@ jobs:
       - run:
           name: Run tests
           command: COVERAGE=true bundle exec rake
+      - run:
+          name: Display content
+          command: ls -al
       - persist_to_workspace:
           root: .
           paths:
