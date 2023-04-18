@@ -6,4 +6,3 @@ git_source(:github) { |repo_name| "https://github.com/#{repo_name}" }
 gemspec
 
 gem 'simplecov', '~> 0.20'
-gem 'simplecov_json_formatter', '~> 0.1.2'
