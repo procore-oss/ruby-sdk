@@ -42,6 +42,7 @@ jobs:
     working_directory: /home/circleci/ruby-sdk
     executor: sonar-scanner
     steps:
+      - checkout
       - attach_workspace:
           at: .
       - store_artifacts:
