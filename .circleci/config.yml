@@ -24,9 +24,9 @@ jobs:
       - store_artifacts:
           path: coverage
       - persist_to_workspace:
-          root: .
+          root: ./
           paths:
-            - .
+            - coverage
   publish:
     docker:
       - image: cimg/ruby:3.2.0
