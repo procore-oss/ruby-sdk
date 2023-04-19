@@ -44,6 +44,8 @@ jobs:
     steps:
       - attach_workspace:
           at: .
+      - store_artifacts:
+          path: coverage
       - run:
           name: Execute sonar-scanner
           command: sonar-scanner -Dsonar.host.url=$SONARQUBE_HOST -Dsonar.login=$SONARQUBE_OPS_CI_TOKEN -Dsonar.buildString=$CIRCLE_SHA1 -Dsonar.analysis.build.url=$CIRCLE_BUILD_URL
