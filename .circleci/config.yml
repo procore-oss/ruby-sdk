@@ -70,7 +70,7 @@ workflows:
       - sonarqube_analysis:
           context: procore-sonarqube-ci
           requires:
-            - test-ruby-3.2
+            - test-ruby
           #filters:
           #  branches:
           #    only:
