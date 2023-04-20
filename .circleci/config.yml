@@ -1,4 +1,8 @@
 version: 2.1
+executors:
+  sonar-scanner:
+    docker:
+      - image: sonarsource/sonar-scanner-cli:4.7.0
 jobs:
   test-ruby:
     parameters:
@@ -8,7 +12,7 @@ jobs:
       - image: "cimg/ruby:<< parameters.ruby_version >>"
       - image: cimg/redis:6.2.6
       - image: memcached:1.6.18
-    working_directory: ~/sdk
+    working_directory: /home/circleci/ruby-sdk
     steps:
       - checkout
       - run:
@@ -16,7 +20,11 @@ jobs:
           command: bundle install
       - run:
           name: Run tests
-          command: bundle exec rake
+          command: COVERAGE=true bundle exec rake
+      - persist_to_workspace:
+          root: ./
+          paths:
+            - coverage
   publish:
     docker:
       - image: cimg/ruby:3.2.0
@@ -28,6 +36,18 @@ jobs:
       - run:
           name: Publish to Rubygems
           command: bundle exec rake release
+  sonarqube_analysis:
+    working_directory: /home/circleci/ruby-sdk
+    executor: sonar-scanner
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - store_artifacts:
+          path: coverage
+      - run:
+          name: Execute sonar-scanner
+          command: sonar-scanner -Dsonar.host.url=$SONARQUBE_HOST -Dsonar.login=$SONARQUBE_OPS_CI_TOKEN -Dsonar.buildString=$CIRCLE_SHA1 -Dsonar.analysis.build.url=$CIRCLE_BUILD_URL
 workflows:
   test-and-publish:
     jobs:
@@ -46,3 +66,11 @@ workflows:
               only: /.*/
             branches:
               ignore: /.*/
+      - sonarqube_analysis:
+          context: procore-sonarqube-ci
+          requires:
+            - test-ruby-3.2
+          filters:
+            branches:
+              only:
+                - master
