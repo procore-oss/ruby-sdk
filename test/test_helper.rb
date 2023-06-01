@@ -1,11 +1,3 @@
-require "minitest/autorun"
-require "webmock/minitest"
-
-require "support/auth_stubs"
-require "support/database"
-
-require "procore"
-
 # For code coverage measurements to work properly, `SimpleCov` should be loaded
 # and started before any application code is loaded.
 if ENV["COVERAGE"]
@@ -18,8 +10,17 @@ if ENV["COVERAGE"]
 
   SimpleCov.start do
     track_files "lib/**/*.{rb}"
+    add_filter "test/"
   end
 end
+
+require "minitest/autorun"
+require "webmock/minitest"
+
+require "support/auth_stubs"
+require "support/database"
+
+require "procore"
 
 Procore.configure do |config|
   config.host = "https://procore.example.com"
