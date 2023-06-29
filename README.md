@@ -236,11 +236,11 @@ rescue Procore:Error => e
 end
 ```
 
-When client is calling `#refresh` or `#revoke` to refresh or revoke an acess token, `Procore::OAuthError` will be raised if an exception happens.
+When client is calling `#refresh` or `#revoke` to refresh or revoke an access token, `Procore::OAuthError` will be raised if an exception happens.
 
 ```ruby
 begin
-  # Use Procore Gem to make refresh or revoke acess token
+  # Use Procore Gem to make refresh or revoke access token
   client.refresh
 
 rescue Procore::OAuthError => e
