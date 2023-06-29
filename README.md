@@ -184,10 +184,6 @@ rescue Procore::InvalidRequestError => e
   # Raised when the request is incorrectly formatted. Possible causes: missing
   # required parameters or sending a request to access a non-existent resource.
 
-rescue Procore::OAuthError => e
-  # Raised whenever there is a problem with OAuth. Possible causes: required
-  # credentials are missing or an access token failed to refresh.
-
 rescue Procore::MissingTokenError => e
   # Raised whenever an access token is nil or invalid.
 
@@ -237,6 +233,19 @@ rescue Procore:Error => e
 
   # Print the headers
   puts e.response.headers
+end
+```
+
+When client is calling `#refresh` or `#revoke` to refresh or revoke an acess token, `Procore::OAuthError` will be raised if an exception happens.
+
+```ruby
+begin
+  # Use Procore Gem to make refresh or revoke acess token
+  client.refresh
+
+rescue Procore::OAuthError => e
+  # Raised whenever there is a problem with OAuth. Possible causes: required
+  # credentials are missing or an access token failed to refresh.
 end
 ```
 
@@ -573,12 +582,6 @@ The gem is available as open source under the terms of the [MIT
 License](http://opensource.org/licenses/MIT).
 
 ## About Procore
-
-<img
-  src="https://www.procore.com/images/procore_logo.png"
-  alt="Procore Logo"
-  width="250px"
-/>
 
 The Procore Gem is maintained by Procore Technologies.
 
