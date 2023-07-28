@@ -2,7 +2,10 @@ version: 2.1
 executors:
   sonar-scanner:
     docker:
-      - image: sonarsource/sonar-scanner-cli:4.7.0
+      - image: containers.artifacts.procoretech.com/test-tooling/procore-sonarscanner:latest
+        auth:
+          username: $ARTIFACTORY_PULL_USERNAME
+          password: $ARTIFACTORY_PULL_PASSWORD
 jobs:
   test-ruby:
     parameters:
@@ -47,7 +50,7 @@ jobs:
           path: coverage
       - run:
           name: Execute sonar-scanner
-          command: sonar-scanner -Dsonar.host.url=$SONARQUBE_HOST -Dsonar.login=$SONARQUBE_OPS_CI_TOKEN -Dsonar.buildString=$CIRCLE_SHA1 -Dsonar.analysis.build.url=$CIRCLE_BUILD_URL
+          command: sonar-scanner -Dsonar.host.url=$SONARQUBE_HOST -Dsonar.token=$SONARQUBE_OPS_CI_TOKEN -Dsonar.buildString=$CIRCLE_SHA1 -Dsonar.analysis.build.url=$CIRCLE_BUILD_URL
 workflows:
   test-and-publish:
     jobs:
@@ -67,7 +70,9 @@ workflows:
             branches:
               ignore: /.*/
       - sonarqube_analysis:
-          context: procore-sonarqube-ci
+          context:
+            - artifactory-production-pull
+            - procore-sonarqube-ci
           requires:
             - test-ruby-3.2
           filters:
