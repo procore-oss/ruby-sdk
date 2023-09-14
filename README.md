@@ -4,7 +4,7 @@
 
 #### Table of Contents
 - [Installation](#installation)
-- [1.0.0 Release](#100-release)
+- [Configuration](#configuration)
 - [Making Requests](#making-requests)
 - [Usage](#usage)
 - [Error Handling](#error-handling)
@@ -12,7 +12,6 @@
   - [Navigating Through Paginated Results](#navigating-through-paginated-results)
   - [Change Number of Results](#change-number-of-results)
 - [Sync Actions](#sync-actions)
-- [Configuration](#configuration)
 - [Stores](#stores)
   - [Session Store](#session-store)
   - [Redis Store](#redis-store)
@@ -31,10 +30,56 @@ Add this line to your application's Gemfile:
 gem "procore"
 ```
 
-## 1.0.0 Release
+## Configuration
 
-v1.0.0 was released on January 5, 2021, and adds support the new Rest v1.0 API.
-See the CHANGELOG for upgrade instructions.
+The Procore Gem exposes a configuration with several options.
+
+For example, when using this gem in a Rails application, the configuration can be done like below:
+```ruby
+# config/initializes/procore.rb
+
+require "procore"
+Procore.configure do |config|
+  # Base API host name. Alter this depending on your environment - in a
+  # staging or test environment you may want to point this at a sandbox
+  # instead of production.
+  config.host = ENV.fetch("PROCORE_BASE_API_PATH", "https://api.procore.com")
+
+  # When using #sync action, sets the default batch size to use for chunking
+  # up a request body. Example: if the size is set to 500, and 2,000 updates
+  # are desired, 4 requests will be made. Note, the maximum size is 1000.
+  config.default_batch_size = 500
+
+  # The default API version to use if none is specified in the request.
+  # Should be either "v1.0" (recommended) or "vapid" (legacy).
+  config.default_version = "v1.0"
+
+  # Integer: Number of times to retry a failed API call. Reasons an API call
+  # could potentially fail:
+  # 1. Service is briefly down or unreachable
+  # 2. Timeout hit - service is experiencing immense load or mid restart
+  # 3. Because computers
+  #
+  # Defaults to 1 retry. Would recommend 3-5 for production use.
+  # Has exponential backoff - first request waits a 1.5s after a failure,
+  # next one 2.25s, next one 3.375s, 5.0, etc.
+  config.max_retries = 3
+
+  # Float: Threshold for canceling an API request. If a request takes longer
+  # than this value it will automatically cancel.
+  config.timeout = 5.0
+
+  # Instance of a Logger. This gem will log information about requests,
+  # responses and other things it might be doing. In a Rails application it
+  # should be set to Rails.logger
+  config.logger = Rails.logger
+
+  # String: User Agent sent with each API request. API requests must have a user
+  # agent set. It is recomended to set the user agent to the name of your
+  # application.
+  config.user_agent = "MyAppName"
+end
+```
 
 ## Making Requests
 
@@ -47,21 +92,21 @@ Stores automatically manage tokens for you - refreshing, revoking and storage
 are abstracted away to make your code as simple as possible. There are several
 different [types of stores](#stores) available to you.
 
-The Client class exposes `#get`, `#post`, `#put`, `#patch`, `#sync` and
+The `Client` class exposes `#get`, `#post`, `#put`, `#patch`, `#sync` and
 `#delete` methods to you.
 
 ```ruby
-   get(path, version: "", query: {})
+   get(path, version: "", query: {}, options: {})
   post(path, version: "", body: {}, options: {})
    put(path, version: "", body: {}, options: {})
  patch(path, version: "", body: {}, options: {})
-delete(path, version: "", query: {})
+delete(path, version: "", query: {}, options: {})
   sync(path, version: "", body: {}, options: {})
 ```
 
-All paths are relative, the gem will handle expanding them. An API version may
-be specified in the `version:` argument, or the default version is used. The
-default version is `v1.0` unless otherwise configured.
+#### The `path` and `version`
+
+All paths are relative, the gem will handle expanding them. An API version can be specified in the `version:` argument, otherwise the `default_version` in the configuration will be used. 
 
 | Example | Requested URL |
 | --- | --- |
@@ -69,10 +114,22 @@ default version is `v1.0` unless otherwise configured.
 | `client.get("me", version: "v1.1")` | `https://api.procore.com/rest/v1.1/me` |
 | `client.get("me", version: "vapid")` | `https://api.procore.com/vapid/me` |
 
-In addition to the settings above, you will need to set `company_id` in the request 
-options to work with [Multiple Procore Zones (MPZ)](https://developers.procore.com/documentation/tutorial-mpz).
+#### Requiring `company_id` in the `options`
 
-Example Usage:
+In order for your application to work with [Multiple Procore Zones (MPZ)](https://developers.procore.com/documentation/tutorial-mpz), each call your application makes to the Procore API **must** contain a request header that includes the `Procore-Company-Id` field. This request header field specifies the id of the company into which you are making the call.
+
+This can be achieved by setting the `company_id` in the request `options`. (And this gem will convert it into a `Procore-Company-Id` header automatically.)
+
+For example:
+```ruby
+client.get("companies/12345/users", options: { company_id: 12345 })
+```
+
+Note: Only the following Procore API endpoints do not require a request header containing the `Procore-Company-Id` field:
+* Show User Info - (GET /rest/v1.0/me)
+* List Companies - (GET /rest/v1.0/companies)
+
+#### Example Usage
 
 ```ruby
 store = Procore::Auth::Stores::Session.new(session: session)
@@ -91,19 +148,6 @@ companies.first[:name] #=> "Procore Company 1"
 projects = client.get("projects", query: {company_id: <company_id>}, options: {company_id: <company_id>}).body
 
 projects.first[:name] #=> "Project 1"
-```
-
-To use Procore's older API Vapid by default, the default version can be set in
-either the Gem's [configuration](https://github.com/procore/ruby-sdk#configuration)
-or the client's `options` hash:
-
-```ruby
-client = Procore::Client.new(
-  ...
-  options {
-    default_version: "vapid"
-  }
-)
 ```
 
 ## Usage
@@ -358,56 +402,6 @@ client.sync(
  },
  options: { batch_size: 500, company_id: 1 },
 )
-```
-
-## Configuration
-
-The Procore Gem exposes a configuration with several options.
-
-```ruby
-# config/initializes/procore.rb
-
-require "procore"
-Procore.configure do |config|
-  # Base API host name. Alter this depending on your environment - in a
-  # staging or test environment you may want to point this at a sandbox
-  # instead of production.
-  config.host = ENV.fetch("PROCORE_BASE_API_PATH", "https://api.procore.com")
-
-  # When using #sync action, sets the default batch size to use for chunking
-  # up a request body. Example: if the size is set to 500, and 2,000 updates
-  # are desired, 4 requests will be made. Note, the maximum size is 1000.
-  config.default_batch_size = 500
-
-  # The default API version to use if none is specified in the request.
-  # Should be either "v1.0" (recommended) or "vapid" (legacy).
-  config.default_version = "v1.0"
-
-  # Integer: Number of times to retry a failed API call. Reasons an API call
-  # could potentially fail:
-  # 1. Service is briefly down or unreachable
-  # 2. Timeout hit - service is experiencing immense load or mid restart
-  # 3. Because computers
-  #
-  # Defaults to 1 retry. Would recommend 3-5 for production use.
-  # Has exponential backoff - first request waits a 1.5s after a failure,
-  # next one 2.25s, next one 3.375s, 5.0, etc.
-  config.max_retries = 3
-
-  # Float: Threshold for canceling an API request. If a request takes longer
-  # than this value it will automatically cancel.
-  config.timeout = 5.0
-
-  # Instance of a Logger. This gem will log information about requests,
-  # responses and other things it might be doing. In a Rails application it
-  # should be set to Rails.logger
-  config.logger = Rails.logger
-
-  # String: User Agent sent with each API request. API requests must have a user
-  # agent set. It is recomended to set the user agent to the name of your
-  # application.
-  config.user_agent = "MyAppName"
-end
 ```
 
 ## Stores
