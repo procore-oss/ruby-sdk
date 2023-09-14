@@ -34,7 +34,7 @@ gem "procore"
 
 The Procore Gem exposes a configuration with several options.
 
-For example, when use this gem in a Rails application, the configuration can be done like below:
+For example, when using this gem in a Rails application, the configuration can be done like below:
 ```ruby
 # config/initializes/procore.rb
 
