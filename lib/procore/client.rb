@@ -30,10 +30,12 @@ module Procore
     #   the request. Defaults to Configuration.user_agent
     def initialize(client_id:, client_secret:, store:, options: {})
       @options = Procore::Defaults::client_options.merge(options)
+
+      host = @options[:login_host] || @options[:host]
       @credentials = Procore::Auth::AccessTokenCredentials.new(
         client_id: client_id,
         client_secret: client_secret,
-        host: @options[:host],
+        host: host,
       )
       @store = store
     end
