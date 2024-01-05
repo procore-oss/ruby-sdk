@@ -26,11 +26,12 @@ module Procore
     # @param options [Hash] options to configure the client with
     # @option options [String] :host Endpoint to use for the API. Defaults to
     #   Configuration.host
+    # @option options [String] :login_host used by the OAuth client to generate API tokens.
+    # Defaults to Configuration.login_host
     # @option options [String] :user_agent User Agent string to send along with
     #   the request. Defaults to Configuration.user_agent
     def initialize(client_id:, client_secret:, store:, options: {})
       @options = Procore::Defaults::client_options.merge(options)
-
       @credentials = Procore::Auth::AccessTokenCredentials.new(
         client_id: client_id,
         client_secret: client_secret,
