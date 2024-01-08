@@ -111,6 +111,7 @@ module Procore
     def initialize
       @default_batch_size = Procore::Defaults::BATCH_SIZE
       @host = Procore::Defaults::API_ENDPOINT
+      @login_host = Procore::Defaults::LOGIN_ENDPOINT
       @logger = nil
       @max_retries = 1
       @timeout = 1.0
