@@ -45,6 +45,11 @@ Procore.configure do |config|
   # instead of production.
   config.host = ENV.fetch("PROCORE_BASE_API_PATH", "https://api.procore.com")
 
+  # Base Login host name used by the OAuth client to generate API tokens.
+  # Alter this depending on your environment - in a staging or test environment
+  # you may want to point this at a sandbox instead of production.
+  config.login_host = ENV.fetch("PROCORE_BASE_LOGIN_PATH", "https://login.procore.com")
+
   # When using #sync action, sets the default batch size to use for chunking
   # up a request body. Example: if the size is set to 500, and 2,000 updates
   # are desired, 4 requests will be made. Note, the maximum size is 1000.
