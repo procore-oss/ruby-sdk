@@ -350,5 +350,4 @@ class Procore::RequestableTest < Minitest::Test
 
     Procore.configuration.max_retries = max_retries_old
   end
-
 end
