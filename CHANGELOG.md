@@ -1,3 +1,9 @@
+## 1.3 (Jan 8, 2024)
+
+* Introduces :login_host configuration attribute used to set up OAuth2::Client. Please note, this will result Procore::Client use `https://login.procore.com/oauth/token` instead of `https://api.procore.com/oauth/token` for auth token generation.   
+
+  *Eugene Tokarev*
+
 ## 1.2 (Dec 8, 2022)
 
 * Update oauth2 gem version to any 2.x

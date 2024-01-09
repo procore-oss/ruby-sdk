@@ -1,5 +1,5 @@
 module AuthStubs
-  def stub_client_credentials_token(host: "https://procore.example.com")
+  def stub_client_credentials_token(host: "https://procore-login.example.com")
     stub_request(:post, "#{host}/oauth/token")
       .to_return(
         status: 200,
@@ -9,7 +9,7 @@ module AuthStubs
   end
 
   def stub_refresh_token
-    stub_request(:post, "https://procore.example.com/oauth/token")
+    stub_request(:post, "https://procore-login.example.com/oauth/token")
       .to_return(
         status: 200,
         body: {
@@ -24,6 +24,6 @@ module AuthStubs
   end
 
   def stub_revoke_token
-    stub_request(:post, "https://procore.example.com/oauth/revoke").to_return(status: 200)
+    stub_request(:post, "https://procore-login.example.com/oauth/revoke").to_return(status: 200)
   end
 end

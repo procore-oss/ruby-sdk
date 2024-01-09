@@ -28,6 +28,7 @@ class Procore::ClientTest < Minitest::Test
       store: store,
       options: {
         host: "https://example.com",
+        login_host: "https://my-auth-provider.com",
         default_version: "v1.0",
         user_agent: "Procore Test Suite",
       },
@@ -35,6 +36,7 @@ class Procore::ClientTest < Minitest::Test
 
     assert_equal "https://example.com", client.options[:host]
     assert_equal "Procore Test Suite", client.options[:user_agent]
+    assert_equal "https://my-auth-provider.com", client.options[:login_host]
   end
 
   def test_client_active_recored_expired_token

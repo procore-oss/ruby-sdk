@@ -24,4 +24,5 @@ require "procore"
 
 Procore.configure do |config|
   config.host = "https://procore.example.com"
+  config.login_host = "https://procore-login.example.com"
 end

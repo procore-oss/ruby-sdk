@@ -32,6 +32,16 @@ module Procore
     # @return [String]
     attr_accessor :host
 
+    # @!attribute [rw] login_host
+    # @note defaults to Defaults::LOGIN_ENDPOINT
+    #
+    # Base Login host name used by the OAuth client to generate API tokens.
+    # Alter this depending on your environment - in a staging or test environment
+    # you may want to point this at a sandbox instead of production.
+    #
+    # @return [String]
+    attr_accessor :login_host
+
     # @!attribute [rw] default_version
     # @note defaults to Defaults::DEFAULT_VERSION
     #
@@ -101,6 +111,7 @@ module Procore
     def initialize
       @default_batch_size = Procore::Defaults::BATCH_SIZE
       @host = Procore::Defaults::API_ENDPOINT
+      @login_host = Procore::Defaults::LOGIN_ENDPOINT
       @logger = nil
       @max_retries = 1
       @timeout = 1.0
