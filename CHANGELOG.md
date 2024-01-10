@@ -1,3 +1,9 @@
+## 1.3.1 (Jan 9, 2024)
+
+* Fix a bug with the retry logic in `with_response_handling` resulting in performing one more retry than expected .
+
+  *Eugene Tokarev*
+
 ## 1.3 (Jan 8, 2024)
 
 * Introduces :login_host configuration attribute used to set up OAuth2::Client. Please note, this will result Procore::Client use `https://login.procore.com/oauth/token` instead of `https://api.procore.com/oauth/token` for auth token generation.   

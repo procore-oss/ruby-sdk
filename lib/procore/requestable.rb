@@ -253,7 +253,7 @@ module Procore
       begin
         result = yield
       rescue *HTTP_EXCEPTIONS => e
-        if retries <= Procore.configuration.max_retries
+        if retries < Procore.configuration.max_retries
           retries += 1
           sleep 1.5**retries
           retry

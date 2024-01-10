@@ -332,4 +332,24 @@ class Procore::RequestableTest < Minitest::Test
       assert_equal({ "errors" => "Unauthorized" }, e.response.body)
     end
   end
+
+  def test_no_retry_logic
+    # Disable retries
+    max_retries_old = Procore.configuration.max_retries
+
+    begin
+      Procore.configuration.max_retries = 0
+      stub_request(:get, "http://test.com/rest/v1.0/retry_test")
+        .to_raise(RestClient::Exceptions::Timeout)
+
+      # Attempt to perform the request and assert the correct exception is raised
+      assert_raises(Procore::APIConnectionError) do
+        Request.new(token: "token").get("retry_test")
+      end
+
+      assert_requested :get, "http://test.com/rest/v1.0/retry_test", times: 1
+    ensure
+      Procore.configuration.max_retries = max_retries_old
+    end
+  end
 end
