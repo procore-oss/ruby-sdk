@@ -1,6 +1,8 @@
 # Procore Gem
 
-[![CircleCI](https://circleci.com/gh/procore/ruby-sdk/tree/master.svg?style=svg)](https://app.circleci.com/pipelines/github/procore/ruby-sdk?branch=master)
+[![Test](https://github.com/procore-oss/ruby-sdk/actions/workflows/test.yaml/badge.svg?branch=main)](https://github.com/procore-oss/ruby-sdk/actions/workflows/test.yaml)
+[![Gem Version](https://badge.fury.io/rb/procore.svg)](https://badge.fury.io/rb/procore)
+[![Discord](https://img.shields.io/badge/Chat-EDEDED?logo=discord)](https://discord.gg/PbntEMmWws)
 
 #### Table of Contents
 - [Installation](#installation)
