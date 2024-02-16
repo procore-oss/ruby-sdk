@@ -7,12 +7,12 @@ require "procore/version"
 Gem::Specification.new do |spec|
   spec.name          = "procore"
   spec.version       = Procore::VERSION
-  spec.authors       = ["Procore Engineering"]
+  spec.authors       = ["Procore Technologies, Inc."]
   spec.email         = ["opensource@procore.comm"]
 
   spec.summary       = "Procore Ruby Gem"
   spec.description   = "Procore Ruby Gem"
-  spec.homepage      = "https://github.com/procore/ruby-sdk"
+  spec.homepage      = "https://github.com/procore-oss/ruby-sdk"
   spec.license       = "MIT"
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
@@ -41,4 +41,7 @@ Gem::Specification.new do |spec|
   spec.add_dependency "activesupport", "> 2.4"
   spec.add_dependency "oauth2", "~> 2.0"
   spec.add_dependency "rest-client", "~> 2.0"
+
+  spec.metadata['allowed_push_host'] = 'https://rubygems.org'
+  spec.metadata['rubygems_mfa_required'] = 'true'
 end

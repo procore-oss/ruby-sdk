@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) 2017 Patrick Koperwas
+Copyright (c) 2017 Procore Technologies, Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
