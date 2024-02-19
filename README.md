@@ -563,7 +563,7 @@ Please **do not** bump the gem version in your PR. This will be done in a follow
 
 Gem maintainer should follow these steps to release a new version:
 
-1. Merge all PRs into the `master` branch that you want included in the release.
+1. Merge all PRs into the `main` branch that you want included in the release.
 2. Update `version.rb` to a new semantic version, and move unreleased items in `CHANGELOG.md` into a section for that version.
 3. Stage and commit changes. `git commit -a`
 4. Create a tag for the new version. `git tag -a {version}`

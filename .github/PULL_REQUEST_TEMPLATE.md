@@ -1,7 +1,7 @@
 Checklist:
 
 * [ ] I have updated the necessary documentation
-* [ ] I have signed off all my commits as required by [DCO](https://github.com/procore-oss/blueprinter/blob/main/CONTRIBUTING.md)
+* [ ] I have signed off all my commits as required by [DCO](https://github.com/procore-oss/ruby-sdk/blob/main/CONTRIBUTING.md)
 * [ ] My build is green
 
 <!--
