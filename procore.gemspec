@@ -5,15 +5,16 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require "procore/version"
 
 Gem::Specification.new do |spec|
-  spec.name          = "procore"
-  spec.version       = Procore::VERSION
-  spec.authors       = ["Procore Technologies, Inc."]
-  spec.email         = ["opensource@procore.comm"]
+  spec.name                  = "procore"
+  spec.version               = Procore::VERSION
+  spec.authors               = ["Procore Technologies, Inc."]
+  spec.email                 = ["opensource@procore.comm"]
 
-  spec.summary       = "Procore Ruby Gem"
-  spec.description   = "Procore Ruby Gem"
-  spec.homepage      = "https://github.com/procore-oss/ruby-sdk"
-  spec.license       = "MIT"
+  spec.summary               = "Procore Ruby Gem"
+  spec.description           = "Procore Ruby Gem"
+  spec.homepage              = "https://github.com/procore-oss/ruby-sdk"
+  spec.license               = "MIT"
+  spec.required_ruby_version = Gem::Requirement.new('>= 3.0')
 
   spec.files         = `git ls-files -z`.split("\x0").reject do |f|
     f.match(%r{^(test|spec|features)/})
