@@ -36,7 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rubocop-performance"
   spec.add_development_dependency "rubocop-rails"
   spec.add_development_dependency "simplecov"
-  spec.add_development_dependency "sqlite3"
+  spec.add_development_dependency "sqlite3", "~>1.4"
   spec.add_development_dependency "webmock"
 
   spec.add_dependency "activesupport", "> 2.4"
