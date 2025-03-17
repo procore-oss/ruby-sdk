@@ -1,0 +1,11 @@
+version: "3.5"
+
+services:
+  redis:
+    image: redis:6.2.6
+    ports:
+      - "127.0.0.1:6379:6379"
+  memcached:
+    image: memcached:1.6.18
+    ports:
+      - "127.0.0.1:11211:11211"
