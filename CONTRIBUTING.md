@@ -12,6 +12,12 @@ Once a GitHub issue is accepted and assigned to you, please follow general workf
 
 1. Fork the target repository under your GitHub username.
 2. Create a branch in your forked repository for the changes you are about to make.
+
+- `bundle install` to install the dependencies
+- Make sure tests pass locally
+  - You'll need to spin up a few containers (redis and memcached) to run the tests. You can do this by running `docker-compose up -d` in the root of the project.
+  - Run tests with `COVERAGE=true bundle exec rake`
+
 3. Commit your changes in the branch you created in step 2. All commits need to be signed-off. Check the [legal](#legal) section bellow for more details.
 4. Push your commits to your remote fork.
 5. Create a Pull Request from your remote fork pointing to the HEAD branch (usually `main` branch) of the target repository.
@@ -23,14 +29,14 @@ Procore projects use Developer Certificate of Origin ([DCO](https://GitHub.com/a
 
 Please sign-off your contributions by doing ONE of the following:
 
-* Use `git commit -s ...` with each commit to add the sign-off or
-* Manually add a `Signed-off-by: Your Name <your.email@example.com>` to each commit message.
+- Use `git commit -s ...` with each commit to add the sign-off or
+- Manually add a `Signed-off-by: Your Name <your.email@example.com>` to each commit message.
 
 The email address must match your primary GitHub email. You do NOT need cryptographic (e.g. gpg) signing.
 
-* Use `git commit -s --amend ...` to add a sign-off to the latest commit, if you forgot.
+- Use `git commit -s --amend ...` to add a sign-off to the latest commit, if you forgot.
 
-*Note*: Some projects will provide specific configuration to ensure all commits are signed-off. Please check the project's documentation for more details.
+_Note_: Some projects will provide specific configuration to ensure all commits are signed-off. Please check the project's documentation for more details.
 
 ## Tests
 
