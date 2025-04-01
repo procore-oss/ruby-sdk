@@ -15,7 +15,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Check if version has been updated
         id: check
-        uses: tj-actions/changed-files@2d756ea4c53f7f6b397767d8723b3a10a9f35bf2
+        uses: tj-actions/changed-files@823fcebdb31bb35fdf2229d9f769b400309430d0
         with:
           files: lib/procore/version.rb
   release:
