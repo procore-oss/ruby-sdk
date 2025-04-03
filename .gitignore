@@ -1,5 +1,7 @@
 .yardopts
 
+.tool-versions
+
 /.bundle/
 /.yardoc
 /Gemfile.lock
